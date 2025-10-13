@@ -1,10 +1,10 @@
 <?php
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MapController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/map', function () {
-        return Inertia::render('map/Map');
-    })->name('map');
+    Route::get('/map', [MapController::class, 'show'])->name('map');
+
+    Route::post('/map', [MapController::class, 'store'])->name('map.store');
 });
