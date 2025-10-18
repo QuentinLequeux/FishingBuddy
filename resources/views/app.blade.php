@@ -3,6 +3,33 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Quentin Lequeux">
+        <meta name="description" content="FishingBuddy - Un compagnon pour la pêche !">
+        <meta name="keywords" content="pêche, application, fish, fishing, poisson, carte, pêcheur">
+
+        <!-- SEO -->
+
+        @verbatim
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "FishingBuddy",
+                "foundingDate": "2025",
+                "description": "FishingBuddy - Un compagnon pour la pêche !",
+                "sameAs": [
+                    "https://github.com/QuentinLequeux",
+                    "https://www.linkedin.com/in/quentin-lequeux-8a11a3192/"
+                ],
+                "alumni": [
+                    {
+                        "@type": "Person",
+                        "name": "Quentin Lequeux"
+                    }
+                ]
+            }
+        </script>
+        @endverbatim
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
