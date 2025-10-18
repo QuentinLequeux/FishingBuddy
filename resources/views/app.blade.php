@@ -5,7 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Quentin Lequeux">
         <meta name="description" content="FishingBuddy - Un compagnon pour la pêche !">
-        <meta name="keywords" content="pêche, application, fish, fishing, poisson, carte, pêcheur">
+        <meta name="keywords" content="pêche, application, fish, fishing, poisson, pêcheur">
+
+        <!-- OpenGraph -->
+
+        <meta property="og:type" content="website">
+        <meta property="og:sitename" content="FishingBuddy">
+        <meta property="og:locale" content="fr_BE">
+        <meta property="og:title" content="FishingBuddy">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:description" content="FishingBuddy - Un compagnon pour la pêche !">
 
         <!-- SEO -->
 
