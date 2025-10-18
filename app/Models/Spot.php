@@ -9,6 +9,19 @@ class Spot extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'latitude',
+        'longitude',
+        'name',
+        'license',
+        'url',
+        'environement',
+        'rules',
+        'equipments',
+        'is_public',
+    ];
+
     protected $casts = [
         'environement' => 'array',
         'rules' => 'array',
