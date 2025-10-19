@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MapController;
+use App\Http\Controllers\Map\MapController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/map', [MapController::class, 'show'])->name('map');
