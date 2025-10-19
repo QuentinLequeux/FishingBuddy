@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import NavFooter from '@/components/NavFooter.vue';
-import NavMain from '@/components/NavMain.vue';
-import NavUser from '@/components/NavUser.vue';
 import {
     Sidebar,
     SidebarContent,
@@ -11,30 +8,55 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import AppLogo from './AppLogo.vue';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
-import AppLogo from './AppLogo.vue';
+import { dashboard, map } from '@/routes';
+import NavMain from '@/components/NavMain.vue';
+import NavUser from '@/components/NavUser.vue';
+import NavFooter from '@/components/NavFooter.vue';
+import {
+    FigmaIcon,
+    Fish,
+    GithubIcon,
+    HomeIcon,
+    IdCard,
+    MapIcon,
+} from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Accueil',
         href: dashboard(),
-        icon: LayoutGrid,
+        icon: HomeIcon,
+    },
+    {
+        title: 'Carte',
+        href: map(),
+        icon: MapIcon,
+    },
+    {
+        title: 'Permis',
+        href: '#',
+        icon: IdCard,
+    },
+    {
+        title: 'Espèces',
+        href: '#',
+        icon: Fish,
     },
 ];
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Github Repo',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: Folder,
+        title: 'Github',
+        href: 'https://github.com/QuentinLequeux/FishingBuddy',
+        icon: GithubIcon,
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
+        title: 'Figma',
+        href: 'https://www.figma.com/design/MuP0p49DjDY7RhyGtgxE8f/Projet?node-id=17-2755&t=ZbejOo2sL8LBrUPi-0',
+        icon: FigmaIcon,
     },
 ];
 </script>
