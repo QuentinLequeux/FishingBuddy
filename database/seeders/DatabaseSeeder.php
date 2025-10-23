@@ -14,19 +14,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([SpecieSeeder::class]);
+
         $user = User::factory()->create([
             'name' => 'Quentin',
             'email' => 'quent789@gmail.com',
         ]);
 
-        $specie = Specie::factory(1)->create();
+        $specie = Specie::all();
 
         $spots = Spot::factory(1)->create([
             'user_id' => $user->id,
         ]);
 
         foreach ($spots as $spot) {
-            $spot->species()->attach($specie);
+            $randomSpecie = $specie->random(rand(1, 3))->pluck('id');
+            $spot->species()->attach($randomSpecie);
         }
     }
 }
