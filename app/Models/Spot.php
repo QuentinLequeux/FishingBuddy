@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Spot extends Model
 {
     use HasFactory;
+    use softDeletes;
 
     protected $fillable = [
         'user_id',
@@ -30,7 +32,7 @@ class Spot extends Model
 
     public function species()
     {
-        return $this->belongsToMany(Specie::class, 'spot_species');
+        return $this->belongsToMany(Specie::class, 'spot_species', 'spot_id', 'specie_id')->withTimestamps();
     }
 
     public function user()
