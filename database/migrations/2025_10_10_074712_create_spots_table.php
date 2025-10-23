@@ -17,13 +17,14 @@ return new class extends Migration
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->string('name');
-            $table->string('license');
+            $table->string('license')->nullable();
             $table->string('url')->nullable();
             $table->json('environement')->nullable();
             $table->json('rules')->nullable();
             $table->boolean('is_public')->default(true);
             $table->json('equipments')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
