@@ -8,7 +8,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/map', [MapController::class, 'store'])->name('map.store');
 
+    Route::post('/map/{spot}', [MapController::class, 'update'])->name('map.update');
+
     Route::delete('/map/{spot}', [MapController::class, 'destroy'])->name('map.destroy');
 
     Route::post('/map/{spot}/restore', [MapController::class, 'restore'])->name('map.restore');
 });
+
+// TODO : put/patch ?
