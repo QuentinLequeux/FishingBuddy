@@ -8,7 +8,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
+    $user = auth()->user();
+    return Inertia::render('Dashboard', ['user' => $user]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/settings.php';
