@@ -99,7 +99,7 @@ return [
         'array' => 'The :attribute field must not have more than :max items.',
         'file' => 'The :attribute field must not be greater than :max kilobytes.',
         'numeric' => 'The :attribute field must not be greater than :max.',
-        'string' => 'The :attribute field must not be greater than :max characters.',
+        'string' => 'Le champ :attribute ne doit pas être supérieur à :max caractères.',
     ],
     'max_digits' => 'The :attribute field must not have more than :max digits.',
     'mimes' => 'The :attribute field must be a file of type: :values.',
@@ -162,7 +162,7 @@ return [
     'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
     'uppercase' => 'The :attribute field must be uppercase.',
-    'url' => 'The :attribute field must be a valid URL.',
+    'url' => 'Le champ :attribute doit être une URL valide.',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
 
@@ -189,7 +189,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | The following language lines are used to swap our attribute placeholder
-    | with something more reader friendly such as "E-Mail Address" instead
+    | with something more reader-friendly such as "E-Mail Address" instead
     | of "email". This simply helps us make our message more expressive.
     |
     */
