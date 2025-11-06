@@ -4,23 +4,15 @@ import {
     Car,
     Lock,
     Share2,
-    SquarePen,
     LockOpenIcon,
-    EllipsisVertical,
     ExternalLinkIcon,
 } from 'lucide-vue-next';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover';
 import { ISpot } from '@/types/ISpot';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { defineEmits, defineProps, ref } from 'vue';
 import { Separator } from '@/components/ui/separator';
 import UpdateForm from '@/components/map/UpdateForm.vue';
-import AlertDialogSpot from '@/components/map/AlertDialogSpot.vue';
+import PopoverSpot from '@/components/map/PopoverSpot.vue';
 
 defineProps<{
     modelValue: boolean;
@@ -41,30 +33,9 @@ const showForm = ref(false);
     <transition name="fade">
         <div
             v-if="modelValue && spot"
-            class="absolute right-14 z-10 my-2 flex h-[96%] w-[400px] flex-col gap-2 rounded-2xl bg-white p-4 shadow-lg max-sm:w-[83%] dark:bg-[#0A0A0AFF] overflow-y-scroll"
+            class="absolute right-14 z-10 my-2 flex h-[96%] w-[400px] flex-col gap-2 rounded-2xl bg-white p-4 shadow-lg max-sm:w-[83%] dark:bg-sidebar overflow-y-scroll"
         >
-            <Popover>
-                <PopoverTrigger as-child>
-                    <EllipsisVertical
-                        class="absolute top-1 right-10 m-2 hover:cursor-pointer hover:text-main dark:text-white"
-                        :size="24"
-                    />
-                </PopoverTrigger>
-                <PopoverContent
-                    class="z-10 flex w-full flex-col items-start p-2"
-                >
-                    <Button
-                        type="button"
-                        title="Modifier"
-                        variant="ghost"
-                        @click="showForm = true"
-                    >
-                        <SquarePen :size="20" />
-                        Modifier
-                    </Button>
-                    <AlertDialogSpot :spot="spot" />
-                </PopoverContent>
-            </Popover>
+            <PopoverSpot :spot="spot" @edit="showForm = true" />
             <X
                 :size="24"
                 class="absolute top-2 right-2 m-1 hover:cursor-pointer hover:text-main dark:text-white"
@@ -277,6 +248,6 @@ const showForm = ref(false);
 }
 </style>
 
-<!-- TODO : dark mode -->
+<!-- TODO : Météo ? -->
 <!-- TODO : Responsive -->
-<!-- TODO : Component : Popover,... -->
+<!-- TODO : Localisation en dessous du lieu ? (ex : Seraing, BE) -->
