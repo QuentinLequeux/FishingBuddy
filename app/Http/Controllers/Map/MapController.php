@@ -70,4 +70,42 @@ class MapController extends Controller
 
         return redirect()->route('map');
     }
+
+        public function update(Request $request, Spot $spot)
+    {
+        $validated = $request->validate([
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'name' => 'required|string|max:100',
+            'license' => 'string|max:100|nullable',
+            'url' => 'nullable|url',
+            'species' => 'nullable|array',
+            'species.*' => 'exists:species,id',
+            'environement' => 'nullable|array',
+            'equipments' => 'nullable|array',
+            'rules' => 'nullable|array',
+            'is_public' => 'required|boolean',
+        ]);
+
+        $spot->update([
+            'user_id' => auth()->user()->id,
+            'latitude' => $validated['latitude'],
+            'longitude' => $validated['longitude'],
+            'name' => $validated['name'],
+            'license' => $validated['license'],
+            'url' => $validated['url'],
+            'environement' => $validated['environement'],
+            'equipments' => $validated['equipments'],
+            'rules' => $validated['rules'],
+            'is_public' => $validated['is_public'],
+        ]);
+
+        if (!empty($validated['species'])) {
+            $spot->species()->sync($validated['species']);
+        } else {
+            $spot->species()->detach();
+        }
+
+        return redirect()->route('map');
+    }
 }
