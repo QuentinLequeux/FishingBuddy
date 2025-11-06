@@ -59,4 +59,15 @@ class MapController extends Controller
 
         return redirect()->route('map');
     }
+
+    public function restore($id)
+    {
+        $spot = Spot::withTrashed()->findOrFail($id);
+
+        if ($spot->trashed()) {
+            $spot->restore();
+        }
+
+        return redirect()->route('map');
+    }
 }
