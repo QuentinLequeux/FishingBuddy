@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {
     Sidebar,
-    SidebarContent,
+    SidebarMenu,
     SidebarFooter,
     SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
+    SidebarContent,
     SidebarMenuItem,
+    SidebarMenuButton,
 } from '@/components/ui/sidebar';
 import AppLogo from './AppLogo.vue';
 import { type NavItem } from '@/types';
@@ -16,12 +16,13 @@ import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import {
-    FigmaIcon,
     Fish,
-    GithubIcon,
-    HomeIcon,
     IdCard,
     MapIcon,
+    HomeIcon,
+    Activity,
+    FigmaIcon,
+    GithubIcon,
 } from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
@@ -34,6 +35,11 @@ const mainNavItems: NavItem[] = [
         title: 'Carte',
         href: map(),
         icon: MapIcon,
+    },
+    {
+        title: 'Activité',
+        href: '#',
+        icon: Activity,
     },
     {
         title: 'Permis',
@@ -86,3 +92,5 @@ const footerNavItems: NavItem[] = [
     </Sidebar>
     <slot />
 </template>
+
+<!-- TODO : Badge 'Bientôt' pour les prochaines fonctionnalités -->
