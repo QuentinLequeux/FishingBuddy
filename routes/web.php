@@ -12,6 +12,7 @@ Route::get('dashboard', function () {
     return Inertia::render('Dashboard', ['user' => $user]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
 require __DIR__.'/map.php';
+require __DIR__.'/feed.php';
+require __DIR__.'/auth.php';
+require __DIR__.'/settings.php';
