@@ -38,7 +38,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Activité',
-        href: '#',
+        href: '/feed',
         icon: Activity,
     },
     {
