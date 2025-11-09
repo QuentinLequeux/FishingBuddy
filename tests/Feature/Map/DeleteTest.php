@@ -13,5 +13,5 @@ test('user can delete a spot', function () {
 
     $response->assertRedirect(route('map'));
 
-    $this->assertDatabaseMissing('spots', ['id' => $spot->id]);
+    $this->assertSoftDeleted('spots', ['id' => $spot->id]);
 });
