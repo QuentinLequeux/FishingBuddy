@@ -22,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'followed_id',
     ];
 
     /**
@@ -50,5 +51,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function spots()
     {
         return $this->hasMany(Spot::class);
+    }
+
+    public function following()
+    {
+        return $this->hasMany(Follow::class, 'follower_id');
     }
 }
