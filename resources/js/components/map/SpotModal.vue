@@ -14,7 +14,7 @@ import { Separator } from '@/components/ui/separator';
 import UpdateForm from '@/components/map/UpdateForm.vue';
 import PopoverSpot from '@/components/map/PopoverSpot.vue';
 
-defineProps<{
+const props = defineProps<{
     modelValue: boolean;
     spot: ISpot | null;
 }>();
@@ -28,6 +28,13 @@ const close = () => {
 };
 
 const showForm = ref(false);
+
+const onSpotSaved = (updatedSpot: ISpot) => {
+    if (props.spot) {
+        Object.assign(props.spot, updatedSpot);
+    }
+    showForm.value = false;
+}
 </script>
 <template>
     <transition name="fade">
@@ -233,7 +240,7 @@ const showForm = ref(false);
         :lng="Number(spot?.longitude ?? 0)"
         :species="spot?.species ?? []"
         @update:visible="showForm = $event"
-        @saved="showForm = false"
+        @saved="onSpotSaved"
     />
 </template>
 <style scoped>
@@ -249,5 +256,7 @@ const showForm = ref(false);
 </style>
 
 <!-- TODO : Météo ? -->
+<!-- TODO : Photo ? -->
 <!-- TODO : Responsive -->
+<!-- TODO : Hover espèces : Taille minimale de prise, saison -->
 <!-- TODO : Localisation en dessous du lieu ? (ex : Seraing, BE) -->
