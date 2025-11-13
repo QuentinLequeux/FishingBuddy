@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Spot;
 use App\Models\User;
 use App\Models\Specie;
+use App\Models\Activities;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,20 +17,34 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([SpecieSeeder::class]);
 
-        $user = User::factory()->create([
-            'name' => 'Quentin',
-            'email' => 'quent789@gmail.com',
-        ]);
+        $this->call([LuresSeeder::class]);
 
-        $specie = Specie::all();
+        $users = [
+            [
+                'name' => 'Quentin',
+                'email' => 'quent789@gmail.com',
+            ],
+            [
+                'name' => 'Nicolas',
+                'email' => 'quentin.lequeux@student.hepl.be',
+            ],
+        ];
 
-        $spots = Spot::factory(1)->create([
-            'user_id' => $user->id,
-        ]);
+        foreach ($users as $userData) {
+            $user = User::factory()->create($userData);
 
-        foreach ($spots as $spot) {
-            $randomSpecie = $specie->random(rand(1, 3))->pluck('id');
-            $spot->species()->attach($randomSpecie);
+            $spots = Spot::factory(1)->create([
+                'user_id' => $user->id,
+            ]);
+
+            $specie = Specie::all();
+
+            foreach ($spots as $spot) {
+                $randomSpecie = $specie->random(rand(1, 3))->pluck('id');
+                $spot->species()->attach($randomSpecie);
+            }
         }
+
+        Activities::factory()->count(3)->create();
     }
 }
