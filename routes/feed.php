@@ -1,11 +1,11 @@
 <?php
 
-use Inertia\Inertia;
+use App\Http\Controllers\Activities\ActivitiesController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/feed', function () {
-        Return Inertia::render('feed/Feed');
-    })->name('feed');
+    Route::get('/feed', [ActivitiesController::class, 'index'])->name('feed');
+
+    Route::post('/feed/{user}/follow', [ActivitiesController::class, 'follow'])->name('feed.follow');
 });
 
 // TODO : Route accessible guest ?
