@@ -28,11 +28,11 @@ const open = () => {
     <transition name="fade">
         <div
             v-if="modelValue"
-            class="absolute bottom-4 left-1/2 z-10 flex w-[300px] -translate-x-1/2 flex-col gap-6 rounded-lg bg-white p-4 shadow-xl"
+            class="absolute bottom-4 left-1/2 z-10 flex w-[300px] -translate-x-1/2 flex-col gap-6 rounded-lg bg-white dark:bg-[#262626] p-4 shadow-xl"
         >
             <X
                 :size="18"
-                class="absolute top-0 right-0 m-1 hover:cursor-pointer dark:text-black"
+                class="absolute top-0 right-0 m-1 hover:cursor-pointer"
                 @click="close"
             />
             <a
@@ -43,7 +43,7 @@ const open = () => {
             >
                 <Car color="#fff" />
             </a>
-            <p class="mt-2 text-center text-sm dark:text-black">
+            <p class="mt-2 text-center text-sm">
                 {{ lat }}, {{ lng }}
             </p>
             <Button
