@@ -2,6 +2,7 @@
 import 'vue-sonner/style.css';
 import { Toaster } from 'vue-sonner';
 import { ISpot } from '@/types/ISpot';
+import { map as carte } from '@/routes';
 import { BreadcrumbItem } from '@/types';
 import { ISpecie } from '@/types/ISpecie';
 import '@maptiler/sdk/dist/maptiler-sdk.css';
@@ -17,7 +18,7 @@ import { markRaw, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Carte',
-        href: '/map',
+        href: carte().url,
     },
 ];
 
