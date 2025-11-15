@@ -52,7 +52,7 @@ const onSuccess = () => {
 <template>
     <AlertDialog>
         <AlertDialogTrigger as-child>
-            <Button type="button" title="Supprimer" variant="ghost">
+            <Button type="button" title="Supprimer" variant="ghost" class="text-red-500 hover:text-red-500">
                 <Trash2 :size="20" />
                 Supprimer
             </Button>
@@ -72,7 +72,7 @@ const onSuccess = () => {
                         <Button
                             type="submit"
                             title="Supprimer"
-                            class="bg-red-500 hover:bg-red-500/90"
+                            class="bg-red-500 hover:bg-red-500/90 w-full"
                         >
                             Supprimer
                         </Button>
