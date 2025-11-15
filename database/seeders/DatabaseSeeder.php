@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Spot;
 use App\Models\User;
 use App\Models\Specie;
-use App\Models\Activities;
+use App\Models\Activity;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -45,6 +45,6 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        Activities::factory()->count(3)->create();
+        Activity::factory()->count(3)->create();
     }
 }
