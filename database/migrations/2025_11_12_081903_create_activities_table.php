@@ -18,8 +18,10 @@ return new class extends Migration
             $table->integer('size');
             $table->decimal('weight');
             $table->string('lure');
+            //$table->string('image');
             //$table->string('visibility');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -32,4 +34,4 @@ return new class extends Migration
     }
 };
 
-// TODO : Visibility ?, Lieu ?, Views ?
+// TODO : Visibility ?, Lieu ?, Views ?, Photo ?
