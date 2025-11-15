@@ -5,6 +5,7 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover';
 import { ISpot } from '@/types/ISpot';
+import { PopoverArrow } from 'reka-ui';
 import { Button } from '@/components/ui/button';
 import { EllipsisVertical, SquarePen } from 'lucide-vue-next';
 import AlertDialogSpot from '@/components/map/AlertDialogSpot.vue';
@@ -36,6 +37,7 @@ defineEmits<{
                 Modifier
             </Button>
             <AlertDialogSpot :spot="spot" />
+            <PopoverArrow class="fill-white stroke-gray-300 dark:stroke-gray-700 dark:fill-gray-950" />
         </PopoverContent>
     </Popover>
 </template>
