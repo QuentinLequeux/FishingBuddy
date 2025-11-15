@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import {
+    Fish,
+    IdCard,
+    MapIcon,
+    HomeIcon,
+    Activity,
+    FigmaIcon,
+    GithubIcon,
+} from 'lucide-vue-next';
+import {
     Sidebar,
     SidebarMenu,
     SidebarFooter,
@@ -15,15 +24,6 @@ import { dashboard, map } from '@/routes';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import NavFooter from '@/components/NavFooter.vue';
-import {
-    Fish,
-    IdCard,
-    MapIcon,
-    HomeIcon,
-    Activity,
-    FigmaIcon,
-    GithubIcon,
-} from 'lucide-vue-next';
 
 const mainNavItems: NavItem[] = [
     {
@@ -43,13 +43,15 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Permis',
-        href: '#',
+        href: '',
         icon: IdCard,
+        soon: true,
     },
     {
         title: 'Espèces',
-        href: '#',
+        href: '',
         icon: Fish,
+        soon: true,
     },
 ];
 
@@ -92,5 +94,3 @@ const footerNavItems: NavItem[] = [
     </Sidebar>
     <slot />
 </template>
-
-<!-- TODO : Badge 'Bientôt' pour les prochaines fonctionnalités -->

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import {
-    SidebarGroup,
     SidebarMenu,
-    SidebarMenuButton,
+    SidebarGroup,
     SidebarMenuItem,
+    SidebarMenuButton,
 } from '@/components/ui/sidebar';
-import { urlIsActive } from '@/lib/utils';
 import { type NavItem } from '@/types';
+import { urlIsActive } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 import { Link, usePage } from '@inertiajs/vue3';
 
 defineProps<{
@@ -22,12 +23,14 @@ const page = usePage();
             <SidebarMenuItem v-for="item in items" :key="item.title">
                 <SidebarMenuButton
                     as-child
-                    :is-active="urlIsActive(item.href, page.url)"
+                    :is-active="!item.soon && urlIsActive(item.href, page.url)"
                     :tooltip="item.title"
+                    :class="item.soon ? 'pointer-events-none' : ''"
                 >
                     <Link :href="item.href">
                         <component :is="item.icon" />
-                        <span>{{ item.title }}</span>
+                        <span :class="item.soon ? 'opacity-50' : ''">{{ item.title }}</span>
+                        <Badge v-if="item.soon" class="bg-main">Bientôt</Badge>
                     </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>
