@@ -98,7 +98,7 @@ return [
     'max' => [
         'array' => 'The :attribute field must not have more than :max items.',
         'file' => 'The :attribute field must not be greater than :max kilobytes.',
-        'numeric' => 'The :attribute field must not be greater than :max.',
+        'numeric' => 'Le champ :attribute ne doit pas être supérieur à :max.',
         'string' => 'Le champ :attribute ne doit pas être supérieur à :max caractères.',
     ],
     'max_digits' => 'The :attribute field must not have more than :max digits.',
