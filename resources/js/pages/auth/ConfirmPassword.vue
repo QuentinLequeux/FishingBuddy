@@ -11,10 +11,10 @@ import { LoaderCircle } from 'lucide-vue-next';
 
 <template>
     <AuthLayout
-        title="Confirm your password"
-        description="This is a secure area of the application. Please confirm your password before continuing."
+        title="Confirmer votre mot de passe"
+        description="C'est une zone sécurisée de l'application. Veuillez confirmer votre mot de passe avant de continuer."
     >
-        <Head title="Confirm password" />
+        <Head title="Confirmer le mot de passe" />
 
         <Form
             v-bind="store.form()"
@@ -23,7 +23,7 @@ import { LoaderCircle } from 'lucide-vue-next';
         >
             <div class="space-y-6">
                 <div class="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Mot de passe</Label>
                     <Input
                         id="password"
                         type="password"
@@ -33,21 +33,20 @@ import { LoaderCircle } from 'lucide-vue-next';
                         autocomplete="current-password"
                         autofocus
                     />
-
                     <InputError :message="errors.password" />
                 </div>
-
                 <div class="flex items-center">
                     <Button
-                        class="w-full"
+                        class="w-full bg-main text-white hover:bg-main/90"
                         :disabled="processing"
                         data-test="confirm-password-button"
+                        title="Confirmer"
                     >
                         <LoaderCircle
                             v-if="processing"
                             class="h-4 w-4 animate-spin"
                         />
-                        Confirm Password
+                        Confirmer
                     </Button>
                 </div>
             </div>
