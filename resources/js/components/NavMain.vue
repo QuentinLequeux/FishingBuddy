@@ -30,7 +30,7 @@ const page = usePage();
                     <Link :href="item.href">
                         <component :is="item.icon" />
                         <span :class="item.soon ? 'opacity-50' : ''">{{ item.title }}</span>
-                        <Badge v-if="item.soon" class="bg-main">Bientôt</Badge>
+                        <Badge v-if="item.soon" class="bg-main text-white">Bientôt</Badge>
                     </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>
