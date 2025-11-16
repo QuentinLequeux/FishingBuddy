@@ -98,6 +98,8 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                         <Button
                             :disabled="processing"
                             data-test="update-password-button"
+                            class="bg-main hover:bg-main/90 text-white"
+                            title="Sauvegarder le mot de passe"
                             >Sauvegarder le mot de passe</Button
                         >
 
