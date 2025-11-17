@@ -13,26 +13,22 @@ import {
 import { toast } from 'vue-sonner';
 import { computed, ref } from 'vue';
 import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from '@/components/ui/hover-card';
-import {
     TagsInput,
     TagsInputItem,
     TagsInputInput,
     TagsInputItemText,
     TagsInputItemDelete,
 } from '@/components/ui/tags-input';
+import { X } from 'lucide-vue-next';
+import { useFilter } from 'reka-ui';
 import { ISpot } from '@/types/ISpot';
-import { X, Info } from 'lucide-vue-next';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, useForm } from '@inertiajs/vue3';
-import { HoverCardArrow, useFilter } from 'reka-ui';
 import InputError from '@/components/InputError.vue';
 import { Separator } from '@/components/ui/separator';
+import HoverCardForm from '@/components/map/HoverCardForm.vue';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const props = defineProps<{
@@ -91,6 +87,7 @@ watch(
             form.environement = props.spot.environement ?? '';
             form.rules = props.spot.rules ?? '';
             form.is_public = props.spot?.is_public ? '1' : '0';
+            form.equipments = props.spot.equipments ?? [];
         }
     },
 );
@@ -100,16 +97,10 @@ const submit = () => {
     if (props.spot) {
         form.post(route('map.update', props.spot.id), {
             onSuccess: () => {
+                const updatedSpot = form.data();
                 emit('update:visible', false);
-                emit('saved');
-                toast.success('Spot mis à jour', {
-                    action: {
-                        label: 'Annuler',
-                        onClick: () => {
-                            console.log('Annulé');
-                        },
-                    },
-                });
+                emit('saved', updatedSpot);
+                toast.success('Spot mis à jour');
             },
         });
     }
@@ -127,11 +118,11 @@ const submit = () => {
     <transition name="overlay">
         <div
             v-if="props.visible"
-            class="absolute top-5 left-1/2 z-20 flex max-h-full min-w-[400px] -translate-x-1/2 transform flex-col gap-4 self-center overflow-y-auto rounded-xl bg-white p-4 shadow-lg"
+            class="absolute top-4 left-1/2 z-20 flex max-h-[96%] max-w-[500px] min-w-[400px] -translate-x-1/2 transform flex-col gap-4 self-center overflow-y-auto rounded-xl bg-white p-4 shadow-lg"
         >
             <X
                 :size="24"
-                class="absolute top-0 right-0 m-2 hover:cursor-pointer hover:text-main text-black"
+                class="absolute top-2 right-0 m-2 text-black hover:cursor-pointer hover:text-main"
                 @click="close"
             />
             <h2
@@ -164,23 +155,15 @@ const submit = () => {
                     v-model="form.latitude"
                 />
                 <div class="flex flex-col gap-2">
-                    <Label class="text-black" for="name">
-                        Nom
-                        <HoverCard>
-                            <HoverCardTrigger>
-                                <Info :size="12" />
-                            </HoverCardTrigger>
-                            <HoverCardContent>
-                                <div class="text-xs">
-                                    Maximum 100 caract&egrave;res.
-                                </div>
-                                <HoverCardArrow
-                                    class="fill-white stroke-gray-300"
-                                />
-                            </HoverCardContent>
-                        </HoverCard>
-                        <span class="text-[#fc5a5a]">*</span>
-                    </Label>
+                    <div class="flex items-center gap-2">
+                        <Label class="text-black" for="name">
+                            Nom
+                            <span class="text-[#fc5a5a]">*</span>
+                        </Label>
+                        <HoverCardForm>
+                            Maximum 100 caract&egrave;res.
+                        </HoverCardForm>
+                    </div>
                     <Input
                         required
                         placeholder="Example"
@@ -192,22 +175,12 @@ const submit = () => {
                     <InputError :message="form.errors.name" />
                 </div>
                 <div class="flex flex-col gap-2">
-                    <Label class="text-black" for="license">
-                        Permis
-                            <HoverCard>
-                                <HoverCardTrigger>
-                                    <Info :size="12" />
-                                </HoverCardTrigger>
-                                <HoverCardContent>
-                                    <div class="text-xs">
-                                        Maximum 100 caract&egrave;res.
-                                    </div>
-                                    <HoverCardArrow
-                                        class="fill-white stroke-gray-300"
-                                    />
-                                </HoverCardContent>
-                            </HoverCard>
-                    </Label>
+                    <div class="flex items-center gap-2">
+                        <Label class="text-black" for="license"> Permis </Label>
+                        <HoverCardForm>
+                            Maximum 100 caract&egrave;res.
+                        </HoverCardForm>
+                    </div>
                     <Input
                         placeholder="Les amis de la Mehaigne"
                         id="license"
@@ -218,22 +191,12 @@ const submit = () => {
                     <InputError :message="form.errors.license" />
                 </div>
                 <div class="flex flex-col gap-2">
-                    <Label class="text-black" for="url">
-                        URL
-                        <HoverCard>
-                            <HoverCardTrigger>
-                                <Info :size="12" />
-                            </HoverCardTrigger>
-                            <HoverCardContent>
-                                <div class="text-xs">
-                                    Format : https://example.com
-                                </div>
-                                <HoverCardArrow
-                                    class="fill-white stroke-gray-300"
-                                />
-                            </HoverCardContent>
-                        </HoverCard>
-                    </Label>
+                    <div class="flex items-center gap-2">
+                        <Label class="text-black" for="url"> URL </Label>
+                        <HoverCardForm>
+                            Format : https://example.com
+                        </HoverCardForm>
+                    </div>
                     <Input
                         placeholder="https://www.example.com"
                         id="url"
@@ -310,7 +273,9 @@ const submit = () => {
                     </Combobox>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <Label class="text-black" for="environement">Environement</Label>
+                    <Label class="text-black" for="environement"
+                        >Environement</Label
+                    >
                     <TagsInput v-model="form.environement">
                         <TagsInputItem
                             v-for="item in form.environement"
@@ -324,7 +289,9 @@ const submit = () => {
                     </TagsInput>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <Label class="text-black" for="rules">R&egrave;glementations</Label>
+                    <Label class="text-black" for="rules"
+                        >R&egrave;glementations</Label
+                    >
                     <TagsInput v-model="form.rules">
                         <TagsInputItem
                             v-for="item in form.rules"
@@ -338,20 +305,32 @@ const submit = () => {
                     </TagsInput>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <div class="text-sm font-medium text-black">Acc&egrave;s</div>
+                    <div class="text-sm font-medium text-black">
+                        Acc&egrave;s
+                    </div>
                     <RadioGroup
                         class="flex items-center gap-2"
                         name="is_public"
                         v-model="form.is_public"
                     >
-                        <RadioGroupItem class="border-black text-black" value="1" id="1" />
+                        <RadioGroupItem
+                            class="border-black text-black"
+                            value="1"
+                            id="1"
+                        />
                         <Label class="text-black" for="1">Public</Label>
-                        <RadioGroupItem class="border-black text-black" value="0" id="0" />
+                        <RadioGroupItem
+                            class="border-black text-black"
+                            value="0"
+                            id="0"
+                        />
                         <Label class="text-black" for="0">Priv&eacute;</Label>
                     </RadioGroup>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <div class="text-sm font-medium text-black mt-2">Equipements</div>
+                    <div class="mt-2 text-sm font-medium text-black">
+                        Equipements
+                    </div>
                     <div class="flex items-center gap-2">
                         <input
                             type="checkbox"
@@ -382,7 +361,7 @@ const submit = () => {
                     </Button>
                     <Button
                         type="submit"
-                        class="bg-main hover:bg-main/90 text-white"
+                        class="bg-main text-white hover:bg-main/90"
                         :disabled="processing"
                         title="Modifier"
                     >
@@ -424,13 +403,12 @@ const submit = () => {
 </style>
 
 <!-- TODO : toast -->
-<!-- TODO : darkmode -->
-<!-- TODO : Component -->
+<!-- TODO : dark mode -->
 <!-- TODO : Responsive -->
 <!-- TODO : route(patch, put)? -->
-<!-- TODO : Remplir form données -->
-<!-- TODO : Annuler modification -->
+<!-- TODO : Component : Radio,... -->
 <!-- TODO : Style recherche TagsInput -->
 <!-- TODO : name, pas id dans combobox -->
 <!-- TODO : Reload page after submission -->
+<!-- TODO : Règles de validation (HoverCard) -->
 <!-- TODO : Afficher toutes les espèces dans combobox -->
