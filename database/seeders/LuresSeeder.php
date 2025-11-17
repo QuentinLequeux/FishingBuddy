@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Lures;
+use App\Models\Lure;
 use Illuminate\Database\Seeder;
 
 class LuresSeeder extends Seeder
@@ -13,14 +13,24 @@ class LuresSeeder extends Seeder
     public function run(): void
     {
         $lures = [
+            'Asticot',
+            'Crankbait',
             'Cuillère',
+            'Drop shot',
+            'Jerkbait',
+            'Maïs',
             'Mouche',
+            'Pain',
+            'Shad',
+            'Spinnerbait',
+            'Swimbait',
             'Twist',
+            'Vers',
             'Vif',
         ];
 
         foreach ($lures as $lure) {
-            Lures::create(['name' => $lure]);
+            Lure::create(['name' => $lure]);
         }
     }
 }
