@@ -14,10 +14,10 @@ class Activity extends Model
 
     protected $fillable = [
         'user_id',
-        'specie',
+        'specie_id',
         'size',
         'weight',
-        'lure',
+        'lure_id',
     ];
 
     public function user()
@@ -28,5 +28,15 @@ class Activity extends Model
     public function likes()
     {
         return $this->hasMany(Like::class, 'activity_id');
+    }
+
+    public function specie()
+    {
+        return $this->belongsTo(Specie::class);
+    }
+
+    public function lure()
+    {
+        return $this->belongsTo(Lure::class);
     }
 }
