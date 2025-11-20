@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('specie');
+            $table->foreignId('specie_id')->constrained('species');
             $table->integer('size');
             $table->decimal('weight');
-            $table->string('lure');
+            $table->foreignId('lure_id')->constrained('lures');
             //$table->string('image');
             //$table->string('visibility');
             $table->timestamps();
