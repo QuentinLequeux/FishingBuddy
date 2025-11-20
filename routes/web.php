@@ -15,4 +15,5 @@ Route::get('dashboard', function () {
 require __DIR__.'/map.php';
 require __DIR__.'/feed.php';
 require __DIR__.'/auth.php';
+require __DIR__.'/profile.php';
 require __DIR__.'/settings.php';
