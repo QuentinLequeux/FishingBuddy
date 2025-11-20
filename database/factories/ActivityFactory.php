@@ -18,10 +18,10 @@ class ActivityFactory extends Factory
     {
         return [
             'user_id' => $this->faker->numberBetween(1, 2),
-            'specie' => $this->faker->randomElement(['Brochet', 'Truite', 'Ombre']),
+            'specie_id' => $this->faker->numberBetween(1, 20),
             'size' => $this->faker->numberBetween(1, 100),
             'weight' => $this->faker->randomFloat(1, 0.5, 15),
-            'lure' => $this->faker->randomElement(['Cuillère', 'Vif', 'Twist']),
+            'lure_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }
