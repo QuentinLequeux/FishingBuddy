@@ -1,13 +1,17 @@
 import { User } from '@/types/index';
+import { ILure } from '@/types/ILure';
+import { ISpecie } from '@/types/ISpecie';
 
 export interface IActivities {
     id: number;
     user_id: number;
-    specie: string;
+    specie: ISpecie;
     size: number;
     weight: number;
-    lure: string;
+    lure: ILure;
     created_at: string;
     user: User;
     isFollowing: boolean;
+    hasLiked: boolean;
+    likesCount: number;
 }
