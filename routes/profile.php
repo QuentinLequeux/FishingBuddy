@@ -8,5 +8,8 @@ Route::get('/profile/{user:name?}', function (User $user) {
         'user' => $user,
         'posts' => $user->activities()->count(),
         'follows' => $user->followers()->count(),
+        'isFollowing' => $user->following()->where('followed_id', $user->id)->exists(),
     ]);
 })->name('profile');
+
+// TODO : slug
