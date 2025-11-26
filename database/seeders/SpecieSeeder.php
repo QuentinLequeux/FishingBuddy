@@ -45,3 +45,5 @@ class SpecieSeeder extends Seeder
         }
     }
 }
+
+// TODO : Ajouter saison et taille de prise minimum.
