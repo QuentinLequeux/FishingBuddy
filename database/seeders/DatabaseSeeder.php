@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Spot;
 use App\Models\User;
 use App\Models\Specie;
+use App\Models\Comment;
 use App\Models\Activity;
 use Illuminate\Database\Seeder;
 
@@ -28,6 +29,10 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Nicolas',
                 'email' => 'quentin.lequeux@student.hepl.be',
             ],
+            [
+                'name' => 'Benjamin',
+                'email' => 'quent690@yahoo.fr',
+            ],
         ];
 
         foreach ($users as $userData) {
@@ -46,5 +51,7 @@ class DatabaseSeeder extends Seeder
         }
 
         Activity::factory()->count(3)->create();
+
+        Comment::factory()->count(5)->create();
     }
 }
