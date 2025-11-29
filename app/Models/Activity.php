@@ -39,4 +39,9 @@ class Activity extends Model
     {
         return $this->belongsTo(Lure::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->with('user');
+    }
 }
