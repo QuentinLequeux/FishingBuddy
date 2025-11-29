@@ -18,27 +18,15 @@
 
         <!-- SEO -->
 
-        @verbatim
-        <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                "name": "FishingBuddy",
-                "foundingDate": "2025",
-                "description": "FishingBuddy - Un compagnon pour la pêche !",
-                "sameAs": [
-                    "https://github.com/QuentinLequeux",
-                    "https://www.linkedin.com/in/quentin-lequeux-8a11a3192/"
-                ],
-                "alumni": [
-                    {
-                        "@type": "Person",
-                        "name": "Quentin Lequeux"
-                    }
-                ]
-            }
-        </script>
-        @endverbatim
+        @include('includes.jsonld-app')
+
+        @if(request()->routeIs('profile'))
+            @include('includes.jsonld-profile')
+        @endif
+
+        @if(request()->routeIs('feed'))
+            @include('includes.jsonld-feed')
+        @endif
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
@@ -84,5 +72,3 @@
         @inertia
     </body>
 </html>
-
-<!-- TODO : Fichier json à part ? -->
