@@ -28,8 +28,10 @@ class MapController extends Controller
             'species' => 'nullable|array',
             'species.*' => 'exists:species,id',
             'environement' => 'nullable|array',
+            'environement.*' => 'string',
             'equipments' => 'nullable|array',
             'rules' => 'nullable|array',
+            'rules.*' => 'string',
             'is_public' => 'required|boolean',
         ]);
 
@@ -71,7 +73,7 @@ class MapController extends Controller
         return redirect()->route('map');
     }
 
-        public function update(Request $request, Spot $spot)
+    public function update(Request $request, Spot $spot)
     {
         $validated = $request->validate([
             'latitude' => 'required|numeric',
@@ -82,8 +84,10 @@ class MapController extends Controller
             'species' => 'nullable|array',
             'species.*' => 'exists:species,id',
             'environement' => 'nullable|array',
+            'environement.*' => 'string',
             'equipments' => 'nullable|array',
             'rules' => 'nullable|array',
+            'rules.*' => 'string',
             'is_public' => 'required|boolean',
         ]);
 
