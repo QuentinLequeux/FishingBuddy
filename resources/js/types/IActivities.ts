@@ -1,6 +1,7 @@
 import { User } from '@/types/index';
 import { ILure } from '@/types/ILure';
 import { ISpecie } from '@/types/ISpecie';
+import { IComment } from '@/types/IComment';
 
 export interface IActivities {
     id: number;
@@ -14,4 +15,6 @@ export interface IActivities {
     isFollowing: boolean;
     hasLiked: boolean;
     likesCount: number;
+    commentsCount: number;
+    comment: IComment;
 }
