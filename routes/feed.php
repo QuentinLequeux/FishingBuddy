@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Activities\CommentController;
 use App\Http\Controllers\Activities\ActivitiesController;
 
 Route::get('/feed', [ActivitiesController::class, 'index'])->name('feed');
@@ -13,4 +14,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/feed/{activity}', [ActivitiesController::class, 'destroy'])->name('feed.destroy');
 
     Route::post('/feed/{user}/follow', [ActivitiesController::class, 'follow'])->name('feed.follow');
+
+    Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+
+    Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
 });
