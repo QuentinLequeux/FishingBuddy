@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([SpecieSeeder::class]);
 
-        $this->call([LuresSeeder::class]);
+        $this->call([LureSeeder::class]);
 
         $users = [
             [

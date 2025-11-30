@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Lure;
 use Illuminate\Database\Seeder;
 
-class LuresSeeder extends Seeder
+class LureSeeder extends Seeder
 {
     /**
      * Run the database seeds.

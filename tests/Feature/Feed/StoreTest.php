@@ -3,14 +3,14 @@
 use App\Models\User;
 use App\Models\Lure;
 use App\Models\Specie;
-use Database\Seeders\LuresSeeder;
+use Database\Seeders\LureSeeder;
 use Database\Seeders\SpecieSeeder;
 
 test('user can create a post', function () {
     $user = User::factory()->create();
     $this->seed(SpecieSeeder::class);
     $specie = Specie::first();
-    $this->seed(LuresSeeder::class);
+    $this->seed(LureSeeder::class);
     $lure = Lure::first();
 
     $payload = [
