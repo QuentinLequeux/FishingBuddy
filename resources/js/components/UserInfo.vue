@@ -23,7 +23,7 @@ const showAvatar = computed(
 </script>
 
 <template>
-    <a :href="route('profile', user?.name)" class="flex items-center gap-2" title="Vers mon profil">
+    <a :href="route('profile', user?.slug)" class="flex items-center gap-2" title="Vers mon profil">
         <Avatar class="h-8 w-8 overflow-hidden rounded-lg">
             <AvatarImage
                 v-if="showAvatar"
