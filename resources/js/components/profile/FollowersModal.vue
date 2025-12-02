@@ -76,7 +76,10 @@ const props = defineProps({
                         Aucun followers
                     </div>
                 </TabsContent>
-                <TabsContent value="following">
+                <TabsContent
+                    value="following"
+                    class="max-h-128 overflow-y-auto"
+                >
                     <UserCard
                         :users="following_list"
                         v-if="following_list.length > 0"
