@@ -178,4 +178,8 @@
     --color-main: #1D4999;
 }
 
-/* TODO : CSS Classes */
+.main-button {
+    @apply bg-main text-white hover:bg-main/90;
+}
+
+/* TODO : CSS classes */
