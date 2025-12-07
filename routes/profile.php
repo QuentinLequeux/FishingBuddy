@@ -4,7 +4,7 @@ use Inertia\Inertia;
 use App\Models\User;
 
 Route::get('/profile', function () {
-    return redirect('/');
+    return redirect('/feed');
 });
 
 Route::get('/profile/{user:slug}', function (User $user) {
