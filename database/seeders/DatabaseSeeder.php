@@ -34,6 +34,14 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Benjamin',
                 'email' => 'quent690@yahoo.fr',
             ],
+            [
+                'name' => 'Dominique',
+                'email' => 'dominique.vilain@hepl.be',
+            ],
+            [
+                'name' => 'Dylan',
+                'email' => 'dylan.jacquet@hepl.be',
+            ],
         ];
 
         foreach ($users as $userData) {
