@@ -36,6 +36,7 @@ export interface User {
     slug: string;
     created_at: string;
     updated_at: string;
+    isFollowing: boolean;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
