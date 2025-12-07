@@ -5,6 +5,8 @@ use App\Http\Controllers\Activities\ActivitiesController;
 
 Route::get('/feed', [ActivitiesController::class, 'index'])->name('feed');
 
+Route::get('/feed/search', [ActivitiesController::class, 'search'])->name('feed.search');
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/feed', [ActivitiesController::class, 'store'])->name('feed.store');
