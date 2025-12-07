@@ -16,6 +16,9 @@
     --font-poppins:
         'Poppins', 'sans-serif';
 
+    --font-montserrat:
+        'Montserrat', 'sans-serif';
+
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
@@ -85,6 +88,7 @@
 @layer utilities {
     body,
     html {
+        scroll-behavior: smooth;
         --font-sans:
             'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
             'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
@@ -182,4 +186,20 @@
     @apply bg-main text-white hover:bg-main/90;
 }
 
-/* TODO : CSS classes */
+.banner {
+    background-image: url('/resources/js/assets/img/banner.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.hero {
+    background-image: url('/resources/js/assets/img/macbook.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.shadow-card {
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
+}
