@@ -25,13 +25,15 @@ const page = usePage();
                     as-child
                     :is-active="!item.soon && urlIsActive(item.href, page.url)"
                     :tooltip="item.title"
-                    :class="item.soon ? 'pointer-events-none' : ''"
+                    :class="item.soon ? 'cursor-not-allowed' : ''"
                 >
-                    <Link :href="item.href">
+                    <component
+                        :is="item.soon ? 'div' : Link"
+                        v-bind="item.soon ? {} : { href: item.href }">
                         <component :is="item.icon" />
                         <span :class="item.soon ? 'opacity-50' : ''">{{ item.title }}</span>
                         <Badge v-if="item.soon" class="bg-main text-white">Bientôt</Badge>
-                    </Link>
+                    </component>
                 </SidebarMenuButton>
             </SidebarMenuItem>
         </SidebarMenu>
