@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->index('name');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
