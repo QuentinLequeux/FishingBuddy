@@ -1,26 +1,33 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'
 import { useVModel } from '@vueuse/core'
+import  { HTMLAttributes, ref } from 'vue'
 
 const props = defineProps<{
   defaultValue?: string | number
   modelValue?: string | number
   class?: HTMLAttributes['class']
-}>()
+}>();
+
+const inputEl = ref<HTMLInputElement | null>(null);
+
+defineExpose({
+    focus: () => inputEl.value?.focus()
+});
 
 const emits = defineEmits<{
   (e: 'update:modelValue', payload: string | number): void
-}>()
+}>();
 
 const modelValue = useVModel(props, 'modelValue', emits, {
   passive: true,
   defaultValue: props.defaultValue,
-})
+});
 </script>
 
 <template>
   <input
+      ref="inputEl"
     v-model="modelValue"
     data-slot="input"
     :class="cn(
