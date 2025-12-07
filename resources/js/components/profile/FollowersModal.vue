@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { User } from '@/types';
 import {
     Dialog,
@@ -7,14 +6,18 @@ import {
     DialogHeader,
     DialogContent,
 } from '@/components/ui/dialog';
+import { ref, watch } from 'vue';
 import { Ban } from 'lucide-vue-next';
 import UserCard from '@/components/profile/UserCard.vue';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const emit = defineEmits(['update:open']);
-const activeTab = ref('followers');
 const props = defineProps({
     open: Boolean,
+    activeTab: {
+        type: String,
+        default: 'followers',
+    },
     followers: {
         type: Array,
         default: () => [],
@@ -32,6 +35,14 @@ const props = defineProps({
         default: () => [],
     },
 });
+const activeTab = ref(props.activeTab);
+
+watch(
+    () => props.activeTab,
+    (val) => {
+        activeTab.value = val;
+    },
+);
 </script>
 <template>
     <Dialog :open="props.open" @update:open="emit('update:open', $event)">
