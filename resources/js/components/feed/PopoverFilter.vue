@@ -62,5 +62,3 @@ import { LucideSlidersHorizontal, X } from 'lucide-vue-next';
         </PopoverContent>
     </Popover>
 </template>
-
-<!-- TODO : Autres filtres ? -->
