@@ -14,5 +14,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/map/{spot}/restore', [MapController::class, 'restore'])->name('map.restore');
 });
-
-// TODO : put/patch ?
