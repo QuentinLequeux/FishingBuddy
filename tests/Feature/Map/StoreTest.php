@@ -53,5 +53,3 @@ test('user can create a spot', function () {
         $spot->species()->pluck('species.id')->toArray()
     );
 });
-
-// TODO : user cant create a spot ?
