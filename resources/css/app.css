@@ -203,3 +203,11 @@
 .shadow-card {
     box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
 }
+
+.feed {
+    @apply bg-[url('/resources/js/assets/img/fish.svg')]
+}
+
+.dark .feed {
+    @apply dark:bg-[url('/resources/js/assets/img/fish-dark.svg')]
+}
