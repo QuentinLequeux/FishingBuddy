@@ -7,13 +7,21 @@ import {
 import { route } from 'ziggy-js';
 import { Form } from '@inertiajs/vue3';
 import { PopoverArrow } from 'reka-ui';
+import { router } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { IActivities } from '@/types/IActivities';
 import { Ellipsis, SquarePen, Trash2Icon } from 'lucide-vue-next';
 
-defineProps<{
+const props = defineProps<{
     activity: IActivities;
 }>();
+
+const destroy = () => {
+    router.delete(route('feed.destroy', props.activity.id), {
+        preserveScroll: true,
+        preserveState: false,
+    });
+};
 </script>
 
 <template>
@@ -26,7 +34,7 @@ defineProps<{
                 <SquarePen />
                 Modifier
             </Button>
-            <Form :action="route('feed.destroy', activity.id)" method="delete">
+            <Form @submit.prevent="destroy">
                 <Button
                     variant="ghost"
                     title="Supprimer"
