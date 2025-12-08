@@ -402,10 +402,8 @@ const submit = () => {
 }
 </style>
 
-<!-- TODO : toast -->
 <!-- TODO : dark mode -->
 <!-- TODO : Responsive -->
-<!-- TODO : route(patch, put)? -->
 <!-- TODO : Component : Radio,... -->
 <!-- TODO : Style recherche TagsInput -->
 <!-- TODO : name, pas id dans combobox -->
