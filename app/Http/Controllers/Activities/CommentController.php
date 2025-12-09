@@ -23,8 +23,6 @@ class CommentController extends Controller
             'activity_id' => $validated['activity_id'],
             'content' => $validated['content'],
         ]);
-
-        return redirect()->route('feed');
     }
 
     public function destroy(Comment $comment)
@@ -32,7 +30,5 @@ class CommentController extends Controller
         $this->authorize('delete', $comment);
 
         $comment->delete();
-
-        return redirect()->route('feed');
     }
 }
