@@ -1,3 +1,5 @@
+import { User } from '@/types/index';
+
 export interface IComment {
     id: number;
     user_id: number;
@@ -5,4 +7,5 @@ export interface IComment {
     content: string;
     created_at: string;
     updated_at: string;
+    user: User;
 }
