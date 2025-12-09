@@ -16,5 +16,5 @@ export interface IActivities {
     hasLiked: boolean;
     likesCount: number;
     commentsCount: number;
-    comment: IComment;
+    comments: IComment[];
 }
