@@ -17,4 +17,5 @@ export interface IActivities {
     likesCount: number;
     commentsCount: number;
     comments: IComment[];
+    views: number;
 }
