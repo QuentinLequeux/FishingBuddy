@@ -182,7 +182,7 @@ const closePositionModal = () => {
     <Toaster
         position="top-center"
         closeButton
-        closeButtonPosition="top-left"
+        closeButtonPosition="top-right"
         richColors
     />
     <Head title="Carte" />
