@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Activity;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,7 +11,9 @@ Route::get('/', function () {
 
 Route::get('dashboard', function () {
     $user = auth()->user();
-    return Inertia::render('Dashboard', ['user' => $user]);
+    $users = User::inRandomOrder()->take(4)->get();
+    $activity = Activity::with(['user', 'specie', 'lure', 'comments.user'])->inRandomOrder()->first();
+    return Inertia::render('Dashboard', ['user' => $user, 'users' => $users, 'activity' => $activity]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/map.php';
