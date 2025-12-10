@@ -180,7 +180,7 @@ watch(
                             />
                             <span
                                 v-if="activity.likesCount > 0"
-                                class="absolute -top-2 right-0 rounded-full bg-main px-2 py-0.5 text-xs font-medium text-white"
+                                class="count"
                                 >{{ activity?.likesCount }}
                             </span>
                         </Button>
@@ -193,16 +193,19 @@ watch(
                         <MessagesSquare class="size-5" />
                         <span
                             v-if="activity.commentsCount > 0"
-                            class="absolute -top-2 right-0 rounded-full bg-main px-2 py-0.5 text-xs font-medium text-white"
+                            class="count"
                             >{{ activity?.commentsCount }}</span
                         >
                     </Button>
                     <Button
                         variant="ghost"
-                        title="...Vues"
-                        class="cursor-help"
+                        :title="activity.views + ' Vues'"
+                        class="cursor-help relative"
                     >
                         <Eye class="size-6" />
+                        <span class="count">
+                            {{ activity.views }}
+                        </span>
                     </Button>
                 </div>
                 <div v-if="activity?.comments.length" class="flex flex-col">
@@ -271,7 +274,6 @@ watch(
     </Dialog>
 </template>
 
-<!-- TODO : Vues -->
 <!-- TODO : Like live -->
 <!-- TODO : Image lieu -->
 <!-- TODO : Components -->
