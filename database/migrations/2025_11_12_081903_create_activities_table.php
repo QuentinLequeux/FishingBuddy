@@ -18,8 +18,7 @@ return new class extends Migration
             $table->integer('size');
             $table->decimal('weight');
             $table->foreignId('lure_id')->constrained('lures');
-            //$table->string('image');
-            //$table->string('visibility');
+            $table->unsignedInteger('views')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
