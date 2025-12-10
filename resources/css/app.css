@@ -211,3 +211,7 @@
 .dark .feed {
     @apply dark:bg-[url('/resources/js/assets/img/fish-dark.svg')]
 }
+
+.count {
+    @apply absolute -top-2 right-0 rounded-full bg-main px-2 py-0.5 text-xs font-medium text-white
+}
