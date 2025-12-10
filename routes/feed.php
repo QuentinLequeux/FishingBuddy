@@ -20,4 +20,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
 
     Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
+
+    Route::post('/feed/{activity}/view', [ActivitiesController::class, 'view'])->name('feed.view');
 });
