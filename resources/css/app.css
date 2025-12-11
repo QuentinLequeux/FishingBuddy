@@ -193,13 +193,6 @@
     background-size: cover;
 }
 
-.hero {
-    background-image: url('/resources/js/assets/img/macbook.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-
 .shadow-card {
     box-shadow: 0 5px 20px 0 rgba(0,0,0,0.1);
 }
