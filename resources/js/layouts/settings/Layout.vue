@@ -27,6 +27,10 @@ const sidebarNavItems: NavItem[] = [
         title: 'Apparence',
         href: editAppearance(),
     },
+    {
+        title: 'Confidentialité',
+        href: '#',
+    },
 ];
 
 const currentPath = typeof window !== undefined ? window.location.pathname : '';
