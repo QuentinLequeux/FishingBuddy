@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
     Fish,
+    Info,
     IdCard,
     MapIcon,
     HomeIcon,
@@ -20,10 +21,10 @@ import {
 import AppLogo from './AppLogo.vue';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { dashboard, map } from '@/routes';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import NavFooter from '@/components/NavFooter.vue';
+import { dashboard, feed, home, map } from '@/routes';
 
 const mainNavItems: NavItem[] = [
     {
@@ -38,7 +39,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Activité',
-        href: '/feed',
+        href: feed(),
         icon: Activity,
     },
     {
@@ -65,6 +66,11 @@ const footerNavItems: NavItem[] = [
         title: 'Figma',
         href: 'https://www.figma.com/design/MuP0p49DjDY7RhyGtgxE8f/Projet?node-id=17-2755&t=ZbejOo2sL8LBrUPi-0',
         icon: FigmaIcon,
+    },
+    {
+        title: 'A propos',
+        href: home(),
+        icon: Info,
     },
 ];
 </script>
