@@ -27,7 +27,9 @@ const destroy = () => {
 <template>
     <Popover>
         <PopoverTrigger>
-            <Ellipsis class="cursor-pointer" />
+            <div class="hover:bg-gray-100 p-1 rounded-full" title="Options">
+                <Ellipsis class="cursor-pointer" />
+            </div>
         </PopoverTrigger>
         <PopoverContent class="w-fit p-2">
             <Button variant="ghost" title="Modifier">
