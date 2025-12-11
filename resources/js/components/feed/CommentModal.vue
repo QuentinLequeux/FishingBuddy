@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
     Eye,
+    Clock,
     Heart,
     Trophy,
     Weight,
@@ -87,13 +88,16 @@ watch(
                                     {{ activity?.user.name }}
                                 </p>
                             </a>
-                            <time
-                                class="cursor-help text-xs text-gray-500"
-                                :datetime="`${activity?.created_at}`"
-                                :title="`${new Date(activity.created_at).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`"
-                            >
-                                {{ dayjs(activity?.created_at).fromNow() }}
-                            </time>
+                            <div class="flex gap-2 text-gray-500">
+                                <Clock class="size-3" />
+                                <time
+                                    class="cursor-help text-xs text-gray-500"
+                                    :datetime="`${activity?.created_at}`"
+                                    :title="`${new Date(activity.created_at).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`"
+                                >
+                                    {{ dayjs(activity?.created_at).fromNow() }}
+                                </time>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -237,7 +241,10 @@ watch(
                         <p class="text-sm">
                             {{ comment.content }}
                         </p>
-                        <Time :comment="comment" />
+                        <div class="flex gap-2 text-gray-500">
+                            <Clock class="size-3" />
+                            <Time :comment="comment" />
+                        </div>
                     </div>
                 </div>
             </div>
