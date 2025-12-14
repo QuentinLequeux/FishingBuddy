@@ -4,6 +4,7 @@ import { route } from 'ziggy-js';
 import { Ban } from 'lucide-vue-next';
 import { router } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
+import UserAvatar from '@/components/global/UserAvatar.vue';
 
 defineProps({
     users: {
@@ -24,7 +25,7 @@ const submit = (userId: number) => {
             class="mb-4 flex items-center justify-between rounded-xl border-1 border-gray-200 bg-gray-50 p-4 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
         >
             <div class="flex items-center gap-4">
-                <div class="flex h-[50px] w-[50px] rounded-full bg-gray-300" />
+                <UserAvatar :user="user" :size="40" />
                 <a
                     :href="route('profile', user.slug)"
                     :title="`Vers le profil de ${user.name}`"
