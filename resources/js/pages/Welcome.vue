@@ -4,6 +4,7 @@ import {
     Eye,
     Fish,
     Plus,
+    Gift,
     Heart,
     Share2,
     Trash2,
@@ -32,6 +33,7 @@ import { map, feed as activity, hero, hero2 } from '../assets/img';
 onMounted(() => {
     toast.info('Offre de lancement : accès gratuit !', {
         duration: 20000,
+        icon: Gift,
     });
 });
 </script>
