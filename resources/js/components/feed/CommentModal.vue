@@ -27,6 +27,7 @@ import { Textarea } from '@/components/ui/textarea';
 import InputError from '@/components/InputError.vue';
 import { Separator } from '@/components/ui/separator';
 import { Form, useForm, usePage } from '@inertiajs/vue3';
+import UserAvatar from '@/components/global/UserAvatar.vue';
 import PopoverComment from '@/components/feed/PopoverComment.vue';
 
 const emit = defineEmits(['update:open']);
@@ -76,9 +77,7 @@ watch(
             <div class="max-h-128 overflow-y-auto">
                 <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
-                        <div
-                            class="h-[40px] w-[40px] rounded-full bg-gray-300"
-                        />
+                        <UserAvatar :activity="activity" :size="40" />
                         <div class="flex flex-col gap-1">
                             <a
                                 :href="route('profile', activity?.user.slug)"
@@ -220,9 +219,7 @@ watch(
                     >
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <div
-                                    class="h-[35px] w-[35px] rounded-full bg-gray-300"
-                                />
+                                <UserAvatar :user="comment.user" :size="40" />
                                 <a
                                     :href="route('profile', comment.user.slug)"
                                     :title="`Vers le profil de ${comment.user.name}`"
