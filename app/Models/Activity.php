@@ -44,4 +44,9 @@ class Activity extends Model
     {
         return $this->hasMany(Comment::class)->with('user');
     }
+
+    public function views()
+    {
+        return $this->hasMany(ActivityView::class);
+    }
 }
