@@ -257,6 +257,5 @@ const onSpotSaved = (updatedSpot: ISpot) => {
 
 <!-- TODO : Météo ? -->
 <!-- TODO : Photo ? -->
-<!-- TODO : Responsive -->
 <!-- TODO : Hover espèces : Taille minimale de prise, saison -->
 <!-- TODO : Localisation en dessous du lieu ? (ex : Seraing, BE) -->
