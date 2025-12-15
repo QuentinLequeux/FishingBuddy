@@ -16,25 +16,23 @@ test('user can comment an activity', function () {
     $activity = Activity::factory()->create([
         'user_id' => $user->id,
         'specie_id' => $specie->id,
-        'size' => '60',
-        'weight' => '10',
-        'lure_id' => $lure->id
+        'lure_id' => $lure->id,
     ]);
 
     $payload = [
         'activity_id' => $activity->id,
-        'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quibusdam.',
+        'content' => 'Test',
     ];
 
     $this->actingAs($user);
 
     $response = $this->post(route('comment.store'), $payload);
 
-    $response->assertRedirect(route('feed'));
+    $response->assertStatus(200);
 
     $this->assertDatabaseHas('comments', [
         'user_id' => $user->id,
         'activity_id' => $activity->id,
-        'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quibusdam.',
+        'content' => 'Test',
     ]);
 });
