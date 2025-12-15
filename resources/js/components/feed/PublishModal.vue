@@ -173,4 +173,3 @@ const submit = () => {
 
 <!-- TODO : Composants ? -->
 <!-- TODO : Chargement des commentaires ? -->
-<!-- TODO : Confidentialité (Public, Suivi(e)s, Privé) -->
