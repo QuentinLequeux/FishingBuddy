@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import 'vue-sonner/style.css';
 import { route } from 'ziggy-js';
 import { dashboard } from '@/routes';
+import { Toaster } from 'vue-sonner';
 import { MapPin } from 'lucide-vue-next';
 import { onMounted, Ref, ref } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
@@ -125,6 +127,12 @@ onMounted(() => {
 </script>
 
 <template>
+    <Toaster
+        position="top-center"
+        closeButton
+        closeButtonPosition="top-right"
+        richColors
+    />
     <Head title="Accueil" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div
@@ -132,7 +140,7 @@ onMounted(() => {
         >
             <div class="flex min-w-[460px] flex-1 flex-col gap-4">
                 <div
-                    class="h-fit rounded-xl bg-white p-6 shadow-2xs max-sm:w-full dark:bg-sidebar relative"
+                    class="relative h-fit rounded-xl bg-white p-6 shadow-2xs max-sm:w-full dark:bg-sidebar"
                 >
                     <h2
                         aria-level="2"
@@ -156,7 +164,7 @@ onMounted(() => {
                         >
                     </div>
                     <Spinner class="mt-2" v-else />
-                    <div class="flex gap-2 mt-4 font-medium">
+                    <div class="mt-4 flex gap-2 font-medium">
                         <span>
                             {{ weather?.daily.temperature_2m_min[0] }}°C
                         </span>
@@ -174,7 +182,10 @@ onMounted(() => {
                     <time :datetime="isoDate" class="font-medium">
                         {{ currentDate }}
                     </time>
-                    <span class="absolute right-6 bottom-6 text-[10px] text-gray-500">open-meteo.com</span>
+                    <span
+                        class="absolute right-6 bottom-6 text-[10px] text-gray-500"
+                        >open-meteo.com</span
+                    >
                 </div>
                 <div
                     class="flex h-fit w-[460px] flex-col rounded-xl bg-white p-6 shadow-2xs max-md:w-full dark:bg-sidebar"
