@@ -18,19 +18,16 @@ test('user can delete his comment', function () {
         'user_id' => $user->id,
         'specie_id' => $specie->id,
         'lure_id' => $lure->id,
-        'size' => '60',
-        'weight' => '10',
-        ]);
-    Comment::factory()->create([
+    ]);
+    $comment = Comment::factory()->create([
         'user_id' => $user->id,
         'activity_id' => $activity->id,
-        ]);
+        'content' => 'Test',
+    ]);
 
-    $this->actingAs($user);
+    $this->actingAs($user)->delete(route('comment.destroy', $comment));
 
-    $response = $this->delete(route('comment.destroy', Comment::first()));
-
-    $response->assertRedirect(route('feed'));
+    $this->assertDatabaseMissing('comments', ['id' => $comment->id]);
 });
 
 test('other users cannot delete comments', function () {
@@ -44,8 +41,6 @@ test('other users cannot delete comments', function () {
         'user_id' => $user1->id,
         'specie_id' => $specie->id,
         'lure_id' => $lure->id,
-        'size' => '60',
-        'weight' => '10',
         ]);
     Comment::factory()->create([
         'user_id' => $user1->id,
