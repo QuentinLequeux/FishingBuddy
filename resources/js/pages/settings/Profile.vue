@@ -2,7 +2,7 @@
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
-import { Form, Head, Link, usePage } from '@inertiajs/vue3';
+import { Form, Head, Link, useForm, usePage } from '@inertiajs/vue3';
 
 import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
@@ -13,6 +13,10 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
+import { route } from 'ziggy-js';
+import { toast, Toaster } from 'vue-sonner';
+import 'vue-sonner/style.css';
+import HoverCardForm from '@/components/map/HoverCardForm.vue';
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -30,9 +34,33 @@ const breadcrumbItems: BreadcrumbItem[] = [
 
 const page = usePage();
 const user = page.props.auth.user;
+
+const avatarForm = useForm({
+    avatar: null,
+});
+
+const submit = (e: Event) => {
+    if (!avatarForm.avatar) return;
+    e.preventDefault();
+    avatarForm.post(route('profile.avatar.update'), {
+        forceFormData: true,
+        preserveScroll: true,
+        preserveState: false,
+        onSuccess: () => {
+            avatarForm.reset();
+            toast.success('Avatar mis à jour !');
+        },
+    });
+};
 </script>
 
 <template>
+    <Toaster
+        richColors
+        position="top-center"
+        closeButton
+        closeButtonPosition="top-right"
+    />
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="Paramètres profil" />
 
@@ -79,13 +107,15 @@ const user = page.props.auth.user;
 
                     <div v-if="mustVerifyEmail && !user.email_verified_at">
                         <p class="-mt-4 text-sm text-muted-foreground">
-                            Votre adresse email n'est pas v&eacute;rifi&eacute;e.
+                            Votre adresse email n'est pas
+                            v&eacute;rifi&eacute;e.
                             <Link
                                 :href="send()"
                                 as="button"
                                 class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                             >
-                                Cliquez ici pour renvoyer l'email de v&eacute;rification.
+                                Cliquez ici pour renvoyer l'email de
+                                v&eacute;rification.
                             </Link>
                         </p>
 
@@ -93,7 +123,9 @@ const user = page.props.auth.user;
                             v-if="status === 'verification-link-sent'"
                             class="mt-2 text-sm font-medium text-green-600"
                         >
-                            Un nouveau lien de v&eacute;rification a &eacute;t&eacute; envoy&eacute; &agrave; votre adresse email.
+                            Un nouveau lien de v&eacute;rification a
+                            &eacute;t&eacute; envoy&eacute; &agrave; votre
+                            adresse email.
                         </div>
                     </div>
 
@@ -101,7 +133,7 @@ const user = page.props.auth.user;
                         <Button
                             :disabled="processing"
                             data-test="update-profile-button"
-                            class="bg-main hover:bg-main/90 text-white"
+                            class="main-button"
                             title="Sauvegarder"
                             >Sauvegarder</Button
                         >
@@ -121,8 +153,52 @@ const user = page.props.auth.user;
                         </Transition>
                     </div>
                 </Form>
+                <Form
+                    class="flex flex-col gap-2"
+                    enctype="multipart/form-data"
+                    :form="avatarForm"
+                    @submit="submit"
+                >
+                    <div class="flex gap-2">
+                        <Label for="avatar"> Avatar </Label>
+                        <HoverCardForm> Taille maximum : 2MB. </HoverCardForm>
+                    </div>
+                    <p class="text-sm text-gray-500">
+                        T&eacute;l&eacute;chargez ou mettez &agrave; jour
+                        votre avatar.
+                    </p>
+                    <img
+                        v-if="user.avatar"
+                        :src="`/storage/${user.avatar}`"
+                        :alt="`Avatar de ${user.name}`"
+                        width="100"
+                        height="100"
+                        class="rounded-full"
+                    />
+                    <Input
+                        type="file"
+                        id="avatar"
+                        accept=".png, .jpg, .jpeg, .webp"
+                        class="pt-2"
+                        name="avatar"
+                        required
+                        @change="
+                            (e: any) => (avatarForm.avatar = e.target.files[0])
+                        "
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="avatarForm.errors.avatar"
+                    />
+                    <Button
+                        class="main-button mt-4 w-fit"
+                        title="Télécharger"
+                        type="submit"
+                    >
+                        T&eacute;l&eacute;charger
+                    </Button>
+                </Form>
             </div>
-
             <DeleteUser />
         </SettingsLayout>
     </AppLayout>
