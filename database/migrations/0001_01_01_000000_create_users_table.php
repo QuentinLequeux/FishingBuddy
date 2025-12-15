@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('slug')->unique()->nullable();
             $table->string('avatar')->nullable();
+            $table->timestamp('avatar_updated_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->index('name');
