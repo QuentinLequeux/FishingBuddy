@@ -22,12 +22,12 @@ trait HandleImageUpload
     {
         Storage::disk('public')->makeDirectory($directory);
 
-        $fileName = Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $fileName = Str::uuid() . '.webp';
         $path = $directory . '/' . $fileName;
 
         $image = Image::read($file)
             ->cover($width, $height)
-            ->encode();
+            ->toWebp();
 
         Storage::disk('public')->put($path, $image);
 
