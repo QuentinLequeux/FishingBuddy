@@ -65,14 +65,14 @@ onMounted(() => {
             <div class="flex gap-8 max-sm:hidden">
                 <Link
                     href="#map"
-                    class="font-medium text-gray-500 hover:text-black"
+                    class="font-medium text-gray-500 hover:text-black dark:hover:text-white"
                     title="Carte"
                 >
                     Carte
                 </Link>
                 <Link
                     href="#feed"
-                    class="font-medium text-gray-500 hover:text-black"
+                    class="font-medium text-gray-500 hover:text-black dark:hover:text-white"
                     title="Activité"
                 >
                     Activit&eacute;
@@ -118,7 +118,7 @@ onMounted(() => {
                 <Link :href="register()"> S&rsquo;inscrire gratuitement </Link>
             </Button>
             <img
-                class="shadow-lg rounded-xl"
+                class="rounded-xl shadow-lg"
                 :src="hero"
                 alt="Fonctionnalité dashboard"
                 width="1200"
@@ -129,9 +129,11 @@ onMounted(() => {
             />
         </section>
         <section class="scroll-mt-24 bg-main p-16 max-sm:px-0" id="map">
-            <div class="m-auto flex items-center w-[80%] gap-16 max-xl:flex-wrap">
+            <div
+                class="m-auto flex w-[80%] items-center gap-16 max-xl:flex-wrap"
+            >
                 <img
-                    class="rounded-xl max-w-[600px] min-w-[300px]"
+                    class="max-w-[600px] min-w-[300px] rounded-xl"
                     :src="map"
                     alt="Fonctionnalité carte"
                     loading="lazy"
@@ -149,7 +151,7 @@ onMounted(() => {
                             class="ml-4 inline text-yellow-500"
                         />
                     </h3>
-                    <p class="text-white leading-6.5">
+                    <p class="leading-6.5 text-white">
                         Avec la carte interactive de FishingBuddy, gardez une
                         trace pr&eacute;cise de chaque spot : localisation,
                         permis, type de poisson, environnement,
@@ -167,7 +169,7 @@ onMounted(() => {
                                 variant="ghost"
                                 class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <Map />
+                                <Map class="text-black" />
                             </Button>
                             <span class="text-xs text-white"> Carte </span>
                         </div>
@@ -176,7 +178,7 @@ onMounted(() => {
                                 variant="ghost"
                                 class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <MapPinIcon />
+                                <MapPinIcon class="text-black" />
                             </Button>
                             <span class="text-xs text-white"> Spots </span>
                         </div>
@@ -185,7 +187,7 @@ onMounted(() => {
                                 variant="ghost"
                                 class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <CloudSun />
+                                <CloudSun class="text-black" />
                             </Button>
                             <span class="text-xs text-white">
                                 M&eacute;t&eacute;o
@@ -196,7 +198,7 @@ onMounted(() => {
                                 variant="ghost"
                                 class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <Plus />
+                                <Plus class="text-black" />
                             </Button>
                             <span class="text-xs text-white"> Ajouter </span>
                         </div>
@@ -205,7 +207,7 @@ onMounted(() => {
                                 variant="ghost"
                                 class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <SquarePen />
+                                <SquarePen class="text-black" />
                             </Button>
                             <span class="text-xs text-white"> Modifier </span>
                         </div>
@@ -214,7 +216,7 @@ onMounted(() => {
                                 variant="ghost"
                                 class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <Trash2 />
+                                <Trash2 class="text-black" />
                             </Button>
                             <span class="text-xs text-white"> Supprimer </span>
                         </div>
@@ -223,7 +225,7 @@ onMounted(() => {
                                 variant="ghost"
                                 class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <Share2 />
+                                <Share2 class="text-black" />
                             </Button>
                             <span class="text-xs text-white"> Partager </span>
                         </div>
@@ -239,7 +241,9 @@ onMounted(() => {
             </div>
         </section>
         <section class="scroll-mt-24 p-16 max-sm:px-0" id="feed">
-            <div class="m-auto flex items-center w-[80%] gap-16 max-xl:flex-wrap">
+            <div
+                class="m-auto flex w-[80%] items-center gap-16 max-xl:flex-wrap"
+            >
                 <div class="flex w-fit max-w-full flex-col gap-8">
                     <h3
                         aria-level="3"
@@ -247,22 +251,26 @@ onMounted(() => {
                         class="text-3xl font-semibold"
                     >
                         Partagez vos prises, d&eacute;couvrez celles des autres
-                        et inspirez la communaut&eacute;<Fish class="inline ml-4 text-main" />
+                        et inspirez la communaut&eacute;<Fish
+                            class="ml-4 inline text-main"
+                        />
                     </h3>
                     <p class="leading-6.5">
                         La pêche, c’est aussi des histoires. Sur le feed
                         FishingBuddy, publiez vos prises. Interagissez avec
-                        d’autres passionn&eacute;s, suivez leurs activit&eacute;s et d&eacute;couvrez
-                        de nouveaux spots grâce aux retours de la communaut&eacute;. Un
-                        espace vivant, pens&eacute; pour connecter les pêcheurs entre eux.
+                        d’autres passionn&eacute;s, suivez leurs
+                        activit&eacute;s et d&eacute;couvrez de nouveaux spots
+                        grâce aux retours de la communaut&eacute;. Un espace
+                        vivant, pens&eacute; pour connecter les pêcheurs entre
+                        eux.
                     </p>
                     <div class="flex h-[80px] gap-6 overflow-x-auto">
                         <div class="flex flex-col items-center gap-3">
                             <Button
                                 variant="ghost"
-                                class="rounded-full p-5 shadow-md"
+                                class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <Activity />
+                                <Activity class="text-black" />
                             </Button>
                             <span class="text-xs text-gray-500">
                                 Activit&eacute;
@@ -271,45 +279,45 @@ onMounted(() => {
                         <div class="flex flex-col items-center gap-3">
                             <Button
                                 variant="ghost"
-                                class="rounded-full p-5 shadow-md"
+                                class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <Heart />
+                                <Heart class="text-black" />
                             </Button>
                             <span class="text-xs text-gray-500"> Like </span>
                         </div>
                         <div class="flex flex-col items-center gap-3">
                             <Button
                                 variant="ghost"
-                                class="rounded-full p-5 shadow-md"
+                                class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <UserRoundIcon />
+                                <UserRoundIcon class="text-black" />
                             </Button>
                             <span class="text-xs text-gray-500"> Profil </span>
                         </div>
                         <div class="flex flex-col items-center gap-3">
                             <Button
                                 variant="ghost"
-                                class="rounded-full p-5 shadow-md"
+                                class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <UserRoundPlus />
+                                <UserRoundPlus class="text-black" />
                             </Button>
                             <span class="text-xs text-gray-500"> Follow </span>
                         </div>
                         <div class="flex flex-col items-center gap-3">
                             <Button
                                 variant="ghost"
-                                class="rounded-full p-5 shadow-md"
+                                class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <SlidersHorizontal />
+                                <SlidersHorizontal class="text-black" />
                             </Button>
                             <span class="text-xs text-gray-500"> Filtres </span>
                         </div>
                         <div class="flex flex-col items-center gap-3">
                             <Button
                                 variant="ghost"
-                                class="rounded-full p-5 shadow-md"
+                                class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <Share2 />
+                                <Share2 class="text-black" />
                             </Button>
                             <span class="text-xs text-gray-500">
                                 Partager
@@ -318,18 +326,18 @@ onMounted(() => {
                         <div class="flex flex-col items-center gap-3">
                             <Button
                                 variant="ghost"
-                                class="rounded-full p-5 shadow-md"
+                                class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <Eye />
+                                <Eye class="text-black" />
                             </Button>
                             <span class="text-xs text-gray-500">Vues</span>
                         </div>
                         <div class="flex flex-col items-center gap-3">
                             <Button
                                 variant="ghost"
-                                class="rounded-full p-5 shadow-md"
+                                class="rounded-full bg-white p-5 shadow-md"
                             >
-                                <MessagesSquare />
+                                <MessagesSquare class="text-black" />
                             </Button>
                             <span class="text-xs text-gray-500">
                                 Commentaire
@@ -345,7 +353,7 @@ onMounted(() => {
                     </Button>
                 </div>
                 <img
-                    class="rounded-xl max-w-[600px] min-w-[300px] shadow-lg"
+                    class="max-w-[600px] min-w-[300px] rounded-xl shadow-lg"
                     :src="activity"
                     alt="Fonctionnalité feed"
                     loading="lazy"
@@ -407,7 +415,7 @@ onMounted(() => {
         </div>
         <Separator />
         <div class="my-8 flex justify-between gap-2">
-            <p class="text-sm text-gray-500">© 2025 Quentin Lequeux.</p>
+            <p class="text-sm text-gray-500">© 2026 Quentin Lequeux.</p>
             <Link
                 class="text-sm text-gray-500 hover:underline"
                 href="#"
@@ -421,4 +429,3 @@ onMounted(() => {
 </template>
 
 <!-- TODO : Langues ? -->
-<!-- TODO : Dark mode -->
