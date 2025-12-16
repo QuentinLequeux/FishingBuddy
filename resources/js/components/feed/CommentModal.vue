@@ -9,7 +9,6 @@ import {
     MessagesSquare,
     RulerDimensionLine,
 } from 'lucide-vue-next';
-import dayjs from 'dayjs';
 import { watch } from 'vue';
 import {
     Dialog,
@@ -89,13 +88,7 @@ watch(
                             </a>
                             <div class="flex gap-2 text-gray-500">
                                 <Clock class="size-3" />
-                                <time
-                                    class="cursor-help text-xs text-gray-500"
-                                    :datetime="`${activity?.created_at}`"
-                                    :title="`${new Date(activity.created_at).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`"
-                                >
-                                    {{ dayjs(activity?.created_at).fromNow() }}
-                                </time>
+                                <Time :datetime="activity.created_at" />
                             </div>
                         </div>
                     </div>
@@ -240,7 +233,7 @@ watch(
                         </p>
                         <div class="flex gap-2 text-gray-500">
                             <Clock class="size-3" />
-                            <Time :comment="comment" />
+                            <Time :datetime="comment.created_at" />
                         </div>
                     </div>
                 </div>
