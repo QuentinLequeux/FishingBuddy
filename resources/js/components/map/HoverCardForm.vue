@@ -7,6 +7,7 @@ import {
 import { Info } from 'lucide-vue-next';
 import { HoverCardArrow } from 'reka-ui';
 </script>
+
 <template>
     <HoverCard>
         <HoverCardTrigger>
@@ -20,5 +21,3 @@ import { HoverCardArrow } from 'reka-ui';
         </HoverCardContent>
     </HoverCard>
 </template>
-
-<!-- TODO : dark mode <HoverCard> -->
