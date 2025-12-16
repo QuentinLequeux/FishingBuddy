@@ -125,11 +125,11 @@ const addView = (activity: IActivities) => {
             </Badge>
         </div>
         <img
-            src="/images/map.png"
+            src="/images/map2.png"
             alt="Lieu de pêche"
-            width="960"
-            height="680"
-            class="mt-4 h-auto rounded-xl"
+            width="1001"
+            height="667"
+            class="w-full h-full object-cover mt-4 rounded-xl"
         />
         <div class="mt-4 flex justify-between">
             <div class="flex">
@@ -200,6 +200,5 @@ const addView = (activity: IActivities) => {
     </article>
 </template>
 
-<!-- TODO : Image lieu de pêche -->
 <!-- TODO : AlertDialog suppression -->
 <!-- TODO : if (props.activities.specie > 60) afficher trophée -->
