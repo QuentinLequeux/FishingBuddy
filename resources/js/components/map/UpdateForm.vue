@@ -348,6 +348,22 @@ const submit = () => {
                             v-model="form.equipments"
                         />
                         <Label class="text-black" for="3">Toilette</Label>
+                        <input
+                            type="checkbox"
+                            id="4"
+                            name="equipments"
+                            value="PMR"
+                            v-model="form.equipments"
+                        />
+                        <Label for="5">PMR</Label>
+                        <input
+                            type="checkbox"
+                            id="5"
+                            name="equipments"
+                            value="Restauration"
+                            v-model="form.equipments"
+                        />
+                        <Label for="5">Restauration</Label>
                     </div>
                 </div>
                 <div class="flex justify-end gap-2">
@@ -403,10 +419,8 @@ const submit = () => {
 </style>
 
 <!-- TODO : dark mode -->
-<!-- TODO : Responsive -->
-<!-- TODO : Component : Radio,... -->
 <!-- TODO : Style recherche TagsInput -->
 <!-- TODO : name, pas id dans combobox -->
 <!-- TODO : Reload page after submission -->
-<!-- TODO : Règles de validation (HoverCard) -->
+<!-- TODO : Component : Radio, checkbox,... -->
 <!-- TODO : Afficher toutes les espèces dans combobox -->
