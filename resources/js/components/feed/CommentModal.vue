@@ -149,11 +149,11 @@ watch(
                     </Badge>
                 </div>
                 <img
-                    src="/images/map.png"
+                    src="/images/map2.png"
                     alt="Lieu de pêche"
-                    width="960"
-                    height="680"
-                    class="mt-4 h-[300px] rounded-xl"
+                    width="1001"
+                    height="667"
+                    class="mt-4 h-full w-full rounded-xl object-cover"
                 />
                 <div class="relative my-4 flex">
                     <Form
@@ -174,9 +174,7 @@ watch(
                                 "
                                 class="size-5"
                             />
-                            <span
-                                v-if="activity.likesCount > 0"
-                                class="count"
+                            <span v-if="activity.likesCount > 0" class="count"
                                 >{{ activity?.likesCount }}
                             </span>
                         </Button>
@@ -187,16 +185,14 @@ watch(
                         :title="activity.commentsCount + ' Commentaires'"
                     >
                         <MessagesSquare class="size-5" />
-                        <span
-                            v-if="activity.commentsCount > 0"
-                            class="count"
-                            >{{ activity?.commentsCount }}</span
-                        >
+                        <span v-if="activity.commentsCount > 0" class="count">{{
+                            activity?.commentsCount
+                        }}</span>
                     </Button>
                     <Button
                         variant="ghost"
                         :title="activity.views + ' Vues'"
-                        class="cursor-help relative"
+                        class="relative cursor-help"
                     >
                         <Eye class="size-6" />
                         <span class="count">
@@ -247,7 +243,7 @@ watch(
                 <Textarea
                     name="content"
                     placeholder="Écrire votre commentaire ici..."
-                    class="max-h-[150px] h-auto"
+                    class="h-auto max-h-[150px]"
                     v-model="form.content"
                     maxlength="1000"
                     minlength="3"
@@ -272,7 +268,6 @@ watch(
 </template>
 
 <!-- TODO : Like live -->
-<!-- TODO : Image lieu -->
 <!-- TODO : Components -->
 <!-- TODO : Icône scroll ? -->
 <!-- TODO : Ajout commentaire live -->
