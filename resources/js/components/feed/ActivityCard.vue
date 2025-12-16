@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+    Clock,
     Heart,
     Trophy,
     Weight,
@@ -11,15 +12,17 @@ import {
 import { route } from 'ziggy-js';
 import { router } from '@inertiajs/vue3';
 import { Badge } from '@/components/ui/badge';
+import Time from '@/components/feed/Time.vue';
 import { Button } from '@/components/ui/button';
 import { IActivities } from '@/types/IActivities';
 import { Separator } from '@/components/ui/separator';
+import UserAvatar from '@/components/global/UserAvatar.vue';
+import PopoverActivity from '@/components/feed/PopoverActivity.vue';
 
 // dayjs
 import 'dayjs/locale/fr';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import PopoverActivity from '@/components/feed/PopoverActivity.vue';
 
 dayjs.locale('fr');
 dayjs.extend(relativeTime);
@@ -39,6 +42,19 @@ const submit = (method: string) => {
         { preserveScroll: true },
     );
 };
+
+const addView = (activity: IActivities) => {
+    router.post(
+        route('feed.view', activity.id),
+        {},
+        {
+            preserveScroll: true,
+        },
+    );
+    if (!activity.views) {
+        activity.views++;
+    }
+};
 </script>
 
 <template>
@@ -47,27 +63,26 @@ const submit = (method: string) => {
     >
         <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
-                <a
-                    :href="route('profile', activity.user?.slug)"
-                    :title="`Vers le profile de ${activity.user.name}`"
-                    class="h-[40px] w-[40px] rounded-full bg-gray-200"
-                />
+                <UserAvatar :activity="activity" :size="40" />
                 <div class="flex flex-col gap-1">
-                    <p class="font-medium">
-                        {{ activity.user.name }}
-                    </p>
-                    <time
-                        class="cursor-help text-xs text-gray-500"
-                        :title="`${new Date(activity.created_at).toLocaleDateString('fr-BE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`"
-                        :datetime="`${activity.created_at}`"
+                    <a
+                        v-if="activity.user"
+                        :href="route('profile', { user: activity.user?.slug })"
+                        :title="`Vers le profile de ${activity.user.name}`"
                     >
-                        {{ dayjs(activity.created_at).fromNow() }}
-                    </time>
+                        <p class="font-medium">
+                            {{ activity.user?.name }}
+                        </p>
+                    </a>
+                    <div class="flex gap-2 text-gray-500">
+                        <Clock class="size-3" />
+                        <Time :datetime="activity.created_at" />
+                    </div>
                 </div>
             </div>
             <div>
                 <Button
-                    v-if="$page.props.auth.user?.id != activity.user.id"
+                    v-if="$page.props.auth.user?.id != activity.user?.id"
                     @click="submit('follow')"
                     class="main-button"
                     title="Suivre"
@@ -133,27 +148,46 @@ const submit = (method: string) => {
                             class="size-5"
                         />
                     </Button>
-                    <span
-                        v-if="activity.likesCount > 0"
-                        class="absolute -top-2 right-0 rounded-full bg-main px-2 py-0.5 text-xs font-medium text-white"
-                        >{{ activity.likesCount }}</span
-                    >
+                    <span v-if="activity.likesCount > 0" class="count">{{
+                        activity.likesCount
+                    }}</span>
                 </div>
                 <Button
+                    v-if="$page.props.auth.user?.id"
                     variant="ghost"
-                    @click="$emit('comment', activity)"
+                    @click="
+                        $emit('comment', activity);
+                        addView(activity);
+                    "
                     class="relative"
                     :title="activity.commentsCount + ' Commentaires'"
                 >
                     <MessagesSquare class="size-5" />
-                    <span
-                        v-if="activity.commentsCount > 0"
-                        class="absolute -top-2 right-0 rounded-full bg-main px-2 py-0.5 text-xs font-medium text-white"
-                        >{{ activity.commentsCount }}</span
-                    >
+                    <span v-if="activity.commentsCount > 0" class="count">{{
+                        activity.commentsCount
+                    }}</span>
                 </Button>
-                <Button variant="ghost" title="... Vues" class="cursor-help">
-                    <EyeIcon class="size-5" />
+                <Button
+                    v-else
+                    variant="ghost"
+                    :title="activity.commentsCount + ' Commentaires'"
+                    class="relative"
+                    @click="router.visit(route('login'))"
+                >
+                    <MessagesSquare class="size-5" />
+                    <span v-if="activity.commentsCount > 0" class="count">{{
+                        activity.commentsCount
+                    }}</span>
+                </Button>
+                <Button
+                    variant="ghost"
+                    :title="activity.views + ' Vues'"
+                    class="relative cursor-help"
+                >
+                    <EyeIcon class="size-6" />
+                    <span v-if="activity.views > 0" class="count">
+                        {{ activity.views }}
+                    </span>
                 </Button>
             </div>
             <div
@@ -166,7 +200,6 @@ const submit = (method: string) => {
     </article>
 </template>
 
-<!-- TODO : Compteur views -->
 <!-- TODO : Image lieu de pêche -->
 <!-- TODO : AlertDialog suppression -->
 <!-- TODO : if (props.activities.specie > 60) afficher trophée -->
