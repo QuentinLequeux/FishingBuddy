@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'followed_id',
         'avatar',
         'avatar_updated_at',
+        'visibility',
     ];
 
     /**
@@ -67,7 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function following()
     {
-        return $this->hasMany(Follow::class, 'follower_id');
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'followed_id');
     }
 
         public function followers()
