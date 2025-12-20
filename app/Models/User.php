@@ -26,7 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'followed_id',
         'avatar',
         'avatar_updated_at',
-        'visibility',
+        'activities_visibility',
     ];
 
     /**
