@@ -10,6 +10,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/map/{spot}', [MapController::class, 'update'])->name('map.update');
 
+    Route::patch('/map/{spot}/position', [MapController::class, 'updatePosition'])->name('map.position.update');
+
     Route::delete('/map/{spot}', [MapController::class, 'destroy'])->name('map.destroy');
 
     Route::post('/map/{spot}/restore', [MapController::class, 'restore'])->name('map.restore');
