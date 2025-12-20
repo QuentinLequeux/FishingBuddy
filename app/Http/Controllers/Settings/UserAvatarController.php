@@ -36,4 +36,20 @@ class UserAvatarController extends Controller
 
         return to_route('profile.edit');
     }
+
+    public function destroy(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
+        $user->update([
+            'avatar' => null,
+            'avatar_updated_at' => now(),
+        ]);
+
+        return to_route('profile.edit');
+    }
 }
