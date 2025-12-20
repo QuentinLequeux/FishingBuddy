@@ -91,7 +91,7 @@ function initMap(center: [number, number]) {
         const lat = e.lngLat.lat;
 
         if (!userMarker) {
-            userMarker = new Marker({ color: '#1D4E8D' })
+            userMarker = new Marker({ color: '#1D4E8D', draggable: true })
                 .setLngLat([lng, lat])
                 .addTo(map.value);
         }
@@ -117,6 +117,13 @@ function initMap(center: [number, number]) {
                 map.value.getCanvas().style.cursor = '';
             });
         }
+        userMarker.on('dragend', () => {
+            const lngLat = userMarker!.getLngLat();
+            popup.lng = lngLat.lng;
+            popup.lat = lngLat.lat;
+            form.latitude = Number(lngLat.lat.toFixed(7));
+            form.longitude = Number(lngLat.lng.toFixed(7));
+        });
     });
 }
 
@@ -229,8 +236,5 @@ const closePositionModal = () => {
 }
 </style>
 
-<!-- TODO : Protéger clé API -->
 <!-- TODO : Hover : HoverCard avec infos spot ? -->
-<!-- TODO : Pouvoir changer les styles de la carte -->
 <!-- TODO : watchPosition() pour un suivi en temps réel -->
-<!-- TODO : Reload pour tous les composants après soumission -->
