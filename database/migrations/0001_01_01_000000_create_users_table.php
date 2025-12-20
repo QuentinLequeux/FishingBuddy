@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable();
             $table->string('avatar')->nullable();
             $table->timestamp('avatar_updated_at')->nullable();
+            $table->string('visibility')->default('public');
             $table->rememberToken();
             $table->timestamps();
             $table->index('name');
