@@ -49,7 +49,7 @@ defineProps<{
 
                 <div class="my-6 flex items-center justify-start">
                     <Button
-                        class="w-full bg-main hover:bg-main/90"
+                        class="w-full main-button"
                         :disabled="processing"
                         data-test="email-password-reset-link-button"
                         title="Réinitialiser le mot de passe"
