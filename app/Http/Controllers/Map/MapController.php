@@ -112,4 +112,14 @@ class MapController extends Controller
 
         return redirect()->route('map');
     }
+
+    public function updatePosition(Request $request, Spot $spot)
+    {
+        $validated = $request->validate([
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
+
+        $spot->update($validated);
+    }
 }
