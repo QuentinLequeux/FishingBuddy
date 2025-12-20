@@ -83,5 +83,4 @@ const onSuccess = () => {
     </AlertDialog>
 </template>
 
-<!-- TODO : Personnaliser toast -->
 <!-- TODO : Reload après suppression -->
