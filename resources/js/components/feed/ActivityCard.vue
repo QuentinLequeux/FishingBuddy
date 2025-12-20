@@ -109,17 +109,20 @@ const addView = (activity: IActivities) => {
                     {{ activity.lure?.name }}
                 </p>
             </div>
-            <div v-if="activity.size > 60" class="flex items-center gap-4">
+            <div v-if="activity.size > 60" class="flex gap-4">
                 <Separator orientation="vertical" class="h-full" />
-                <Trophy class="size-6 text-yellow-500" />
+                <div class="flex-col">
+                    <p class="text-sm text-gray-500">Record</p>
+                    <Trophy class="size-6 text-yellow-500 mx-auto mt-1" />
+                </div>
             </div>
         </div>
         <div class="mt-2 flex gap-2">
-            <Badge class="bg-main text-white">
+            <Badge class="bg-main/80 text-white">
                 <RulerDimensionLine />
                 {{ activity.size }}&nbsp;cm
             </Badge>
-            <Badge class="bg-main text-white">
+            <Badge class="bg-main/80 text-white">
                 <Weight />
                 {{ activity.weight }}&nbsp;kg
             </Badge>
@@ -129,7 +132,7 @@ const addView = (activity: IActivities) => {
             alt="Lieu de pêche"
             width="1001"
             height="667"
-            class="w-full h-full object-cover mt-4 rounded-xl"
+            class="mt-4 h-full w-full rounded-xl object-cover"
         />
         <div class="mt-4 flex justify-between">
             <div class="flex">
@@ -200,5 +203,4 @@ const addView = (activity: IActivities) => {
     </article>
 </template>
 
-<!-- TODO : AlertDialog suppression -->
 <!-- TODO : if (props.activities.specie > 60) afficher trophée -->
