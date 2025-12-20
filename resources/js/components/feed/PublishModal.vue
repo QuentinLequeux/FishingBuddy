@@ -172,4 +172,3 @@ const submit = () => {
 </template>
 
 <!-- TODO : Composants ? -->
-<!-- TODO : Chargement des commentaires ? -->
