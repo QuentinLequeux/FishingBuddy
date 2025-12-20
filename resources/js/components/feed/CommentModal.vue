@@ -139,11 +139,11 @@ watch(
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <Badge class="bg-main text-white">
+                    <Badge class="bg-main/80 text-white">
                         <RulerDimensionLine />
                         {{ activity?.size }}&nbsp;cm
                     </Badge>
-                    <Badge class="bg-main text-white">
+                    <Badge class="bg-main/80 text-white">
                         <Weight />
                         {{ activity?.weight }}&nbsp;kg
                     </Badge>
@@ -153,7 +153,7 @@ watch(
                     alt="Lieu de pêche"
                     width="1001"
                     height="667"
-                    class="mt-4 h-full w-full rounded-xl object-cover"
+                    class="mt-4 h-auto w-full rounded-xl object-cover"
                 />
                 <div class="relative my-4 flex">
                     <Form
@@ -267,8 +267,4 @@ watch(
     </Dialog>
 </template>
 
-<!-- TODO : Like live -->
 <!-- TODO : Components -->
-<!-- TODO : Icône scroll ? -->
-<!-- TODO : Ajout commentaire live -->
-<!-- TODO : Suivre / Ne pas suivre -->
