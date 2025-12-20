@@ -138,7 +138,7 @@ onMounted(() => {
         <div
             class="flex h-full flex-wrap gap-4 bg-[#f4f4f6] p-6 dark:bg-[#262626]"
         >
-            <div class="flex min-w-[460px] flex-1 flex-col gap-4">
+            <div class="flex min-w-[460px] max-md:min-w-[80%] flex-1 flex-col gap-4">
                 <div
                     class="relative h-fit rounded-xl bg-white p-6 shadow-2xs max-sm:w-full dark:bg-sidebar"
                 >
