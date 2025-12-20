@@ -419,8 +419,6 @@ const submit = () => {
 </style>
 
 <!-- TODO : dark mode -->
-<!-- TODO : Style recherche TagsInput -->
 <!-- TODO : name, pas id dans combobox -->
-<!-- TODO : Reload page after submission -->
 <!-- TODO : Component : Radio, checkbox,... -->
 <!-- TODO : Afficher toutes les espèces dans combobox -->
