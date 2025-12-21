@@ -2,7 +2,7 @@
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
-import { Form, Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { Form, Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 
 import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
@@ -17,6 +17,7 @@ import { route } from 'ziggy-js';
 import { toast, Toaster } from 'vue-sonner';
 import 'vue-sonner/style.css';
 import HoverCardForm from '@/components/map/HoverCardForm.vue';
+import { X } from 'lucide-vue-next';
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -51,6 +52,17 @@ const submit = (e: Event) => {
             toast.success('Avatar mis à jour !');
         },
     });
+};
+
+const deleteAvatar = () => {
+    router.delete(route('profile.avatar.destroy'),
+        {
+            preserveScroll: true,
+            preserveState: false,
+            onSuccess: () => {
+                toast.success('Avatar supprimé !');
+            }
+        });
 };
 </script>
 
@@ -163,18 +175,26 @@ const submit = (e: Event) => {
                         <Label for="avatar"> Avatar </Label>
                         <HoverCardForm> Taille maximum : 2MB. </HoverCardForm>
                     </div>
-                    <p class="text-sm text-gray-500">
-                        T&eacute;l&eacute;chargez ou mettez &agrave; jour
-                        votre avatar.
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        T&eacute;l&eacute;chargez ou mettez &agrave; jour votre
+                        avatar.
                     </p>
-                    <img
-                        v-if="user.avatar"
-                        :src="`/storage/${user.avatar}`"
-                        :alt="`Avatar de ${user.name}`"
-                        width="100"
-                        height="100"
-                        class="rounded-full"
-                    />
+                    <div class="relative w-fit" v-if="user.avatar">
+                        <div
+                            class="absolute right-0 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-gray-400 bg-gray-200"
+                            title="Supprimer l'avatar"
+                            @click="deleteAvatar"
+                        >
+                            <X class="size-3 text-black" />
+                        </div>
+                        <img
+                            :src="`/storage/${user.avatar}`"
+                            :alt="`Avatar de ${user.name}`"
+                            width="100"
+                            height="100"
+                            class="rounded-full"
+                        />
+                    </div>
                     <Input
                         type="file"
                         id="avatar"
