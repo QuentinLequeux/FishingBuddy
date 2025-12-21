@@ -17,7 +17,7 @@ class ActivityFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 2),
+            'user_id' => $this->faker->numberBetween(1, 11),
             'specie_id' => $this->faker->numberBetween(1, 20),
             'size' => $this->faker->numberBetween(1, 100),
             'weight' => $this->faker->randomFloat(1, 0.5, 15),
