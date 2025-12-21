@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Specie;
 use App\Models\Comment;
 use App\Models\Activity;
+use App\Models\ActivityView;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -42,6 +43,30 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Dylan',
                 'email' => 'dylan.jacquet@hepl.be',
             ],
+            [
+                'name' => 'François',
+                'email' => 'francois.parmentier@hepl.be',
+            ],
+            [
+                'name' => 'Myriam',
+                'email' => 'myriam.dupont@hepl.be',
+            ],
+            [
+                'name' => 'Cedric',
+                'email' => 'cedric.muller@hepl.be',
+            ],
+            [
+                'name' => 'Daniel',
+                'email' => 'daniel.schreurs@hepl.be',
+            ],
+            [
+                'name' => 'Maud',
+                'email' => 'maud.wera@hepl.be',
+            ],
+            [
+                'name' => 'Toon',
+                'email' => 'toon.vandenbos@hepl.be',
+            ],
         ];
 
         foreach ($users as $userData) {
@@ -59,8 +84,12 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        Activity::factory()->count(3)->create();
+        Activity::factory()->count(10)->create();
 
-        Comment::factory()->count(5)->create();
+        Comment::factory()->count(10)->create();
+
+        //ActivityView::factory()->count(10)->create();
     }
 }
+
+// TODO : Ajouter les vues.
