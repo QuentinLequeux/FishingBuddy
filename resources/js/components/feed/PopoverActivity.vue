@@ -5,6 +5,17 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover';
 import { route } from 'ziggy-js';
+import { toast } from 'vue-sonner';
+import {
+    AlertDialog,
+    AlertDialogTitle,
+    AlertDialogCancel,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTrigger,
+    AlertDialogContent,
+    AlertDialogDescription,
+} from '@/components/ui/alert-dialog';
 import { Form } from '@inertiajs/vue3';
 import { PopoverArrow } from 'reka-ui';
 import { router } from '@inertiajs/vue3';
@@ -20,6 +31,9 @@ const destroy = () => {
     router.delete(route('feed.destroy', props.activity.id), {
         preserveScroll: true,
         preserveState: false,
+        onSuccess: () => {
+            toast.success('Activité supprimée !');
+        },
     });
 };
 </script>
@@ -27,25 +41,54 @@ const destroy = () => {
 <template>
     <Popover>
         <PopoverTrigger>
-            <div class="hover:bg-gray-100 dark:hover:bg-gray-600 p-1 rounded-full" title="Options">
+            <div
+                class="rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-600"
+                title="Options"
+            >
                 <Ellipsis class="cursor-pointer" />
             </div>
         </PopoverTrigger>
-        <PopoverContent class="w-fit p-2">
+        <PopoverContent class="flex w-fit flex-col gap-2 p-2">
             <Button variant="ghost" title="Modifier">
                 <SquarePen />
                 Modifier
             </Button>
-            <Form @submit.prevent="destroy">
-                <Button
-                    variant="ghost"
-                    title="Supprimer"
-                    class="text-red-500 hover:text-red-500"
-                >
-                    <Trash2Icon />
-                    Supprimer
-                </Button>
-            </Form>
+            <AlertDialog>
+                <AlertDialogTrigger as-child>
+                    <Button
+                        title="Supprimer"
+                        variant="ghost"
+                        class="text-red-500 hover:text-red-500"
+                    >
+                        <Trash2Icon />
+                        Supprimer
+                    </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle
+                            >Êtes-vous sûr&nbsp;?</AlertDialogTitle
+                        >
+                        <AlertDialogDescription
+                            >Apr&egrave;s suppression, l'activit&eacute; ne sera
+                            plus disponible.</AlertDialogDescription
+                        >
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Annuler</AlertDialogCancel>
+                        <Form @submit.prevent="destroy">
+                            <Button
+                                variant="ghost"
+                                title="Supprimer"
+                                class="w-full bg-red-500 text-white hover:bg-red-500/90 hover:text-white dark:hover:bg-red-500/80"
+                            >
+                                <Trash2Icon />
+                                Supprimer
+                            </Button>
+                        </Form>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
             <PopoverArrow
                 class="fill-white stroke-gray-300 dark:fill-gray-950 dark:stroke-gray-700"
             />
