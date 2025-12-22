@@ -22,8 +22,8 @@ class MapController extends Controller
         $validated = $request->validate([
             'latitude' => 'required|decimal:7',
             'longitude' => 'required|decimal:7',
-            'name' => 'required|string|max:100',
-            'license' => 'string|max:100|nullable',
+            'name' => 'required|string|min:3|max:100',
+            'license' => 'string|min:3|max:100|nullable',
             'url' => 'nullable|url',
             'species' => 'nullable|array',
             'species.*' => 'exists:species,id',
@@ -78,8 +78,8 @@ class MapController extends Controller
         $validated = $request->validate([
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'name' => 'required|string|max:100',
-            'license' => 'string|max:100|nullable',
+            'name' => 'required|string|min:3|max:100',
+            'license' => 'string|min:3|max:100|nullable',
             'url' => 'nullable|url',
             'species' => 'nullable|array',
             'species.*' => 'exists:species,id',
