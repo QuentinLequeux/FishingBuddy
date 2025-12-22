@@ -170,5 +170,3 @@ const submit = () => {
         </DialogContent>
     </Dialog>
 </template>
-
-<!-- TODO : Composants ? -->
