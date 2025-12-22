@@ -34,20 +34,22 @@ const onSpotSaved = (updatedSpot: ISpot) => {
         Object.assign(props.spot, updatedSpot);
     }
     showForm.value = false;
-}
+};
 </script>
+
 <template>
     <transition name="fade">
         <div
             v-if="modelValue && spot"
-            class="absolute right-14 z-10 my-2 flex h-[96%] w-[400px] flex-col gap-2 rounded-2xl bg-white p-4 shadow-lg max-sm:w-[83%] dark:bg-sidebar overflow-y-scroll"
+            class="absolute right-14 z-10 my-2 flex h-[96%] w-[400px] flex-col gap-2 overflow-y-scroll rounded-2xl bg-white p-4 shadow-lg max-sm:w-[83%] dark:bg-sidebar"
         >
             <PopoverSpot :spot="spot" @edit="showForm = true" />
-            <X
-                :size="24"
-                class="absolute top-2 right-2 m-1 hover:cursor-pointer hover:text-main dark:text-white"
-                @click="close"
-            />
+            <div
+                title="Fermer"
+                class="absolute top-2 right-2 m-1 hover:cursor-pointer hover:text-main"
+            >
+                <X :size="24" @click="close" />
+            </div>
             <h2
                 aria-level="2"
                 role="heading"
