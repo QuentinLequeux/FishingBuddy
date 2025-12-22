@@ -105,6 +105,14 @@ const submit = () => {
         });
     }
 };
+
+const specieNameById = computed(() => {
+    const map = new Map<number, string>();
+    props.species.forEach((s) => {
+        map.set(s.id, s.name);
+    });
+    return map;
+});
 </script>
 
 <template>
@@ -118,22 +126,19 @@ const submit = () => {
     <transition name="overlay">
         <div
             v-if="props.visible"
-            class="absolute top-4 left-1/2 z-20 flex max-h-[96%] max-w-[500px] min-w-[400px] -translate-x-1/2 transform flex-col gap-4 self-center overflow-y-auto rounded-xl bg-white p-4 shadow-lg"
+            class="absolute top-4 left-1/2 z-20 flex max-h-[96%] max-w-[500px] min-w-[400px] -translate-x-1/2 transform flex-col gap-4 self-center overflow-y-auto rounded-xl bg-white p-4 shadow-lg max-sm:min-w-[90%] dark:bg-sidebar"
         >
-            <X
-                :size="24"
-                class="absolute top-2 right-0 m-2 text-black hover:cursor-pointer hover:text-main"
-                @click="close"
-            />
-            <h2
-                aria-level="2"
-                role="heading"
-                class="text-xl font-bold text-black"
+            <div
+                title="Fermer"
+                class="absolute top-2 right-0 m-2 hover:cursor-pointer hover:text-main"
             >
+                <X :size="24" @click="close" />
+            </div>
+            <h2 aria-level="2" role="heading" class="text-xl font-bold">
                 Modifier un lieu
             </h2>
             <Separator />
-            <p class="text-xs text-black">
+            <p class="text-xs">
                 Les champs
                 <span class="text-[#fc5a5a]">*</span> sont obligatoires
             </p>
@@ -156,11 +161,12 @@ const submit = () => {
                 />
                 <div class="flex flex-col gap-2">
                     <div class="flex items-center gap-2">
-                        <Label class="text-black" for="name">
+                        <Label for="name">
                             Nom
                             <span class="text-[#fc5a5a]">*</span>
                         </Label>
                         <HoverCardForm>
+                            Minimum 3 caract&egrave;res.<br />
                             Maximum 100 caract&egrave;res.
                         </HoverCardForm>
                     </div>
@@ -176,8 +182,9 @@ const submit = () => {
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="flex items-center gap-2">
-                        <Label class="text-black" for="license"> Permis </Label>
+                        <Label for="license"> Permis </Label>
                         <HoverCardForm>
+                            Minimum 3 caract&egrave;res.<br />
                             Maximum 100 caract&egrave;res.
                         </HoverCardForm>
                     </div>
@@ -192,7 +199,7 @@ const submit = () => {
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="flex items-center gap-2">
-                        <Label class="text-black" for="url"> URL </Label>
+                        <Label for="url"> URL </Label>
                         <HoverCardForm>
                             Format : https://example.com
                         </HoverCardForm>
@@ -207,7 +214,7 @@ const submit = () => {
                     <InputError :message="form.errors.url" />
                 </div>
                 <div class="flex flex-col gap-2">
-                    <Label class="text-black" for="specie">Esp&egrave;ce</Label>
+                    <Label for="specie" class="w-fit">Esp&egrave;ce</Label>
                     <Combobox
                         v-model="selectedSpecies"
                         v-model:open="open"
@@ -222,7 +229,9 @@ const submit = () => {
                                         :key="id"
                                         :value="id.toString()"
                                     >
-                                        <TagsInputItemText />
+                                        <span class="p-2">
+                                            {{ specieNameById.get(id) }}
+                                        </span>
                                         <TagsInputItemDelete
                                             @click="
                                                 () =>
@@ -273,9 +282,7 @@ const submit = () => {
                     </Combobox>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <Label class="text-black" for="environement"
-                        >Environement</Label
-                    >
+                    <Label for="environement" class="w-fit">Environement</Label>
                     <TagsInput v-model="form.environement">
                         <TagsInputItem
                             v-for="item in form.environement"
@@ -289,7 +296,7 @@ const submit = () => {
                     </TagsInput>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <Label class="text-black" for="rules"
+                    <Label for="rules" class="w-fit"
                         >R&egrave;glementations</Label
                     >
                     <TagsInput v-model="form.rules">
@@ -305,32 +312,20 @@ const submit = () => {
                     </TagsInput>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <div class="text-sm font-medium text-black">
-                        Acc&egrave;s
-                    </div>
+                    <div class="text-sm font-medium">Acc&egrave;s</div>
                     <RadioGroup
                         class="flex items-center gap-2"
                         name="is_public"
                         v-model="form.is_public"
                     >
-                        <RadioGroupItem
-                            class="border-black text-black"
-                            value="1"
-                            id="1"
-                        />
-                        <Label class="text-black" for="1">Public</Label>
-                        <RadioGroupItem
-                            class="border-black text-black"
-                            value="0"
-                            id="0"
-                        />
-                        <Label class="text-black" for="0">Priv&eacute;</Label>
+                        <RadioGroupItem value="1" id="1" />
+                        <Label for="1">Public</Label>
+                        <RadioGroupItem value="0" id="0" />
+                        <Label for="0">Priv&eacute;</Label>
                     </RadioGroup>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <div class="mt-2 text-sm font-medium text-black">
-                        Equipements
-                    </div>
+                    <div class="mt-2 text-sm font-medium">Equipements</div>
                     <div class="flex items-center gap-2">
                         <input
                             type="checkbox"
@@ -339,7 +334,7 @@ const submit = () => {
                             value="Parking"
                             v-model="form.equipments"
                         />
-                        <Label class="text-black" for="2">Parking</Label>
+                        <Label for="2">Parking</Label>
                         <input
                             type="checkbox"
                             id="3"
@@ -347,7 +342,7 @@ const submit = () => {
                             value="Toilette"
                             v-model="form.equipments"
                         />
-                        <Label class="text-black" for="3">Toilette</Label>
+                        <Label for="3">Toilette</Label>
                         <input
                             type="checkbox"
                             id="4"
@@ -355,7 +350,7 @@ const submit = () => {
                             value="PMR"
                             v-model="form.equipments"
                         />
-                        <Label for="5">PMR</Label>
+                        <Label for="4">PMR</Label>
                         <input
                             type="checkbox"
                             id="5"
@@ -366,7 +361,7 @@ const submit = () => {
                         <Label for="5">Restauration</Label>
                     </div>
                 </div>
-                <div class="flex justify-end gap-2">
+                <div class="flex justify-end gap-2 mt-2">
                     <Button
                         type="button"
                         variant="outline"
@@ -418,7 +413,6 @@ const submit = () => {
 }
 </style>
 
-<!-- TODO : dark mode -->
-<!-- TODO : name, pas id dans combobox -->
+<!-- TODO : Mise à jour (espèce) -->
 <!-- TODO : Component : Radio, checkbox,... -->
 <!-- TODO : Afficher toutes les espèces dans combobox -->
