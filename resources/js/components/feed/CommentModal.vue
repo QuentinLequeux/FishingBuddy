@@ -266,5 +266,3 @@ watch(
         </DialogContent>
     </Dialog>
 </template>
-
-<!-- TODO : Components -->
