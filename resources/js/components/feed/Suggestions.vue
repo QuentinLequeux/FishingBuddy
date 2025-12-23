@@ -20,6 +20,7 @@ const closeSuggest = () => {
 
 <template>
     <aside
+        v-if="users.length"
         v-show="showSuggest"
         id="suggest"
         class="fixed top-56 right-10 flex max-w-[300px] flex-col gap-4 max-2xl:hidden pt-8"
