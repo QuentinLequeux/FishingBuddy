@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Activity;
+use App\Concerns\RandomUser;
 use App\Concerns\UserActivity;
 
 class DashboardController extends Controller
 {
+    use RandomUser;
     use UserActivity;
 
     public function index()
@@ -17,13 +18,10 @@ class DashboardController extends Controller
 
         $followingIds = $user ? $user->following()->pluck('followed_id')->toArray() : [];
 
-        $users = User::whereNotIn('id', array_merge($followingIds, [$user->id]))
-            ->inRandomOrder()
-            ->take(4)
-            ->get();
+        $users = $this->getRandomUsers($user, $followingIds, 4);
 
         $activity = Activity::with(['user', 'specie', 'lure', 'comments.user'])
-            ->visibleFor($user)
+            ->visibleFor()
             ->inRandomOrder()
             ->first();
 
