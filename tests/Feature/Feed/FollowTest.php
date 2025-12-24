@@ -10,5 +10,5 @@ test('authenticated user can follow', function () {
 
     $response = $this->post(route('feed.follow', $user2));
 
-    $response->assertStatus(302);
+    $response->assertStatus(200);
 });
