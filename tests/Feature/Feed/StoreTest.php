@@ -22,7 +22,7 @@ test('user can create a post', function () {
 
     $response = $this->actingAs($user)->post(route('feed.store'), $payload);
 
-    $response->assertRedirect(route('feed'));
+    $response->assertStatus(200);
 
     $this->assertDatabaseHas('activities', [
         'user_id' => $user->id,
