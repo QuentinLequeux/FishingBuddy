@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Like;
 use App\Models\Spot;
 use App\Models\User;
 use App\Models\Specie;
@@ -87,6 +88,8 @@ class DatabaseSeeder extends Seeder
         Activity::factory()->count(10)->create();
 
         Comment::factory()->count(10)->create();
+
+        Like::factory()->count(10)->create();
 
         //ActivityView::factory()->count(10)->create();
     }
