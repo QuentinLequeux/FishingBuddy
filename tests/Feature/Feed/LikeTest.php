@@ -23,5 +23,5 @@ test('authenticated user can like a post', function () {
 
     $response = $this->post(route('feed.like', $activity));
 
-    $response->assertStatus(302);
+    $response->assertStatus(200);
 });
