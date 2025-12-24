@@ -46,8 +46,10 @@ test('user can delete avatar', function () {
     $this->assertDatabaseMissing('users', ['avatar' => '']);
 });
 
+/*
 test('old avatar is deleted when new is uploaded', function () {
 
 });
+*/
 
 // TODO : test
