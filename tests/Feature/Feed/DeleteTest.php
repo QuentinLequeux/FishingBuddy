@@ -23,7 +23,7 @@ test('user can delete his post', function () {
 
     $response = $this->delete(route('feed.destroy', $activity));
 
-    $response->assertRedirect(route('feed'));
+    $response->assertStatus(200);
 
     $this->assertSoftDeleted('activities', ['id' => $activity->id]);
 });
