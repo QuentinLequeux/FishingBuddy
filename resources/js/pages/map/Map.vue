@@ -67,6 +67,10 @@ function initMap(center: [number, number]) {
             center,
             zoom: mapZoom,
             fullscreenControl: true,
+            localIdeographFontFamily: 'Poppins',
+            maxZoom: 20,
+            projectionControl: true,
+            scaleControl: true,
         }),
     );
 
