@@ -7,13 +7,15 @@ test('authenticated user can access to profile', function () {
 
     $this->actingAs($user);
 
-    $response = $this->get(route('profile'));
+    $response = $this->get(route('profile', $user));
 
     $response->assertStatus(200);
 });
 
 test('guest user can access to profile', function () {
-    $response = $this->get(route('profile'));
+    $user = User::factory()->create();
+
+    $response = $this->get(route('profile', $user));
 
     $response->assertStatus(200);
 });
