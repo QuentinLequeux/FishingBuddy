@@ -4,6 +4,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from '@/components/ui/popover';
+import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { PopoverArrow, PopoverClose } from 'reka-ui';
@@ -29,7 +30,10 @@ import { LucideSlidersHorizontal, X } from 'lucide-vue-next';
             <div
                 class="my-2 flex w-full items-start gap-2 rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-900"
             >
-                <Checkbox id="11" class="data-[state=checked]:bg-main dark:data-[state=checked]:bg-white" />
+                <Checkbox
+                    id="11"
+                    class="data-[state=checked]:bg-main dark:data-[state=checked]:bg-white"
+                />
                 <div>
                     <Label for="11">Mes publications</Label>
                     <p class="text-xs">
