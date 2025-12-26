@@ -21,7 +21,6 @@ class DashboardController extends Controller
         $users = $this->getRandomUsers($user, $followingIds, 4);
 
         $activity = Activity::with(['user', 'specie', 'lure', 'comments.user'])
-            ->visibleFor()
             ->inRandomOrder()
             ->first();
 
