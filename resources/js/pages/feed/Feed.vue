@@ -7,7 +7,6 @@ import { ILure } from '@/types/ILure';
 import { AppPageProps } from '@/types';
 import { ISpecie } from '@/types/ISpecie';
 import { Kbd } from '@/components/ui/kbd';
-import { Ban, Search } from 'lucide-vue-next';
 import { Input } from '@/components/ui/input';
 import { BreadcrumbItem, User } from '@/types';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -15,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { IActivities } from '@/types/IActivities';
 import { Head, router, usePage } from '@inertiajs/vue3';
 import UserCard from '@/components/profile/UserCard.vue';
+import { Ban, Search, Home, Heart } from 'lucide-vue-next';
 import Suggestions from '@/components/feed/Suggestions.vue';
 import PublishModal from '@/components/feed/PublishModal.vue';
 import CommentModal from '@/components/feed/CommentModal.vue';
@@ -38,9 +38,7 @@ const props = defineProps<{
     follows: IActivities[];
     species: ISpecie[];
     lures: ILure[];
-    users: {
-        data: User[];
-    };
+    users: User[];
     suggestions: User[];
 }>();
 
@@ -163,18 +161,27 @@ onBeforeUnmount(() => {
                     class="z-10 flex flex-col items-center"
                 >
                     <TabsList class="my-2">
-                        <TabsTrigger value="feed" class="m-1 px-3"
-                            >Activit&eacute;</TabsTrigger
-                        >
+                        <TabsTrigger value="feed" class="m-1 px-3">
+                            <div class="flex items-center gap-2">
+                                <Home class="size-6" />
+                                Activit&eacute;
+                            </div>
+                        </TabsTrigger>
                         <TabsTrigger
                             v-if="$page.props.auth.user"
                             value="follow"
                             class="m-1 px-3"
                         >
-                            Suivi(e)
+                            <div class="flex items-center gap-2">
+                                <Heart class="size-6" />
+                                Suivi(e)
+                            </div>
                         </TabsTrigger>
                         <TabsTrigger value="search" class="m-1 px-3">
-                            Recherche
+                            <div class="flex items-center gap-2">
+                                <Search class="size-6" />
+                                Recherche
+                            </div>
                         </TabsTrigger>
                     </TabsList>
                     <TabsContent value="feed">
@@ -233,8 +240,8 @@ onBeforeUnmount(() => {
                                 ref="searchRef"
                             />
                             <UserCard
-                                v-if="props.users"
-                                :users="props.users.data"
+                                v-if="props.users.length"
+                                :users="props.users"
                                 class="h-screen"
                             />
                         </div>
@@ -269,13 +276,9 @@ onBeforeUnmount(() => {
             v-model:open="openCommentModal"
             :activity="selectedActivity"
         />
-        <Suggestions
-            v-if="activeTab !== 'search'"
-            :users="props.suggestions"
-        />
+        <Suggestions v-if="activeTab !== 'search'" :users="props.suggestions" />
     </AppLayout>
 </template>
 
-<!-- TODO : Icône tabs ? -->
 <!-- TODO : Modifier post -->
 <!-- TODO : Load par étapes des posts à afficher -->
