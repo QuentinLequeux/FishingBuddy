@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import {
+    Ban,
+    Flame,
+    Share2,
+    HeartPlus,
+    TrendingUp,
+    TrendingDown,
+} from 'lucide-vue-next';
 import { ref } from 'vue';
 import 'vue-sonner/style.css';
 import { route } from 'ziggy-js';
@@ -6,16 +14,22 @@ import { BreadcrumbItem } from '@/types';
 import { Toaster, toast } from 'vue-sonner';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Button } from '@/components/ui/button';
-import { Share2, HeartPlus } from 'lucide-vue-next';
+import { IActivities } from '@/types/IActivities';
 import Tooltip from '@/components/global/ToolTip.vue';
 import { Separator } from '@/components/ui/separator';
+import UserAvatar from '@/components/global/UserAvatar.vue';
 import { router, usePage, Head, Link } from '@inertiajs/vue3';
+import ActivityCard from '@/components/feed/ActivityCard.vue';
+import CommentModal from '@/components/feed/CommentModal.vue';
 import FollowersModal from '@/components/profile/FollowersModal.vue';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const {
+    old,
     user,
+    liked,
     posts,
+    recent,
     follows,
     followings,
     isFollowing,
@@ -24,7 +38,9 @@ const {
 } = usePage().props as any;
 const following = ref(isFollowing);
 const followersCount = ref(follows);
+const openCommentModal = ref(false);
 const openFollowersModal = ref(false);
+const selectedActivity = ref<IActivities | null>(null);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -47,6 +63,7 @@ const submit = () => {
         {},
         {
             preserveScroll: true,
+            preserveState: false,
         },
     );
 };
@@ -71,15 +88,23 @@ const openFollowing = () => {
     openFollowersModal.value = true;
 };
 </script>
+
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Toaster position="top-center" closeButton richColors />
+        <Toaster
+            position="top-center"
+            closeButton
+            closeButtonPosition="top-right"
+            richColors
+        />
         <Head :title="user.name" />
-        <div class="flex justify-center p-6">
+        <div class="feed flex justify-center p-6">
             <h2 aria-level="2" role="heading" class="sr-only">
                 Profil - {{ user.name }}
             </h2>
-            <div class="relative flex w-[600px] flex-col items-center gap-4">
+            <div
+                class="relative flex flex-col items-center gap-4 max-sm:w-full"
+            >
                 <Button
                     class="main-button absolute left-0"
                     title="Partager le lien"
@@ -87,7 +112,7 @@ const openFollowing = () => {
                 >
                     <Share2 class="mr-0.5 size-5" />
                 </Button>
-                <div class="h-[100px] w-[100px] rounded-full bg-gray-200" />
+                <UserAvatar :user="user" :size="100" />
                 <h3 aria-level="3" role="heading" class="text-xl font-semibold">
                     {{ user.name }}
                 </h3>
@@ -123,8 +148,9 @@ const openFollowing = () => {
                         Suivi·e·s
                     </p>
                     <Separator orientation="vertical" />
-                    <Tooltip :posts="posts">
-                        <p>{{ posts }}&nbsp;Posts</p>
+                    <Tooltip :label="posts">
+                        <span class="font-semibold">{{ posts }}</span
+                        >&nbsp;Posts
                     </Tooltip>
                 </div>
                 <Button
@@ -151,23 +177,87 @@ const openFollowing = () => {
                     v-if="$page.props.auth.user?.id === user.id"
                     class="main-button mb-4 w-full"
                     title="Publier"
+                    @click="router.get(route('feed'), { publish: 1 })"
                 >
                     Publier
                 </Button>
                 <Tabs defaultValue="new">
-                    <TabsList class="p-2">
-                        <TabsTrigger value="new">R&eacute;cents</TabsTrigger>
-                        <TabsTrigger value="old">Anciens</TabsTrigger>
-                        <TabsTrigger value="like">Likes</TabsTrigger>
+                    <TabsList class="m-auto flex w-fit justify-center p-2">
+                        <TabsTrigger value="new">
+                            <div class="flex items-center gap-2">
+                                <TrendingUp class="size-6" />
+                                R&eacute;cents
+                            </div>
+                        </TabsTrigger>
+                        <TabsTrigger value="old">
+                            <div class="flex items-center gap-2">
+                                <TrendingDown class="size-6" />
+                                Anciens
+                            </div>
+                        </TabsTrigger>
+                        <TabsTrigger value="like">
+                            <div class="flex items-center gap-2">
+                                <Flame class="size-6" />
+                                Populaires
+                            </div>
+                        </TabsTrigger>
                     </TabsList>
                     <TabsContent value="new">
-                        <div>R&eacute;cents</div>
+                        <p
+                            v-if="recent.length === 0"
+                            class="mt-8 flex h-screen justify-center gap-2 text-gray-500"
+                        >
+                            <Ban />
+                            Aucune publications.
+                        </p>
+                        <ActivityCard
+                            v-for="activity in recent"
+                            :key="activity.id"
+                            :activity="activity"
+                            :auth-user-id="$page.props.auth.user?.id"
+                            @comment="
+                                selectedActivity = $event;
+                                openCommentModal = true;
+                            "
+                        />
                     </TabsContent>
                     <TabsContent value="old">
-                        <div>Anciens</div>
+                        <p
+                            v-if="old.length === 0"
+                            class="mt-8 flex h-screen justify-center gap-2 text-gray-500"
+                        >
+                            <Ban />
+                            Aucune publications.
+                        </p>
+                        <ActivityCard
+                            v-for="activity in old"
+                            :key="activity.id"
+                            :activity="activity"
+                            :auth-user-id="$page.props.auth.user?.id"
+                            @comment="
+                                selectedActivity = $event;
+                                openCommentModal = true;
+                            "
+                        />
                     </TabsContent>
                     <TabsContent value="like">
-                        <div>Likes</div>
+                        <p
+                            v-if="liked.length === 0"
+                            class="mt-8 flex h-screen justify-center gap-2 text-gray-500"
+                        >
+                            <Ban />
+                            Aucune publications.
+                        </p>
+                        <ActivityCard
+                            v-for="activity in liked"
+                            :key="activity.id"
+                            :activity="activity"
+                            :auth-user-id="$page.props.auth.user?.id"
+                            @comment="
+                                selectedActivity = $event;
+                                openCommentModal = true;
+                            "
+                        />
                     </TabsContent>
                 </Tabs>
             </div>
@@ -180,11 +270,10 @@ const openFollowing = () => {
             :followers_list="followers_list"
             :following_list="following_list"
         />
+        <CommentModal
+            v-if="selectedActivity"
+            v-model:open="openCommentModal"
+            :activity="selectedActivity"
+        />
     </AppLayout>
 </template>
-
-<!-- TODO : ToolTip -->
-<!-- TODO : QR code ? -->
-<!-- TODO : Ajouter avatar -->
-<!-- TODO : Affichage du lieu (ex : Namur) -->
-<!-- TODO : Condition si aucun post : Icône ou publier si auth()->id === user.id -->
