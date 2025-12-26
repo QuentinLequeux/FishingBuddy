@@ -35,4 +35,7 @@ return [
         ],
     ],
 
+    'maptiler' => [
+        'key' => env('VITE_MAPTILER_KEY'),
+    ],
 ];

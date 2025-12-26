@@ -1,5 +1,5 @@
-import { InertiaLinkProps } from '@inertiajs/vue3';
 import type { LucideIcon } from 'lucide-vue-next';
+import { InertiaLinkProps } from '@inertiajs/vue3';
 
 export interface Auth {
     user: User;
@@ -15,6 +15,7 @@ export interface NavItem {
     href: NonNullable<InertiaLinkProps['href']>;
     icon?: LucideIcon;
     isActive?: boolean;
+    soon?: boolean;
 }
 
 export type AppPageProps<
@@ -32,8 +33,10 @@ export interface User {
     email: string;
     avatar?: string;
     email_verified_at: string | null;
+    slug: string;
     created_at: string;
     updated_at: string;
+    isFollowing: boolean;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

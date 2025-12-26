@@ -17,10 +17,10 @@ defineProps<{
 
 <template>
     <AuthLayout
-        title="Forgot password"
-        description="Enter your email to receive a password reset link"
+        title="Mot de passe oublié"
+        description="Entrez votre email pour recevoir un lien de réinitialisation de votre mot de passe."
     >
-        <Head title="Forgot password" />
+        <Head title="Mot de passe oublié" />
 
         <div
             v-if="status"
@@ -35,7 +35,7 @@ defineProps<{
                 v-slot="{ errors, processing }"
             >
                 <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
+                    <Label for="email">Adresse email</Label>
                     <Input
                         id="email"
                         type="email"
@@ -49,22 +49,23 @@ defineProps<{
 
                 <div class="my-6 flex items-center justify-start">
                     <Button
-                        class="w-full"
+                        class="w-full main-button"
                         :disabled="processing"
                         data-test="email-password-reset-link-button"
+                        title="Réinitialiser le mot de passe"
                     >
                         <LoaderCircle
                             v-if="processing"
                             class="h-4 w-4 animate-spin"
                         />
-                        Email password reset link
+                        R&eacute;initialiser le mot de passe
                     </Button>
                 </div>
             </Form>
 
             <div class="space-x-1 text-center text-sm text-muted-foreground">
-                <span>Or, return to</span>
-                <TextLink :href="login()">log in</TextLink>
+                <span>Où, retour vers</span>
+                <TextLink :href="login()">connexion</TextLink>
             </div>
         </div>
     </AuthLayout>

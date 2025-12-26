@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,12 +13,17 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('slug')->unique()->nullable();
+            $table->string('avatar')->nullable();
+            $table->timestamp('avatar_updated_at')->nullable();
+            $table->string('activities_visibility')->default('public');
             $table->rememberToken();
             $table->timestamps();
+            $table->index('name');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

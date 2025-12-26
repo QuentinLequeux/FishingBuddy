@@ -3,6 +3,30 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Quentin Lequeux">
+        <meta name="description" content="FishingBuddy - Un compagnon pour la pêche !">
+        <meta name="keywords" content="pêche, application, fish, fishing, poisson, pêcheur">
+
+        <!-- OpenGraph -->
+
+        <meta property="og:type" content="website">
+        <meta property="og:sitename" content="FishingBuddy">
+        <meta property="og:locale" content="fr_BE">
+        <meta property="og:title" content="FishingBuddy">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:description" content="FishingBuddy - Un compagnon pour la pêche !">
+
+        <!-- SEO -->
+
+        @include('includes.jsonld-app')
+
+        @if(request()->routeIs('profile'))
+            @include('includes.jsonld-profile')
+        @endif
+
+        @if(request()->routeIs('feed'))
+            @include('includes.jsonld-feed')
+        @endif
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
@@ -32,17 +56,19 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <!-- Favicons -->
 
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg">
 
+        <!-- Adobe Fonts -->
+
+        <link rel="stylesheet" href="https://use.typekit.net/bdz5dbg.css">
+
+        @routes
         @vite(['resources/js/app.ts', "resources/js/pages/{$page['component']}.vue"])
         @inertiaHead
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-poppins antialiased">
         @inertia
     </body>
 </html>

@@ -2,7 +2,7 @@
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
-import { Form, Head, Link, usePage } from '@inertiajs/vue3';
+import { Form, Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 
 import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
@@ -13,6 +13,11 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
+import { route } from 'ziggy-js';
+import { toast, Toaster } from 'vue-sonner';
+import 'vue-sonner/style.css';
+import HoverCardForm from '@/components/map/HoverCardForm.vue';
+import { X } from 'lucide-vue-next';
 
 interface Props {
     mustVerifyEmail: boolean;
@@ -23,24 +28,59 @@ defineProps<Props>();
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
-        title: 'Profile settings',
+        title: 'Paramètres profil',
         href: edit().url,
     },
 ];
 
 const page = usePage();
 const user = page.props.auth.user;
+
+const avatarForm = useForm({
+    avatar: null,
+});
+
+const submit = (e: Event) => {
+    if (!avatarForm.avatar) return;
+    e.preventDefault();
+    avatarForm.post(route('profile.avatar.update'), {
+        forceFormData: true,
+        preserveScroll: true,
+        preserveState: false,
+        onSuccess: () => {
+            avatarForm.reset();
+            toast.success('Avatar mis à jour !');
+        },
+    });
+};
+
+const deleteAvatar = () => {
+    router.delete(route('profile.avatar.destroy'),
+        {
+            preserveScroll: true,
+            preserveState: false,
+            onSuccess: () => {
+                toast.success('Avatar supprimé !');
+            }
+        });
+};
 </script>
 
 <template>
+    <Toaster
+        richColors
+        position="top-center"
+        closeButton
+        closeButtonPosition="top-right"
+    />
     <AppLayout :breadcrumbs="breadcrumbItems">
-        <Head title="Profile settings" />
+        <Head title="Paramètres profil" />
 
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall
-                    title="Profile information"
-                    description="Update your name and email address"
+                    title="Information de profil"
+                    description="Mettez à jour votre nom et votre adresse email."
                 />
 
                 <Form
@@ -49,7 +89,7 @@ const user = page.props.auth.user;
                     v-slot="{ errors, processing, recentlySuccessful }"
                 >
                     <div class="grid gap-2">
-                        <Label for="name">Name</Label>
+                        <Label for="name">Nom</Label>
                         <Input
                             id="name"
                             class="mt-1 block w-full"
@@ -57,13 +97,13 @@ const user = page.props.auth.user;
                             :default-value="user.name"
                             required
                             autocomplete="name"
-                            placeholder="Full name"
+                            placeholder="Nom"
                         />
                         <InputError class="mt-2" :message="errors.name" />
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="email">Email address</Label>
+                        <Label for="email">Adresse email</Label>
                         <Input
                             id="email"
                             type="email"
@@ -72,20 +112,22 @@ const user = page.props.auth.user;
                             :default-value="user.email"
                             required
                             autocomplete="username"
-                            placeholder="Email address"
+                            placeholder="Adresse email"
                         />
                         <InputError class="mt-2" :message="errors.email" />
                     </div>
 
                     <div v-if="mustVerifyEmail && !user.email_verified_at">
                         <p class="-mt-4 text-sm text-muted-foreground">
-                            Your email address is unverified.
+                            Votre adresse email n'est pas
+                            v&eacute;rifi&eacute;e.
                             <Link
                                 :href="send()"
                                 as="button"
                                 class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                             >
-                                Click here to resend the verification email.
+                                Cliquez ici pour renvoyer l'email de
+                                v&eacute;rification.
                             </Link>
                         </p>
 
@@ -93,8 +135,9 @@ const user = page.props.auth.user;
                             v-if="status === 'verification-link-sent'"
                             class="mt-2 text-sm font-medium text-green-600"
                         >
-                            A new verification link has been sent to your email
-                            address.
+                            Un nouveau lien de v&eacute;rification a
+                            &eacute;t&eacute; envoy&eacute; &agrave; votre
+                            adresse email.
                         </div>
                     </div>
 
@@ -102,7 +145,9 @@ const user = page.props.auth.user;
                         <Button
                             :disabled="processing"
                             data-test="update-profile-button"
-                            >Save</Button
+                            class="main-button"
+                            title="Sauvegarder"
+                            >Sauvegarder</Button
                         >
 
                         <Transition
@@ -115,13 +160,65 @@ const user = page.props.auth.user;
                                 v-show="recentlySuccessful"
                                 class="text-sm text-neutral-600"
                             >
-                                Saved.
+                                Sauvegard&eacute;.
                             </p>
                         </Transition>
                     </div>
                 </Form>
+                <Form
+                    class="flex flex-col gap-2"
+                    enctype="multipart/form-data"
+                    :form="avatarForm"
+                    @submit="submit"
+                >
+                    <div class="flex gap-2">
+                        <Label for="avatar"> Avatar </Label>
+                        <HoverCardForm> Taille maximum : 2MB. </HoverCardForm>
+                    </div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        T&eacute;l&eacute;chargez ou mettez &agrave; jour votre
+                        avatar.
+                    </p>
+                    <div class="relative w-fit" v-if="user.avatar">
+                        <div
+                            class="absolute right-0 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-gray-400 bg-gray-200"
+                            title="Supprimer l'avatar"
+                            @click="deleteAvatar"
+                        >
+                            <X class="size-3 text-black" />
+                        </div>
+                        <img
+                            :src="`/storage/${user.avatar}`"
+                            :alt="`Avatar de ${user.name}`"
+                            width="100"
+                            height="100"
+                            class="rounded-full"
+                        />
+                    </div>
+                    <Input
+                        type="file"
+                        id="avatar"
+                        accept=".png, .jpg, .jpeg, .webp"
+                        class="pt-2"
+                        name="avatar"
+                        required
+                        @change="
+                            (e: any) => (avatarForm.avatar = e.target.files[0])
+                        "
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="avatarForm.errors.avatar"
+                    />
+                    <Button
+                        class="main-button mt-4 w-fit"
+                        title="Télécharger"
+                        type="submit"
+                    >
+                        T&eacute;l&eacute;charger
+                    </Button>
+                </Form>
             </div>
-
             <DeleteUser />
         </SettingsLayout>
     </AppLayout>
