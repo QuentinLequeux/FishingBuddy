@@ -166,12 +166,10 @@ class ActivitiesController extends Controller
     {
         return Activity::with(['user', 'lure', 'specie', 'comments.user'])
             ->latest()
-            ->visibleFor()
             ->take(10)
             ->get();
     }
 }
 
-// TODO : visibleFor
 // TODO : Optimiser queries et models
 // TODO : Chargement des activities en back-end
