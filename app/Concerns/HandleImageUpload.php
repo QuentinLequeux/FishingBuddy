@@ -26,7 +26,7 @@ trait HandleImageUpload
         $path = $directory . '/' . $fileName;
 
         $image = Image::read($file)
-            ->cover($width, $height)
+            ->coverDown($width, $height)
             ->toWebp();
 
         Storage::disk('public')->put($path, $image);
