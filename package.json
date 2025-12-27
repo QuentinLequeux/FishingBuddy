@@ -47,10 +47,5 @@
         "vue": "^3.5.13",
         "vue-sonner": "^2.0.9",
         "ziggy-js": "^2.6.0"
-    },
-    "optionalDependencies": {
-        "@rollup/rollup-linux-x64-gnu": "4.9.5",
-        "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
-        "lightningcss-linux-x64-gnu": "^1.29.1"
     }
 }
