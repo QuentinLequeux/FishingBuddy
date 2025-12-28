@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Activity;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +19,8 @@ class ActivityViewFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => $this->faker->unique()->numberBetween(1, 11),
-            'activity_id' => $this->faker->numberBetween(1, 5),
+            'user_id' => User::inRandomOrder()->first()->id,
+            'activity_id' => Activity::inRandomOrder()->first()->id,
         ];
     }
 }
