@@ -8,6 +8,7 @@ import {
     ExternalLinkIcon,
 } from 'lucide-vue-next';
 import { ISpot } from '@/types/ISpot';
+import { ISpecie } from '@/types/ISpecie';
 import { Badge } from '@/components/ui/badge';
 import { defineEmits, defineProps, ref } from 'vue';
 import { Separator } from '@/components/ui/separator';
@@ -17,10 +18,12 @@ import PopoverSpot from '@/components/map/PopoverSpot.vue';
 const props = defineProps<{
     modelValue: boolean;
     spot: ISpot | null;
+    species: ISpecie[];
 }>();
 
 const emit = defineEmits<{
     (e: 'update:modelValue', value: boolean): void;
+    (e: 'deleted', id: number): void;
 }>();
 
 const close = () => {
@@ -28,13 +31,6 @@ const close = () => {
 };
 
 const showForm = ref(false);
-
-const onSpotSaved = (updatedSpot: ISpot) => {
-    if (props.spot) {
-        Object.assign(props.spot, updatedSpot);
-    }
-    showForm.value = false;
-};
 </script>
 
 <template>
@@ -43,7 +39,7 @@ const onSpotSaved = (updatedSpot: ISpot) => {
             v-if="modelValue && spot"
             class="absolute right-14 z-10 my-2 flex h-[96%] w-[400px] flex-col gap-2 overflow-y-scroll rounded-2xl bg-white p-4 shadow-lg max-sm:w-[83%] dark:bg-sidebar"
         >
-            <PopoverSpot :spot="spot" @edit="showForm = true" />
+            <PopoverSpot :spot="spot" @edit="showForm = true" @deleted="emit('deleted', $event)" />
             <div
                 title="Fermer"
                 class="absolute top-2 right-2 m-1 hover:cursor-pointer hover:text-main"
@@ -240,9 +236,8 @@ const onSpotSaved = (updatedSpot: ISpot) => {
         :spot="spot"
         :lat="Number(spot?.latitude ?? 0)"
         :lng="Number(spot?.longitude ?? 0)"
-        :species="spot?.species ?? []"
+        :species="props.species"
         @update:visible="showForm = $event"
-        @saved="onSpotSaved"
     />
 </template>
 <style scoped>
