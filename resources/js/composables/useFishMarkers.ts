@@ -54,5 +54,14 @@ export function useFishMarkers(
             markers.set(spot.id, marker);
         });
     }
-    return { createFishMarkers }
+
+    function removeMarker(id: number) {
+        const marker = markers.get(id);
+        if (!marker) return;
+
+        marker.remove();
+        markers.delete(id);
+    }
+
+    return { createFishMarkers, removeMarker }
 }
