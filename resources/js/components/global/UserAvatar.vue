@@ -42,5 +42,3 @@ const avatarSize = computed(() => props.size ?? 40);
         />
     </div>
 </template>
-
-<!-- TODO : src prod (asset ?) -->
