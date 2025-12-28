@@ -96,10 +96,9 @@ const submit = () => {
     form.species = [...selectedSpecies.value];
     if (props.spot) {
         form.post(route('map.update', props.spot.id), {
+            preserveState: false,
             onSuccess: () => {
-                const updatedSpot = form.data();
                 emit('update:visible', false);
-                emit('saved', updatedSpot);
                 toast.success('Spot mis à jour');
             },
         });
@@ -412,7 +411,3 @@ const specieNameById = computed(() => {
     opacity: 1;
 }
 </style>
-
-<!-- TODO : Mise à jour (espèce) -->
-<!-- TODO : Component : Radio, checkbox,... -->
-<!-- TODO : Afficher toutes les espèces dans combobox -->
