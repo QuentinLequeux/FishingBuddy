@@ -28,7 +28,7 @@ const props = defineProps<{ spots: ISpot[]; species: ISpecie[] }>();
 const spots = ref<ISpot[]>(props.spots || []);
 const spotModalVisible = ref(false);
 const spotModalData = ref<ISpot | null>(null);
-const { createFishMarkers } = useFishMarkers(
+const { createFishMarkers, removeMarker } = useFishMarkers(
     map,
     spotModalData,
     spotModalVisible,
@@ -188,7 +188,19 @@ const closePositionModal = () => {
         markerVisible.value = false;
     }
 };
+
+const onSpotDeleted = (id: number | null) => {
+    if (id == null) return;
+
+    spots.value = spots.value.filter(s => s.id !== id);
+
+    spotModalVisible.value = false;
+    spotModalData.value = null;
+
+    removeMarker(id);
+};
 </script>
+
 <template>
     <Toaster
         position="top-center"
@@ -220,7 +232,7 @@ const closePositionModal = () => {
                     :lng="popup.lng"
                     :species="species"
                 />
-                <SpotModal v-model="spotModalVisible" :spot="spotModalData" :species="species" />
+                <SpotModal v-model="spotModalVisible" :spot="spotModalData" :species="species" @deleted="onSpotDeleted" />
             </div>
         </div>
     </AppLayout>
