@@ -4,12 +4,25 @@ namespace App\Http\Controllers\Activities;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Concerns\UserActivity;
 use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {
+    use UserActivity;
+
     public function index(User $user)
     {
+        $authUser = auth()->user();
+
+        $followingIds = $authUser
+            ? $authUser->following()->pluck('followed_id')->toArray()
+            : [];
+
+        $likedActivityIds = $authUser
+            ? $authUser->likes()->pluck('activity_id')->toArray()
+            : [];
+
         $user->loadCount([
             'activities',
             'followers',
@@ -22,11 +35,11 @@ class ProfileController extends Controller
 
         $activities = $user->activities()->with(['specie', 'lure', 'user', 'comments.user'])->take(10);
 
-        $old = $activities->oldest()->get();
+        $old = $this->getUserActivityData($activities->oldest()->get(), $followingIds, $likedActivityIds);
 
-        $recent = $activities->latest()->get();
+        $recent = $this->getUserActivityData($activities->latest()->get(), $followingIds, $likedActivityIds);
 
-        $liked = $activities->withCount('likes')->orderByDesc('likes_count')->get();
+        $liked = $this->getUserActivityData($activities->withCount('likes')->orderByDesc('likes_count')->get(), $followingIds, $likedActivityIds);
 
         $is_following = auth()->check() ? auth()->user()->following()->where('followed_id', $user->id)->exists() : false;
 
