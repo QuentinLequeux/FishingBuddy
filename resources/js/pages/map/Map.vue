@@ -220,7 +220,7 @@ const closePositionModal = () => {
                     :lng="popup.lng"
                     :species="species"
                 />
-                <SpotModal v-model="spotModalVisible" :spot="spotModalData" />
+                <SpotModal v-model="spotModalVisible" :spot="spotModalData" :species="species" />
             </div>
         </div>
     </AppLayout>
