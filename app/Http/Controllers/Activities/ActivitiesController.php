@@ -132,8 +132,6 @@ class ActivitiesController extends Controller
             $activity->views()->create([
                 'user_id' => $user->id
             ]);
-
-            $activity->increment('views');
         }
     }
 
