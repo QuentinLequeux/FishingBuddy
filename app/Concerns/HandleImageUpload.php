@@ -20,7 +20,8 @@ trait HandleImageUpload
      */
     public function storeAndResizeImage(UploadedFile $file, int $width = 200, int $height = 200, string $directory = 'avatars'): string
     {
-        Storage::disk('public')->makeDirectory($directory);
+        //Storage::disk('public')->makeDirectory($directory);
+        $disk = Storage::disk('s3');
 
         $fileName = Str::uuid() . '.webp';
         $path = $directory . '/' . $fileName;
@@ -29,7 +30,8 @@ trait HandleImageUpload
             ->coverDown($width, $height)
             ->toWebp();
 
-        Storage::disk('public')->put($path, $image);
+        //Storage::disk('public')->put($path, $image);
+        $disk->put($path, (string)$image, 'public');
 
         return $path;
     }

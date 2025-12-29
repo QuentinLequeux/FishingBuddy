@@ -19,11 +19,11 @@ const avatarSize = computed(() => props.size ?? 40);
 
 <template>
     <div
-        v-if="targetUser?.avatar"
+        v-if="targetUser?.avatar_url"
         :style="{ width: `${avatarSize}px`, height: `${avatarSize}px` }"
     >
         <img
-            :src="`/storage/${targetUser.avatar}`"
+            :src="targetUser.avatar_url"
             :alt="`Avatar de ${targetUser.name}`"
             :width="avatarSize"
             :height="avatarSize"
