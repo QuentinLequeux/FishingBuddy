@@ -87,12 +87,12 @@ class DatabaseSeeder extends Seeder
 
         Activity::factory()->count(10)->create();
 
+        ActivityView::factory()->count(5)->create()->each(function ($view) {
+            $view->activity()->increment('views');
+        });
+
         Comment::factory()->count(10)->create();
 
-        Like::factory()->count(10)->create();
-
-        //ActivityView::factory()->count(10)->create();
+        Like::factory()->count(5)->create();
     }
 }
-
-// TODO : Ajouter les vues.

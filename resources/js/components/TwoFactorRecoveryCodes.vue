@@ -45,21 +45,20 @@ onMounted(async () => {
                 <LockKeyhole class="size-4" />2FA Recovery Codes
             </CardTitle>
             <CardDescription>
-                Recovery codes let you regain access if you lose your 2FA
-                device. Store them in a secure password manager.
+                Les codes de r&eacute;cup&eacute;ration vous permettent de retrouver l'acc&egrave;s si vous perdez votre
+                appareil 2FA. Stockez-les dans un gestionnaire de mots de passe s&eacute;curis&eacute;.
             </CardDescription>
         </CardHeader>
         <CardContent>
             <div
                 class="flex flex-col gap-3 select-none sm:flex-row sm:items-center sm:justify-between"
             >
-                <Button @click="toggleRecoveryCodesVisibility" class="w-fit">
+                <Button @click="toggleRecoveryCodesVisibility" class="w-fit main-button">
                     <component
                         :is="isRecoveryCodesVisible ? EyeOff : Eye"
                         class="size-4"
                     />
-                    {{ isRecoveryCodesVisible ? 'Hide' : 'View' }} Recovery
-                    Codes
+                    {{ isRecoveryCodesVisible ? 'Cacher' : 'Montrer' }} codes de r&eacute;cup&eacute;ration
                 </Button>
 
                 <Form
@@ -75,7 +74,7 @@ onMounted(async () => {
                         type="submit"
                         :disabled="processing"
                     >
-                        <RefreshCw /> Regenerate Codes
+                        <RefreshCw /> R&eacute;g&eacute;n&eacute;rer codes
                     </Button>
                 </Form>
             </div>
@@ -111,10 +110,9 @@ onMounted(async () => {
                         </div>
                     </div>
                     <p class="text-xs text-muted-foreground select-none">
-                        Each recovery code can be used once to access your
-                        account and will be removed after use. If you need more,
-                        click
-                        <span class="font-bold">Regenerate Codes</span> above.
+                        Chaque code de r&eacute;cup&eacute;ration peut être utilis&eacute; une fois pour acc&eacute;der
+                        &agrave; votre compte et sera supprim&eacute; apr&egrave;s utilisation. Si vous en avez besoin
+                        de plus, cliquez sur <span class="font-bold">R&eacute;g&eacute;n&eacute;rer codes</span>
                     </p>
                 </div>
             </div>

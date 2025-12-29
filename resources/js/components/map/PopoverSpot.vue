@@ -12,11 +12,12 @@ import AlertDialogSpot from '@/components/map/AlertDialogSpot.vue';
 
 defineProps<{
     spot: ISpot;
-}>()
+}>();
 
-defineEmits<{
+const emit = defineEmits<{
     (e: 'edit'): void;
-}>()
+    (e: 'deleted', id: number): void;
+}>();
 </script>
 <template>
     <Popover>
@@ -36,8 +37,10 @@ defineEmits<{
                 <SquarePen :size="20" />
                 Modifier
             </Button>
-            <AlertDialogSpot :spot="spot" />
-            <PopoverArrow class="fill-white stroke-gray-300 dark:stroke-gray-700 dark:fill-gray-950" />
+            <AlertDialogSpot :spot="spot" @deleted="emit('deleted', $event)" />
+            <PopoverArrow
+                class="fill-white stroke-gray-300 dark:fill-gray-950 dark:stroke-gray-700"
+            />
         </PopoverContent>
     </Popover>
 </template>

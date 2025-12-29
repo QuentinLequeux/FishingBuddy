@@ -40,33 +40,33 @@ onUnmounted(() => {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Head title="Two-Factor Authentication" />
+        <Head title="Authentification à deux facteurs" />
         <SettingsLayout>
             <div class="space-y-6">
                 <HeadingSmall
-                    title="Two-Factor Authentication"
-                    description="Manage your two-factor authentication settings"
+                    title="Authentification à deux facteurs"
+                    description="Gérez vos paramètres d'authentification à deux facteurs."
                 />
 
                 <div
                     v-if="!twoFactorEnabled"
                     class="flex flex-col items-start justify-start space-y-4"
                 >
-                    <Badge variant="destructive">Disabled</Badge>
+                    <Badge variant="destructive">D&eacute;sactiv&eacute;</Badge>
 
                     <p class="text-muted-foreground">
-                        When you enable two-factor authentication, you will be
-                        prompted for a secure pin during login. This pin can be
-                        retrieved from a TOTP-supported application on your
-                        phone.
+                        Lorsque vous activez l'authentification &agrave; deux facteurs, un code PIN s&eacute;curis&eacute;
+                        vous sera demand&eacute; lors de la connexion. Ce code peut être r&eacute;cup&eacute;r&eacute;
+                        &agrave; partir d'une application compatible sur votre t&eacute;l&eacute;phone.
                     </p>
 
                     <div>
                         <Button
                             v-if="hasSetupData"
                             @click="showSetupModal = true"
+                            class="main-button"
                         >
-                            <ShieldCheck />Continue Setup
+                            <ShieldCheck />Poursuivre la configuration
                         </Button>
                         <Form
                             v-else
@@ -74,8 +74,8 @@ onUnmounted(() => {
                             @success="showSetupModal = true"
                             #default="{ processing }"
                         >
-                            <Button type="submit" :disabled="processing">
-                                <ShieldCheck />Enable 2FA</Button
+                            <Button type="submit" :disabled="processing" class="main-button">
+                                <ShieldCheck />Activer 2FA</Button
                             ></Form
                         >
                     </div>
@@ -85,13 +85,12 @@ onUnmounted(() => {
                     v-else
                     class="flex flex-col items-start justify-start space-y-4"
                 >
-                    <Badge variant="default">Enabled</Badge>
+                    <Badge variant="default">Activ&eacute;</Badge>
 
                     <p class="text-muted-foreground">
-                        With two-factor authentication enabled, you will be
-                        prompted for a secure, random pin during login, which
-                        you can retrieve from the TOTP-supported application on
-                        your phone.
+                        Avec l'authentification &agrave; deux facteurs activ&eacute;e, vous serez invit&eacute; &agrave;
+                        entrer un code PIN al&eacute;atoire s&eacute;curis&eacute; lors de la connexion, que vous pouvez
+                        r&eacute;cup&eacute;rer depuis l'application compatible sur votre t&eacute;l&eacute;phone.
                     </p>
 
                     <TwoFactorRecoveryCodes />
@@ -104,7 +103,7 @@ onUnmounted(() => {
                                 :disabled="processing"
                             >
                                 <ShieldBan />
-                                Disable 2FA
+                                D&eacute;sactiver 2FA
                             </Button>
                         </Form>
                     </div>

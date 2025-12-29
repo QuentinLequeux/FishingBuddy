@@ -39,7 +39,7 @@ const submit = (method: string) => {
             method === 'like' ? props.activity.id : props.activity.user.id,
         ),
         {},
-        { preserveScroll: true },
+        { preserveScroll: true, preserveState: false },
     );
 };
 
@@ -202,5 +202,3 @@ const addView = (activity: IActivities) => {
         </div>
     </article>
 </template>
-
-<!-- TODO : if (props.activities.specie > 60) afficher trophée -->

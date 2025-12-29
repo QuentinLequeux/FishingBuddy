@@ -90,6 +90,7 @@ Pages d'actualités et de profils accessibles par les invités.
 - Fonctionnalité de gestion des permis.
 - Pouvoir changer le style de la carte.
 - Système de gamification (Badges, etc).
+- Implémenter des roles (Ex : modération, etc).
 - Implémenter des notifications (Ex : Followers, etc).
 - Utilisation de l'API static-map de MapTiler pour lier un spot à une prise.
 - Fonctionnalité HeatMap (Selon le nombre de spots enregistrés dans la même zone).

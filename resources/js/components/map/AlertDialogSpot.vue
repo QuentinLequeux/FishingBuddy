@@ -25,7 +25,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'deleted', id: number | null): void;
+    (e: 'deleted', id: number): void;
 }>();
 
 const submit = computed(() => {
@@ -34,7 +34,9 @@ const submit = computed(() => {
 });
 
 const onSuccess = () => {
-    const id = props.spot?.id ?? null;
+    if (!props.spot) return;
+
+    const id = props.spot?.id;
 
     toast.success('Spot supprimé', {
         duration: 5000,
@@ -82,5 +84,3 @@ const onSuccess = () => {
         </AlertDialogContent>
     </AlertDialog>
 </template>
-
-<!-- TODO : Reload après suppression -->
