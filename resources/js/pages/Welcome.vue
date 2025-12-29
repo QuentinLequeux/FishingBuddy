@@ -49,7 +49,7 @@ onMounted(() => {
     <header class="fixed z-10 w-screen bg-white shadow-md dark:bg-sidebar">
         <h1 aria-level="1" role="heading" class="sr-only">FishingBuddy</h1>
         <nav
-            class="m-auto flex w-[80%] items-center justify-between py-4 max-sm:w-[90%]"
+            class="m-auto flex w-[80%] items-center justify-between py-4 max-sm:w-[95%]"
         >
             <h2 aria-level="2" role="heading" class="sr-only">
                 Navigation principale
@@ -86,7 +86,7 @@ onMounted(() => {
             >
                 <Link :href="dashboard()"> Dashboard </Link>
             </Button>
-            <div v-else class="flex gap-2">
+            <div v-else class="flex gap-2 max-sm:gap-0">
                 <Button as-child variant="ghost" title="S'inscrire">
                     <Link :href="register()"> S&rsquo;inscrire </Link>
                 </Button>
