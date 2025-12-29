@@ -32,6 +32,7 @@ export interface User {
     name: string;
     email: string;
     avatar?: string;
+    avatar_url?: string;
     email_verified_at: string | null;
     slug: string;
     created_at: string;
