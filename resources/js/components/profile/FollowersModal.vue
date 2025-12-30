@@ -6,8 +6,9 @@ import {
     DialogHeader,
     DialogContent,
 } from '@/components/ui/dialog';
-import { ref, watch } from 'vue';
 import { Ban } from 'lucide-vue-next';
+import { computed, ref, watch } from 'vue';
+import LoadMore from '@/components/global/LoadMore.vue';
 import UserCard from '@/components/profile/UserCard.vue';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -43,7 +44,33 @@ watch(
         activeTab.value = val;
     },
 );
+
+const perPage = 10;
+const visibleCount = ref({
+    followers: perPage,
+    following: perPage,
+});
+
+const visibleFollowers = computed(() =>
+    props.followers_list.slice(0, visibleCount.value.followers)
+);
+
+const visibleFollowing = computed(() =>
+    props.following_list.slice(0, visibleCount.value.following)
+);
+
+function loadMore(tab: 'followers' | 'following') {
+    const listLength =
+        tab === 'followers'
+    ? props.followers_list.length : props.following_list.length;
+
+    visibleCount.value[tab] = Math.min(
+        visibleCount.value[tab] + perPage,
+        listLength
+    );
+}
 </script>
+
 <template>
     <Dialog :open="props.open" @update:open="emit('update:open', $event)">
         <DialogContent>
@@ -76,7 +103,7 @@ watch(
                     class="max-h-128 overflow-y-auto"
                 >
                     <UserCard
-                        :users="followers_list"
+                        :users="visibleFollowers"
                         v-if="followers_list.length > 0"
                     />
                     <div
@@ -86,13 +113,22 @@ watch(
                         <Ban />
                         Aucun followers
                     </div>
+                    <div
+                        v-if="
+                            visibleCount.followers < props.followers_list.length
+                        "
+                    >
+                        <LoadMore @click="loadMore('followers')" class="mt-4">
+                            Montrer plus
+                        </LoadMore>
+                    </div>
                 </TabsContent>
                 <TabsContent
                     value="following"
                     class="max-h-128 overflow-y-auto"
                 >
                     <UserCard
-                        :users="following_list"
+                        :users="visibleFollowing"
                         v-if="following_list.length > 0"
                     />
                     <div
@@ -102,11 +138,17 @@ watch(
                         <Ban />
                         Aucun suivi·e·s
                     </div>
+                    <div
+                        v-if="
+                            visibleCount.following < props.following_list.length
+                        "
+                    >
+                        <LoadMore @click="loadMore('following')" class="mt-4">
+                            Montrer plus
+                        </LoadMore>
+                    </div>
                 </TabsContent>
             </Tabs>
         </DialogContent>
     </Dialog>
 </template>
-
-<!-- TODO : watch follow ? -->
-<!-- TODO : chargement autres users ou pagination ? -->
