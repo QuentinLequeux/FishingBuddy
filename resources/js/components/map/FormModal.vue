@@ -259,6 +259,7 @@ const specieNameById = computed(() => {
                             </TagsInput>
                         </ComboboxAnchor>
                     </Combobox>
+                    <InputError :message="form.errors.species" />
                 </div>
                 <div class="flex flex-col gap-2">
                     <Label for="env" class="w-fit">Environement</Label>
