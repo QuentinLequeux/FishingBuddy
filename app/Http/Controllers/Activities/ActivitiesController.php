@@ -23,7 +23,7 @@ class ActivitiesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
 
@@ -31,11 +31,15 @@ class ActivitiesController extends Controller
 
         $likedActivityIds = $user ? $user->likes()->pluck('activity_id')->toArray() : [];
 
-        $activities = $this->getActivities();
+        $filters = $request->input('filters', []);
+        $offset = (int) $request->get('offset', 0);
+        $limit = 5;
+
+        $activities = $this->getActivities($limit, $offset, $filters);
 
         $activities = $this->getUserActivityData($activities, $followingIds, $likedActivityIds);
 
-        $follows = $this->getActivities()->whereIn('user_id', $followingIds);
+        $follows = $this->getActivities(10)->whereIn('user_id', $followingIds);
 
         $follows = $this->getUserActivityData($follows, $followingIds, $likedActivityIds);
 
@@ -52,6 +56,9 @@ class ActivitiesController extends Controller
             'suggestions' => $suggestions,
             'tab' => request('tab', 'feed'),
             'publish' => request()->boolean('publish'),
+            'hasMore' => $activities->count() === $limit,
+            'offset' => $offset + $limit,
+            'filters' => $filters,
         ]);
     }
 
@@ -160,14 +167,36 @@ class ActivitiesController extends Controller
             ]);
     }
 
-    private function getActivities()
+    private function getActivities(int $limit = 5, int $offset = 0, array $filters = [])
     {
-        return Activity::with(['user', 'lure', 'specie', 'comments.user'])
+        $viewer = auth()->user();
+
+        $query = Activity::with(['user', 'lure', 'specie', 'comments.user'])
+            ->whereHas('user', function ($query) use ($viewer) {
+                $query->where('activities_visibility', 'public');
+
+                if ($viewer) {
+                    $query->orWhere(function ($q) use ($viewer) {
+                        $q->where('activities_visibility', 'followers')
+                            ->whereHas('followers', function ($f) use ($viewer) {
+                                $f->where('follower_id', $viewer->id);
+                            });
+                    });
+
+                    $query->orWhere('id', $viewer->id);
+                }
+            });
+
+            if (($filters['mine'] ?? false) && $viewer) {
+                $query->where('user_id', $viewer->id);
+            }
+            return $query
             ->latest()
-            ->take(10)
+            ->offset($offset)
+            ->take($limit)
             ->get();
     }
 }
 
 // TODO : Optimiser queries et models
-// TODO : Chargement des activities en back-end
+// TODO : LikeController et FollowController ?
