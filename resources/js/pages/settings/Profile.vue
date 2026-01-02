@@ -188,7 +188,7 @@ const deleteAvatar = () => {
                             <X class="size-3 text-black" />
                         </div>
                         <img
-                            :src="`/storage/${user.avatar}`"
+                            :src="user.avatar_url"
                             :alt="`Avatar de ${user.name}`"
                             width="100"
                             height="100"

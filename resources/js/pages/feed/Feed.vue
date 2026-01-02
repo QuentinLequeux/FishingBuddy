@@ -13,6 +13,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Button } from '@/components/ui/button';
 import { IActivities } from '@/types/IActivities';
 import { Head, router, usePage } from '@inertiajs/vue3';
+import LoadMore from '@/components/global/LoadMore.vue';
 import UserCard from '@/components/profile/UserCard.vue';
 import { Ban, Search, Home, Heart } from 'lucide-vue-next';
 import Suggestions from '@/components/feed/Suggestions.vue';
@@ -31,7 +32,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const page = usePage<AppPageProps & { searchQuery?: string }>();
+const page = usePage<
+    AppPageProps & { searchQuery?: string; filters: boolean }
+>();
 
 const props = defineProps<{
     activities: IActivities[];
@@ -40,12 +43,17 @@ const props = defineProps<{
     lures: ILure[];
     users: User[];
     suggestions: User[];
+    hasMore: boolean;
+    offset: number;
 }>();
 
+const offset = ref(props.offset);
+const hasMore = ref(props.hasMore);
 const searchRef: any = ref(null);
 const openPublishModal = ref(false);
 const openCommentModal = ref(false);
 const activeTab = ref(page.props.tab || 'feed');
+const activities = ref<IActivities[]>(props.activities);
 const selectedActivityId = ref<number | null>(null);
 const searchQuery = ref(page.props.searchQuery || '');
 const shortcutKey = computed(() => (isMac ? '⌘' : 'Ctrl'));
@@ -58,17 +66,31 @@ const handleShortcut = (e: any) => {
     }
 };
 
-const visibleCount = ref(5);
-const visibleActivities = computed(() =>
-    props.activities.slice(0, visibleCount.value),
-);
+type LoadMoreProps = {
+    offset: number;
+    hasMore: boolean;
+    activities: IActivities[];
+};
 
 const loadMore = () => {
-    visibleCount.value += 5;
+    router.get(
+        route('feed'),
+        { offset: offset.value, filters: page.props.filters },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            only: ['activities', 'hasMore', 'offset'],
+            onSuccess: (page) => {
+                const props = page.props as unknown as LoadMoreProps;
+                activities.value.push(...props.activities);
+                offset.value = props.offset;
+                hasMore.value = props.hasMore;
+            },
+        },
+    );
 };
 
 watch(activeTab, (tab) => {
-    visibleCount.value = 5;
     if (tab !== 'search') {
         router.get(
             route('feed'),
@@ -151,7 +173,7 @@ onBeforeUnmount(() => {
                     >
                         Publier
                     </Button>
-                    <PopoverFilter />
+                    <PopoverFilter v-if="activeTab !== 'search' && activeTab !== 'follow'" />
                 </div>
             </div>
             <div class="flex justify-center">
@@ -186,14 +208,14 @@ onBeforeUnmount(() => {
                     </TabsList>
                     <TabsContent value="feed">
                         <p
-                            v-if="visibleActivities.length === 0"
+                            v-if="activities.length === 0"
                             class="mt-8 flex h-screen gap-2 text-gray-500"
                         >
                             <Ban />
                             Aucune publications.
                         </p>
                         <ActivityCard
-                            v-for="activity in visibleActivities"
+                            v-for="activity in activities"
                             :key="activity.id"
                             :activity="activity"
                             :auth-user-id="$page.props.auth.user?.id"
@@ -202,6 +224,15 @@ onBeforeUnmount(() => {
                                 openCommentModal = true;
                             "
                         />
+                        <div v-if="activeTab !== 'search'">
+                            <LoadMore
+                                :has-more="hasMore"
+                                @click="loadMore"
+                                v-if="hasMore && activities.length > 0"
+                            >
+                                Montrer plus
+                            </LoadMore>
+                        </div>
                     </TabsContent>
                     <TabsContent value="follow">
                         <p
@@ -223,7 +254,7 @@ onBeforeUnmount(() => {
                         />
                     </TabsContent>
                     <TabsContent value="search">
-                        <div class="relative mt-6 w-[450px] max-sm:w-full">
+                        <div class="relative mt-6 w-112.5 max-sm:w-full">
                             <Search
                                 class="absolute top-2.5 left-3 size-5 text-gray-500"
                             />
@@ -248,22 +279,6 @@ onBeforeUnmount(() => {
                     </TabsContent>
                 </Tabs>
             </div>
-            <div
-                v-if="
-                    activeTab !== 'search' &&
-                    visibleCount < props.activities.length
-                "
-            >
-                <Button
-                    type="button"
-                    variant="secondary"
-                    class="w-full font-semibold"
-                    title="Montrer plus"
-                    @click="loadMore"
-                >
-                    Montrer plus
-                </Button>
-            </div>
         </div>
         <ScrollButton />
         <PublishModal
@@ -279,6 +294,3 @@ onBeforeUnmount(() => {
         <Suggestions v-if="activeTab !== 'search'" :users="props.suggestions" />
     </AppLayout>
 </template>
-
-<!-- TODO : Modifier post -->
-<!-- TODO : Load par étapes des posts à afficher -->

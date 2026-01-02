@@ -3,6 +3,7 @@ import {
     Ban,
     Flame,
     Share2,
+    Facebook,
     HeartPlus,
     TrendingUp,
     TrendingDown,
@@ -36,6 +37,7 @@ const {
     followers_list,
     following_list,
 } = usePage().props as any;
+const url = window.location.href;
 const following = ref(isFollowing);
 const followersCount = ref(follows);
 const openCommentModal = ref(false);
@@ -110,7 +112,19 @@ const openFollowing = () => {
                     title="Partager le lien"
                     @click="share"
                 >
-                    <Share2 class="mr-0.5 size-5" />
+                    <Share2 class="size-5" />
+                </Button>
+                <Button
+                    class="main-button absolute top-12 left-0"
+                    title="Partager sur facebook"
+                    as-child
+                >
+                    <a
+                        :href="`https://www.facebook.com/sharer/sharer.php?u=${url}`"
+                        target="_blank"
+                    >
+                        <Facebook class="size-5" />
+                    </a>
                 </Button>
                 <UserAvatar :user="user" :size="100" />
                 <h3 aria-level="3" role="heading" class="text-xl font-semibold">

@@ -138,7 +138,7 @@ onMounted(() => {
         <div
             class="flex h-full flex-wrap gap-4 bg-[#f4f4f6] p-6 dark:bg-[#262626]"
         >
-            <div class="flex min-w-[460px] max-md:min-w-[80%] flex-1 flex-col gap-4">
+            <div class="flex min-w-115 max-md:min-w-[80%] flex-1 flex-col gap-4">
                 <div
                     class="relative h-fit rounded-xl bg-white p-6 shadow-2xs max-sm:w-full dark:bg-sidebar"
                 >
@@ -188,7 +188,7 @@ onMounted(() => {
                     >
                 </div>
                 <div
-                    class="flex h-fit w-[460px] flex-col rounded-xl bg-white p-6 shadow-2xs max-md:w-full dark:bg-sidebar"
+                    class="flex h-fit w-115 flex-col rounded-xl bg-white p-6 shadow-2xs max-md:w-full dark:bg-sidebar"
                 >
                     <div class="flex justify-between">
                         <h2
@@ -232,7 +232,7 @@ onMounted(() => {
                     v-if="activity"
                     :activity="activity"
                     :auth-user-id="$page.props.auth.user?.id"
-                    class="m-auto !mt-4"
+                    class="m-auto mt-4!"
                     @comment="
                         selectedActivity = $event;
                         openCommentModal = true;
@@ -248,5 +248,4 @@ onMounted(() => {
     </AppLayout>
 </template>
 
-<!-- TODO : CSS Widgets -->
 <!-- TODO : Composables -->

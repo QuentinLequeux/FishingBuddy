@@ -9,7 +9,9 @@ trait RandomUser
     public function getRandomUsers($user, $followingIds, $limit)
     {
         if (!$user) {
-            return collect();
+            return User::inRandomOrder()
+                ->take($limit)
+                ->get();
         }
 
         return User::whereNotIn('id', array_merge($followingIds, [$user->id]))

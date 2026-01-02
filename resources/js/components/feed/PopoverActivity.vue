@@ -49,7 +49,7 @@ const destroy = () => {
             </div>
         </PopoverTrigger>
         <PopoverContent class="flex w-fit flex-col gap-2 p-2">
-            <Button variant="ghost" title="Modifier">
+            <Button variant="ghost" title="Modifier" class="cursor-not-allowed">
                 <SquarePen />
                 Modifier
             </Button>

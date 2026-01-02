@@ -39,6 +39,7 @@ const form = useForm({
 const submit = () => {
     form.post(route('feed.store'), {
         preserveScroll: true,
+        preserveState: false,
         onSuccess: () => {
             toast.success('Publication créée !');
             form.reset();

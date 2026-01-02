@@ -31,7 +31,7 @@ const showAvatar = computed(
         <Avatar class="h-10 w-10 overflow-hidden rounded-full">
             <AvatarImage
                 v-if="showAvatar"
-                :src="user?.avatar!"
+                :src="user?.avatar_url!"
                 :alt="user?.name"
             />
             <AvatarFallback class="rounded-full text-black dark:text-white">

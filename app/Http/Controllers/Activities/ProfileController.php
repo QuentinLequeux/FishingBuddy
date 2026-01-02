@@ -33,7 +33,7 @@ class ProfileController extends Controller
 
         $followers_list = $user->followers()->with('follower:id,name,slug')->get()->pluck('follower');
 
-        $activities = $user->activities()->with(['specie', 'lure', 'user', 'comments.user'])->take(10);
+        $activities = $user->activities()->with(['specie', 'lure', 'user', 'comments.user'])->visibleFor($authUser)->take(10);
 
         $old = $this->getUserActivityData($activities->oldest()->get(), $followingIds, $likedActivityIds);
 

@@ -1,16 +1,53 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from '@/components/ui/popover';
+import { route } from 'ziggy-js';
+import { router } from '@inertiajs/vue3';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { PopoverArrow, PopoverClose } from 'reka-ui';
 import { Separator } from '@/components/ui/separator';
 import { LucideSlidersHorizontal, X } from 'lucide-vue-next';
+
+const filters = ref({
+    mine: true,
+});
+
+const applyFilters = () => {
+    router.get(
+        route('feed'),
+        { filters: filters.value },
+        {
+            preserveScroll: true,
+            preserveState: false,
+            replace: true,
+            only: ['activities', 'hasMore', 'offset'],
+        },
+    );
+};
+
+const resetFilters = () => {
+    router.get(
+        route('feed'),
+        {
+            filters: {},
+            offset: 0,
+        },
+        {
+            preserveScroll: true,
+            preserveState: false,
+            replace: true,
+            only: ['activities', 'hasMore', 'offset', 'filters'],
+        },
+    );
+};
 </script>
+
 <template>
     <Popover>
         <PopoverTrigger as-child>
@@ -32,6 +69,8 @@ import { LucideSlidersHorizontal, X } from 'lucide-vue-next';
             >
                 <Checkbox
                     id="11"
+                    v-model:checked="filters.mine"
+                    @click="applyFilters"
                     class="data-[state=checked]:bg-main dark:data-[state=checked]:bg-white"
                 />
                 <div>
@@ -47,16 +86,9 @@ import { LucideSlidersHorizontal, X } from 'lucide-vue-next';
                     size="sm"
                     title="Réinitialiser"
                     type="button"
+                    @click="resetFilters"
                 >
                     R&eacute;initialiser
-                </Button>
-                <Button
-                    class="main-button"
-                    size="sm"
-                    title="Sauvegarder"
-                    type="submit"
-                >
-                    Sauvegarder
                 </Button>
             </div>
             <PopoverArrow

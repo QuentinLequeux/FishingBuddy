@@ -3,20 +3,17 @@
 namespace App\Http\Controllers\Activities;
 
 use App\Models\Comment;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Activity\CommentStoreRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CommentController extends Controller
 {
     use AuthorizesRequests;
 
-    public function store(Request $request)
+    public function store(CommentStoreRequest $request)
     {
-        $validated = $request->validate([
-            'activity_id' => 'required|exists:activities,id',
-            'content' => 'required|string|min:3|max:1000'
-        ]);
+        $validated = $request->validated();
 
         Comment::create([
             'user_id' => auth()->user()->id,

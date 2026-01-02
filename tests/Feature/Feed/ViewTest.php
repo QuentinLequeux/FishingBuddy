@@ -17,6 +17,7 @@ test('view increment when user click on button', function () {
         'user_id' => $user->id,
         'specie_id' => $specie->id,
         'lure_id' => $lure->id,
+        'views' => 0
     ]);
 
     $this->actingAs($user)->post(route('feed.view', $activity));
@@ -24,4 +25,21 @@ test('view increment when user click on button', function () {
     $this->assertDatabaseHas('activities', ['id' => $activity->id, 'views' => 1]);
 });
 
-// TODO : only one view per user.
+test('only one view per user', function () {
+    $user = User::factory()->create();
+    $this->seed(SpecieSeeder::class);
+    $specie = Specie::first();
+    $this->seed(LureSeeder::class);
+    $lure = Lure::first();
+    $activity = Activity::factory()->create([
+        'user_id' => $user->id,
+        'specie_id' => $specie->id,
+        'lure_id' => $lure->id,
+        'views' => 0
+    ]);
+
+    $this->actingAs($user)->post(route('feed.view', $activity));
+    $this->actingAs($user)->post(route('feed.view', $activity));
+
+    $this->assertDatabaseHas('activities', ['id' => $activity->id, 'views' => 1]);
+});

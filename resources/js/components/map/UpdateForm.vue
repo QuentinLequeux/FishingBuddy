@@ -247,6 +247,7 @@ const specieNameById = computed(() => {
                                         id="specie"
                                         placeholder="Espèce..."
                                         class="h-auto border-none p-0 shadow-none focus-visible:ring-0"
+                                        @keydown.prevent.enter
                                     />
                                 </ComboboxInput>
                                 <ComboboxList>
@@ -279,6 +280,7 @@ const specieNameById = computed(() => {
                             </TagsInput>
                         </ComboboxAnchor>
                     </Combobox>
+                    <InputError :message="form.errors.species" />
                 </div>
                 <div class="flex flex-col gap-2">
                     <Label for="environement" class="w-fit">Environement</Label>
@@ -293,6 +295,7 @@ const specieNameById = computed(() => {
                         </TagsInputItem>
                         <TagsInputInput id="environement" placeholder="Sable" />
                     </TagsInput>
+                    <InputError :message="form.errors.environement" />
                 </div>
                 <div class="flex flex-col gap-2">
                     <Label for="rules" class="w-fit"
@@ -309,6 +312,7 @@ const specieNameById = computed(() => {
                         </TagsInputItem>
                         <TagsInputInput id="rules" placeholder="No kill" />
                     </TagsInput>
+                    <InputError :message="form.errors.rules" />
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="text-sm font-medium">Acc&egrave;s</div>

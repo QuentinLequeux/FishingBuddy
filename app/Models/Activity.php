@@ -49,4 +49,20 @@ class Activity extends Model
     {
         return $this->hasMany(ActivityView::class);
     }
+
+    public function scopeVisibleFor($query, ?User $viewer)
+    {
+        return $query->whereHas('user', function ($q) use ($viewer) {
+            $q->where('activities_visibility', 'public');
+
+            if ($viewer) {
+                $q->orWhere(function ($sub) use ($viewer) {
+                    $sub->where('activities_visibility', 'followers')
+                        ->whereHas('followers', fn ($f) =>
+                            $f->where('follower_id', $viewer->id)
+                        );
+                })->orWhere('id', $viewer->id);
+            }
+        });
+    }
 }

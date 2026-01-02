@@ -227,6 +227,7 @@ const specieNameById = computed(() => {
                                         id="specie"
                                         placeholder="Espèce"
                                         class="h-auto border-none p-0 shadow-none focus-visible:ring-0"
+                                        @keydown.prevent.enter
                                     />
                                 </ComboboxInput>
                                 <ComboboxList>
@@ -259,6 +260,7 @@ const specieNameById = computed(() => {
                             </TagsInput>
                         </ComboboxAnchor>
                     </Combobox>
+                    <InputError :message="form.errors.species" />
                 </div>
                 <div class="flex flex-col gap-2">
                     <Label for="env" class="w-fit">Environement</Label>
