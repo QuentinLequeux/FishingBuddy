@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('activity_views', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('activity_id')->constrained();
+            $table->foreignId('activity_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
 
             $table->unique(['user_id', 'activity_id']);
