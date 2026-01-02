@@ -135,7 +135,7 @@ watch(searchQuery, (newVal) => {
 
 const selectedActivity = computed(
     () =>
-        props.activities.find((a) => a.id === selectedActivityId.value) || null,
+        activities.value.find((a) => a.id === selectedActivityId.value) || null,
 );
 
 onMounted(() => {
