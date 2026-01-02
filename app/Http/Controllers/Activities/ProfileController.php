@@ -33,23 +33,7 @@ class ProfileController extends Controller
 
         $followers_list = $user->followers()->with('follower:id,name,slug')->get()->pluck('follower');
 
-        $activitiesQuery = $user->activities()->with(['specie', 'lure', 'user', 'comments.user'])
-            ->whereHas('user', function ($query) use ($authUser) {
-                $query->where('activities_visibility', 'public');
-
-                if ($authUser) {
-                    $query->orWhere(function ($q) use ($authUser) {
-                        $q->where('activities_visibility', 'followers')
-                          ->whereHas('followers', function ($f) use ($authUser) {
-                              $f->where('follower_id', $authUser->id);
-                          });
-                    });
-
-                    $query->orWhere('users.id', $authUser->id);
-                }
-            });
-
-        $activities = $activitiesQuery->take(10);
+        $activities = $user->activities()->with(['specie', 'lure', 'user', 'comments.user'])->visibleFor($authUser)->take(10);
 
         $old = $this->getUserActivityData($activities->oldest()->get(), $followingIds, $likedActivityIds);
 
