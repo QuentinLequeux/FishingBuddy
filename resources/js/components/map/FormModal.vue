@@ -227,6 +227,7 @@ const specieNameById = computed(() => {
                                         id="specie"
                                         placeholder="Espèce"
                                         class="h-auto border-none p-0 shadow-none focus-visible:ring-0"
+                                        @keydown.prevent.enter
                                     />
                                 </ComboboxInput>
                                 <ComboboxList>
