@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Specie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Map\MapStoreRequest;
 
 class MapController extends Controller
 {
@@ -17,23 +18,9 @@ class MapController extends Controller
         return Inertia::render('map/Map', ['spots' => $spots, 'species' => $species]);
     }
 
-    public function store(Request $request)
+    public function store(MapStoreRequest $request)
     {
-        $validated = $request->validate([
-            'latitude' => 'required|decimal:7',
-            'longitude' => 'required|decimal:7',
-            'name' => 'required|string|min:3|max:100',
-            'license' => 'string|min:3|max:100|nullable',
-            'url' => 'nullable|url',
-            'species' => 'nullable|array',
-            'species.*' => 'exists:species,id',
-            'environement' => 'nullable|array',
-            'environement.*' => 'string',
-            'equipments' => 'nullable|array',
-            'rules' => 'nullable|array',
-            'rules.*' => 'string',
-            'is_public' => 'required|boolean',
-        ]);
+        $validated = $request->validated();
 
         $spot = Spot::create([
             'user_id' => auth()->user()->id,
@@ -73,23 +60,9 @@ class MapController extends Controller
         return redirect()->route('map');
     }
 
-    public function update(Request $request, Spot $spot)
+    public function update(MapStoreRequest $request, Spot $spot)
     {
-        $validated = $request->validate([
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'name' => 'required|string|min:3|max:100',
-            'license' => 'string|min:3|max:100|nullable',
-            'url' => 'nullable|url',
-            'species' => 'nullable|array',
-            'species.*' => 'exists:species,id',
-            'environement' => 'nullable|array',
-            'environement.*' => 'string',
-            'equipments' => 'nullable|array',
-            'rules' => 'nullable|array',
-            'rules.*' => 'string',
-            'is_public' => 'required|boolean',
-        ]);
+        $validated = $request->validated();
 
         $spot->update([
             'user_id' => auth()->user()->id,
