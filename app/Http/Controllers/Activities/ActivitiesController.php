@@ -57,7 +57,7 @@ class ActivitiesController extends Controller
             'suggestions' => $suggestions,
             'tab' => request('tab', 'feed'),
             'publish' => request()->boolean('publish'),
-            'hasMore' => $activities->count() === $limit,
+            'hasMore' => Activity::count() > ($offset + $limit),
             'offset' => $offset + $limit,
             'filters' => $filters,
         ]);
