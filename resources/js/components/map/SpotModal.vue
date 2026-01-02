@@ -63,9 +63,7 @@ const showForm = ref(false);
                     <Car color="#fff" />
                 </a>
                 <a
-                    href="#"
-                    class="w-fit rounded-full bg-main p-2 hover:bg-main/90"
-                    target="_blank"
+                    class="w-fit rounded-full bg-main p-2 hover:bg-main/90 cursor-not-allowed"
                     title=""
                 >
                     <Share2 color="#fff" />
