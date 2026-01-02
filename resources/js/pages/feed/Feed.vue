@@ -173,7 +173,7 @@ onBeforeUnmount(() => {
                     >
                         Publier
                     </Button>
-                    <PopoverFilter />
+                    <PopoverFilter v-if="activeTab !== 'search' && activeTab !== 'follow'" />
                 </div>
             </div>
             <div class="flex justify-center">
