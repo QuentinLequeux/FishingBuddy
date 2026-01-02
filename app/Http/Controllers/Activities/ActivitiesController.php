@@ -12,6 +12,7 @@ use App\Concerns\RandomUser;
 use Illuminate\Http\Request;
 use App\Concerns\UserActivity;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Activity\ActivityStoreRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ActivitiesController extends Controller
@@ -97,16 +98,11 @@ class ActivitiesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ActivityStoreRequest $request)
     {
         $this->authorize('create', Activity::class);
 
-        $validated = $request->validate([
-            'specie_id' => 'required|exists:species,id',
-            'lure_id' => 'required|exists:lures,id',
-            'size' => 'required|integer|min:1|max:200',
-            'weight' => 'required|numeric|min:0.1|max:50',
-        ]);
+        $validated = $request->validated();
 
         Activity::create([
             'user_id' => auth()->user()->id,
