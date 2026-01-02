@@ -167,26 +167,13 @@ class ActivitiesController extends Controller
     {
         $viewer = auth()->user();
 
-        $query = Activity::with(['user', 'lure', 'specie', 'comments.user'])
-            ->whereHas('user', function ($query) use ($viewer) {
-                $query->where('activities_visibility', 'public');
-
-                if ($viewer) {
-                    $query->orWhere(function ($q) use ($viewer) {
-                        $q->where('activities_visibility', 'followers')
-                            ->whereHas('followers', function ($f) use ($viewer) {
-                                $f->where('follower_id', $viewer->id);
-                            });
-                    });
-
-                    $query->orWhere('id', $viewer->id);
-                }
-            });
+        $activities = Activity::with(['user', 'lure', 'specie', 'comments.user'])->visibleFor($viewer);
 
             if (($filters['mine'] ?? false) && $viewer) {
-                $query->where('user_id', $viewer->id);
+                $activities->where('user_id', $viewer->id);
             }
-            return $query
+
+            return $activities
             ->latest()
             ->offset($offset)
             ->take($limit)
