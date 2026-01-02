@@ -17,6 +17,7 @@ import {
     DialogContent,
 } from '@/components/ui/dialog';
 import { route } from 'ziggy-js';
+import { toast } from 'vue-sonner';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import Time from '@/components/feed/Time.vue';
@@ -48,6 +49,7 @@ const submit = () => {
     form.post(route('comment.store'), {
         onSuccess: () => {
             form.reset('content');
+            toast.success('Commentaire ajouté !');
         },
         preserveScroll: true,
     });
