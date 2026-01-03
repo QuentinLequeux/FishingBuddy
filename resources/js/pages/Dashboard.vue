@@ -247,5 +247,3 @@ onMounted(() => {
         />
     </AppLayout>
 </template>
-
-<!-- TODO : Composables -->
