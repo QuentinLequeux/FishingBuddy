@@ -101,3 +101,7 @@ Pages d'actualités et de profils accessibles par les invités.
 FishingBuddy est une plateforme sociale dédiée aux pêcheurs. Combinant cartographie interactive, partage
 de prises et interactions communautaires. Favorisant la découverte de nouveaux spots, l'échange entre passionnés
 et une expérience utilisateur personnalisée.
+
+## Architecture de la base de données
+
+![database schema](/public/images/db.png)
