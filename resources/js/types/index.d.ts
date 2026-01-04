@@ -38,6 +38,8 @@ export interface User {
     created_at: string;
     updated_at: string;
     isFollowing: boolean;
+    location: string;
+    location_visibility: boolean;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
