@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Settings\UserLocationController;
 use Inertia\Inertia;
 use App\Enums\Privacy;
 use Illuminate\Support\Facades\Route;
@@ -39,4 +40,10 @@ Route::middleware('auth')->group(function () {
     })->name('privacy.edit');
 
     Route::patch('settings/privacy', [PrivacySettingsController::class, 'update'])->name('privacy.update');
+
+    Route::patch('settings/location', [UserLocationController::class, 'store'])->name('location.store');
+
+    Route::delete('settings/location', [UserLocationController::class, 'destroy'])->name('location.destroy');
+
+    Route::patch('settings/privacy/location', [PrivacySettingsController::class, 'updateLocation'])->name('location.update');
 });
