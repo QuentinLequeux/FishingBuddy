@@ -21,8 +21,12 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->timestamp('avatar_updated_at')->nullable();
             $table->string('activities_visibility')->default('public');
+            $table->string('location')->nullable();
+            $table->boolean('location_visibility')->default(false);
             $table->rememberToken();
             $table->timestamps();
+
+            // indexes
             $table->index('name');
         });
 
