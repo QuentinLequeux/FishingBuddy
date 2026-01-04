@@ -6,16 +6,15 @@ use Storage;
 use Illuminate\Http\Request;
 use App\Concerns\HandleImageUpload;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\UserAvatarRequest;
 
 class UserAvatarController extends Controller
 {
     use HandleImageUpload;
 
-    public function update(Request $request)
+    public function update(UserAvatarRequest $request)
     {
-        $request->validate([
-            'avatar' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048'
-        ]);
+        $request->validated();
 
         $user = $request->user();
 
