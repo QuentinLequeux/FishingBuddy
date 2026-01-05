@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('activities_visibility')->default('public');
             $table->rememberToken();
             $table->timestamps();
+
+            // indexes
             $table->index('name');
         });
 

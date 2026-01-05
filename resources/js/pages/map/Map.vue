@@ -132,6 +132,11 @@ function initMap(center: [number, number]) {
 }
 
 onMounted(() => {
+    if (!navigator.geolocation) {
+        alert("Géolocalisation non supportée");
+        return;
+    }
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (pos) => {
@@ -139,8 +144,8 @@ onMounted(() => {
 
                 initMap([longitude, latitude]);
             },
-            (err) => {
-                console.warn('Géolocalisation indisponible ou refusée :', err);
+            () => {
+                alert('Géolocalisation refusée');
                 initMap([5.510639, 50.61063]);
             },
             { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },

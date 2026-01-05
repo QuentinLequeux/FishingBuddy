@@ -23,7 +23,7 @@ const closeSuggest = () => {
         v-if="users.length"
         v-show="showSuggest"
         id="suggest"
-        class="fixed top-56 right-10 flex max-w-[300px] flex-col gap-4 max-2xl:hidden pt-8"
+        class="fixed top-56 right-10 flex max-w-75 flex-col gap-4 max-2xl:hidden pt-8"
     >
         <Button
             class="w-fit absolute top-0 right-0"
@@ -50,9 +50,14 @@ const closeSuggest = () => {
             <div class="flex justify-between bg-white hover:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-800 p-2 border rounded-xl">
                 <div class="mr-4 flex items-center gap-4">
                     <UserAvatar :user="user" :size="40" />
-                    <p class="max-w-[150px] truncate text-sm font-medium">
+                    <div class="flex flex-col">
+                        <p class="max-w-37.5 truncate text-sm font-medium">
                         {{ user.name }}
-                    </p>
+                        </p>
+                        <p v-if="user.location_visibility && user.location" class="text-xs text-gray-500 truncate max-w-20">
+                            {{ user.location }}
+                        </p>
+                    </div>
                 </div>
                 <Button
                     variant="ghost"

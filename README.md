@@ -68,6 +68,7 @@ Pages d'actualités et de profils accessibles par les invités.
 - Nombres de : Followers, Suivi(e)s et Posts.
 - Publications : Récentes, Anciennes, Populaires.
 - Possibilité de Suivre/Ne plus suivre un utilisateur.
+- Affichage de la localisation de l'utilisateur sur son profil (selon confidentialité).
 - Lien direct vers le formulaire de publication ou la modification du profil (profil personnel).
 
 #### Paramètres
@@ -79,6 +80,7 @@ Pages d'actualités et de profils accessibles par les invités.
 - Modification de l'adresse email.
 - Ajout/Update/Suppression d'un avatar.
 - Confidentialité des activités (Public, Suivi(e)s ou Privées).
+- Ajout/Suppression/Affichage de la localisation de l'utilisateur.
 
 ## TODO
 
@@ -94,7 +96,6 @@ Pages d'actualités et de profils accessibles par les invités.
 - Implémenter des notifications (Ex : Followers, etc).
 - Utilisation de l'API static-map de MapTiler pour lier un spot à une prise.
 - Fonctionnalité HeatMap (Selon le nombre de spots enregistrés dans la même zone).
-- Affichage de la localisation de l'utilisateur sur son profil (selon confidentialité).
 
 ## Conclusion
 

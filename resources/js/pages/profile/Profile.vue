@@ -3,6 +3,7 @@ import {
     Ban,
     Flame,
     Share2,
+    MapPin,
     Facebook,
     HeartPlus,
     TrendingUp,
@@ -130,6 +131,10 @@ const openFollowing = () => {
                 <h3 aria-level="3" role="heading" class="text-xl font-semibold">
                     {{ user.name }}
                 </h3>
+                <p class="font-medium flex items-center gap-2 text-sm" v-if="user.location_visibility && user.location">
+                    <MapPin class="text-main" />
+                    {{ user.location }}
+                </p>
                 <p class="text-xs text-gray-500">
                     Membre depuis
                     {{

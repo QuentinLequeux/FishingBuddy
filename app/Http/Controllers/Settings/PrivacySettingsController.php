@@ -21,4 +21,15 @@ class PrivacySettingsController extends Controller
            'activities_visibility' => $request->visibility,
         ]);
     }
+
+    public function updateLocation(Request $request)
+    {
+        $request->validate([
+            'location_visibility' => 'required|boolean',
+        ]);
+
+        $request->user()->update([
+            'location_visibility' => $request->boolean('location_visibility'),
+        ]);
+    }
 }

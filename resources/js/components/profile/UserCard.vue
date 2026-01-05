@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { User } from '@/types';
 import { route } from 'ziggy-js';
-import { Ban } from 'lucide-vue-next';
 import { router } from '@inertiajs/vue3';
+import { Ban, MapPin } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import UserAvatar from '@/components/global/UserAvatar.vue';
 
@@ -26,14 +26,20 @@ const submit = (userId: number) => {
         >
             <div class="flex items-center gap-4">
                 <UserAvatar :user="user" :size="40" />
-                <a
-                    :href="route('profile', user.slug)"
-                    :title="`Vers le profil de ${user.name}`"
-                >
+                <div class="flex flex-col gap-1">
+                    <a
+                        :href="route('profile', user.slug)"
+                        :title="`Vers le profil de ${user.name}`"
+                    >
                     <p class="text-sm font-medium max-w-[175px]">
                         {{ user.name }}
                     </p>
-                </a>
+                    </a>
+                    <p v-if="user.location_visibility && user.location" class="text-xs text-gray-500 flex gap-1 max-w-62.5">
+                        <MapPin class="size-4 text-main" />
+                        {{ user.location }}
+                    </p>
+                </div>
             </div>
             <Button
                 v-if="$page.props.auth.user?.id !== user.id"
