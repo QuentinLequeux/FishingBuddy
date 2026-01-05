@@ -102,6 +102,11 @@ const fetchLocationName = async (lat: number, long: number) => {
 };
 
 const getLocation = () => {
+    if (!navigator.geolocation) {
+        alert('Géolocalisation non supportée')
+        return;
+    }
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -110,8 +115,8 @@ const getLocation = () => {
                 fetchWeather(lat.value, long.value);
                 fetchLocationName(lat.value, long.value);
             },
-            (error) => {
-                console.error('Error getting location:', error);
+            () => {
+                alert('Permission refusée');
             },
         );
     } else {
@@ -158,7 +163,7 @@ onMounted(() => {
                     </div>
                     <Spinner v-else class="mt-4" />
                     <div v-if="locationName" class="mt-2 flex gap-2">
-                        <MapPin class="inline-block" /><span
+                        <MapPin class="inline-block text-main" /><span
                             class="font-medium"
                             >{{ locationName }}</span
                         >
