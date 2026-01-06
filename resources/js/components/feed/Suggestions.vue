@@ -20,6 +20,7 @@ const closeSuggest = () => {
 
 <template>
     <aside
+        v-once
         v-if="users.length"
         v-show="showSuggest"
         id="suggest"
