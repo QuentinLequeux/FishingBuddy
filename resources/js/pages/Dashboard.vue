@@ -211,7 +211,7 @@ onMounted(() => {
                             Voir tout
                         </Link>
                     </div>
-                    <UserCard v-if="users" :users="users" />
+                    <UserCard v-once v-if="users" :users="users" />
                 </div>
             </div>
             <div
@@ -234,6 +234,7 @@ onMounted(() => {
                     </Link>
                 </div>
                 <ActivityCard
+                    v-once
                     v-if="activity"
                     :activity="activity"
                     :auth-user-id="$page.props.auth.user?.id"
