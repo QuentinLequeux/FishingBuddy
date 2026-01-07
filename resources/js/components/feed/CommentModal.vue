@@ -26,7 +26,7 @@ import { IActivities } from '@/types/IActivities';
 import { Textarea } from '@/components/ui/textarea';
 import InputError from '@/components/InputError.vue';
 import { Separator } from '@/components/ui/separator';
-import { Form, useForm, usePage } from '@inertiajs/vue3';
+import { Form, router, useForm, usePage } from '@inertiajs/vue3';
 import UserAvatar from '@/components/global/UserAvatar.vue';
 import PopoverComment from '@/components/feed/PopoverComment.vue';
 
@@ -52,6 +52,7 @@ const submit = () => {
             toast.success('Commentaire ajouté !');
         },
         preserveScroll: true,
+        preserveState: false,
     });
 };
 
@@ -64,6 +65,45 @@ watch(
     },
     { immediate: true },
 );
+
+const like = () => {
+    if (props.activity.hasLiked) {
+        // eslint-disable-next-line vue/no-mutating-props
+        props.activity.hasLiked = false;
+        // eslint-disable-next-line vue/no-mutating-props
+        props.activity.likesCount--;
+    } else {
+        // eslint-disable-next-line vue/no-mutating-props
+        props.activity.hasLiked = true;
+        // eslint-disable-next-line vue/no-mutating-props
+        props.activity.likesCount++;
+    }
+
+    router.post(
+        route('feed.like', props.activity.id),
+        {},
+        {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        },
+    );
+};
+
+const follow = () => {
+    // eslint-disable-next-line vue/no-mutating-props
+    props.activity.isFollowing = !props.activity.isFollowing;
+
+    router.post(
+        route('feed.follow', props.activity.user.id),
+        {},
+        {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        },
+    );
+};
 </script>
 
 <template>
@@ -95,27 +135,22 @@ watch(
                         </div>
                     </div>
                     <div>
-                        <Form
-                            :action="route('feed.follow', activity?.user.id)"
-                            method="post"
+                        <Button
+                            v-if="
+                                $page.props.auth.user.id !== activity?.user_id
+                            "
+                            class="main-button"
+                            title="Suivre"
+                            @click="follow"
                         >
-                            <Button
-                                v-if="
-                                    $page.props.auth.user.id !==
-                                    activity?.user_id
-                                "
-                                class="main-button"
-                                title="Suivre"
-                            >
-                                <div v-if="activity?.isFollowing">
-                                    Ne plus suivre
-                                </div>
-                                <div v-else class="flex items-center gap-2">
-                                    <HeartPlus />
-                                    Suivre
-                                </div>
-                            </Button>
-                        </Form>
+                            <div v-if="activity?.isFollowing">
+                                Ne plus suivre
+                            </div>
+                            <div v-else class="flex items-center gap-2">
+                                <HeartPlus />
+                                Suivre
+                            </div>
+                        </Button>
                     </div>
                 </div>
                 <div class="my-4 flex gap-4">
@@ -158,29 +193,25 @@ watch(
                     class="mt-4 h-auto w-full rounded-xl object-cover"
                 />
                 <div class="relative my-4 flex">
-                    <Form
-                        :action="route('feed.like', activity?.id)"
-                        method="post"
+                    <Button
+                        type="submit"
+                        variant="ghost"
+                        :title="activity.likesCount + ' Likes'"
+                        @click="like"
                         class="relative"
                     >
-                        <Button
-                            type="submit"
-                            variant="ghost"
-                            :title="activity.likesCount + ' Likes'"
-                        >
-                            <Heart
-                                :class="
-                                    activity?.hasLiked
-                                        ? 'fill-current text-main'
-                                        : ''
-                                "
-                                class="size-5"
-                            />
-                            <span v-if="activity.likesCount > 0" class="count"
-                                >{{ activity?.likesCount }}
-                            </span>
-                        </Button>
-                    </Form>
+                        <Heart
+                            :class="
+                                activity?.hasLiked
+                                    ? 'fill-current text-main'
+                                    : ''
+                            "
+                            class="size-5"
+                        />
+                        <span v-if="activity.likesCount > 0" class="count"
+                            >{{ activity?.likesCount }}
+                        </span>
+                    </Button>
                     <Button
                         class="relative"
                         variant="ghost"
@@ -245,7 +276,7 @@ watch(
                 <Textarea
                     name="content"
                     placeholder="Écrire votre commentaire ici..."
-                    class="h-auto max-h-[150px]"
+                    class="h-auto max-h-37.5"
                     v-model="form.content"
                     maxlength="1000"
                     minlength="3"
