@@ -57,7 +57,7 @@ class ActivitiesController extends Controller
             'suggestions' => $suggestions,
             'tab' => request('tab', 'feed'),
             'publish' => request()->boolean('publish'),
-            'hasMore' => Activity::count() > ($offset + $limit),
+            'hasMore' => $this->getActivitiesCount($filters) > ($offset + $limit),
             'offset' => $offset + $limit,
             'filters' => $filters,
         ]);
@@ -178,6 +178,18 @@ class ActivitiesController extends Controller
             ->offset($offset)
             ->take($limit)
             ->get();
+    }
+
+    private function getActivitiesCount(array $filters = [])
+    {
+        $viewer = auth()->user();
+        $activities = Activity::visibleFor($viewer);
+
+        if (($filters['mine'] ?? false) && $viewer) {
+            $activities->where('user_id', $viewer->id);
+        }
+
+        return $activities->count();
     }
 }
 
