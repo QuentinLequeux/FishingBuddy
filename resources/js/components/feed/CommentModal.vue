@@ -3,6 +3,7 @@ import {
     Eye,
     Clock,
     Heart,
+    Flame,
     Trophy,
     Weight,
     HeartPlus,
@@ -172,18 +173,29 @@ const follow = () => {
                         class="flex items-center gap-4"
                     >
                         <Separator orientation="vertical" class="h-full" />
-                        <Trophy class="size-6 text-yellow-500" />
+                        <div class="flex-col">
+                            <p class="text-sm text-gray-500">Record</p>
+                            <Trophy class="mx-auto mt-1 size-6 text-yellow-500" />
+                        </div>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <Badge class="bg-main/80 text-white">
-                        <RulerDimensionLine />
-                        {{ activity?.size }}&nbsp;cm
-                    </Badge>
-                    <Badge class="bg-main/80 text-white">
-                        <Weight />
-                        {{ activity?.weight }}&nbsp;kg
-                    </Badge>
+                <div class="flex items-center justify-between gap-2">
+                    <div class="flex gap-2">
+                        <Badge class="bg-main/80 text-white">
+                            <RulerDimensionLine />
+                            {{ activity?.size }}&nbsp;cm
+                        </Badge>
+                        <Badge class="bg-main/80 text-white">
+                            <Weight />
+                            {{ activity?.weight }}&nbsp;kg
+                        </Badge>
+                    </div>
+                    <div v-if="activity.likesCount > 1">
+                        <Badge class="bg-gray-200">
+                            <p class="text-black">Populaire</p>
+                            <Flame class="text-red-500" />
+                        </Badge>
+                    </div>
                 </div>
                 <img
                     src="/images/map2.png"

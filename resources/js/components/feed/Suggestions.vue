@@ -20,7 +20,6 @@ const closeSuggest = () => {
 
 <template>
     <aside
-        v-once
         v-if="users.length"
         v-show="showSuggest"
         id="suggest"
@@ -47,7 +46,7 @@ const closeSuggest = () => {
                 <Link :href="route('feed', { tab: 'search' })" class="text-sm font-medium"> Voir tout </Link>
             </Button>
         </div>
-        <div v-for="user in users" :key="user.id">
+        <div v-for="user in users" :key="user.id" v-once>
             <div class="flex justify-between bg-white hover:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-800 p-2 border rounded-xl">
                 <div class="mr-4 flex items-center gap-4">
                     <UserAvatar :user="user" :size="40" />
