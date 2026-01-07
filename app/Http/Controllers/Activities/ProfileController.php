@@ -33,13 +33,23 @@ class ProfileController extends Controller
 
         $followers_list = $user->followers()->with('follower:id,name,slug')->get()->pluck('follower');
 
-        $activities = $user->activities()->with(['specie', 'lure', 'user', 'comments.user'])->visibleFor($authUser)->take(10);
+        $old = $this->getUserActivityData(
+            $user->activities()->with(['specie', 'lure', 'user', 'comments.user'])->visibleFor($authUser)->oldest()->get(),
+            $followingIds,
+            $likedActivityIds
+        );
 
-        $old = $this->getUserActivityData($activities->oldest()->get(), $followingIds, $likedActivityIds);
+        $recent = $this->getUserActivityData(
+            $user->activities()->with(['specie', 'lure', 'user', 'comments.user'])->visibleFor($authUser)->latest()->get(),
+            $followingIds,
+            $likedActivityIds
+        );
 
-        $recent = $this->getUserActivityData($activities->latest()->get(), $followingIds, $likedActivityIds);
-
-        $liked = $this->getUserActivityData($activities->withCount('likes')->orderByDesc('likes_count')->get(), $followingIds, $likedActivityIds);
+        $liked = $this->getUserActivityData(
+            $user->activities()->with(['specie', 'lure', 'user', 'comments.user'])->visibleFor($authUser)->withCount('likes')->orderByDesc('likes_count')->get(),
+            $followingIds,
+            $likedActivityIds
+        );
 
         $is_following = auth()->check() ? auth()->user()->following()->where('followed_id', $user->id)->exists() : false;
 
