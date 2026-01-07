@@ -24,4 +24,16 @@ test('authenticated user can like a post', function () {
     $response = $this->post(route('feed.like', $activity));
 
     $response->assertStatus(200);
+
+    $this->assertDatabaseHas('likes', [
+        'user_id' => $user->id,
+        'activity_id' => $activity->id
+    ]);
 });
+
+// TODO
+/*
+test('authenticated user can unlike a post', function () {
+
+});
+*/

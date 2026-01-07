@@ -21,6 +21,9 @@ const props = defineProps<{
 }>();
 
 const deleteComment = () => {
+    // eslint-disable-next-line vue/no-mutating-props
+    props.activity.commentsCount --;
+
     router.delete(route('comment.destroy', { comment: props.comment.id }), {
         onSuccess: () => {
             // eslint-disable-next-line vue/no-mutating-props

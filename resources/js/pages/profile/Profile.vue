@@ -135,6 +135,13 @@ const openFollowing = () => {
                     <MapPin class="text-main" />
                     {{ user.location }}
                 </p>
+                <Link v-if="$page.props.auth.user?.id === user.id && !user.location_visibility"
+                      class="text-xs text-main hover:underline"
+                      href="/settings/privacy"
+                      title="Ajouter une localisation"
+                >
+                    Ajouter une localisation
+                </Link>
                 <p class="text-xs text-gray-500">
                     Membre depuis
                     {{

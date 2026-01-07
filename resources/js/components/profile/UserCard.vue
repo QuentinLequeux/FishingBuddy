@@ -6,7 +6,7 @@ import { Ban, MapPin } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import UserAvatar from '@/components/global/UserAvatar.vue';
 
-defineProps({
+const props = defineProps({
     users: {
         type: Array as () => User[],
         default: () => [],
@@ -14,7 +14,21 @@ defineProps({
 });
 
 const submit = (userId: number) => {
-    router.post(route('feed.follow', userId), {}, { preserveScroll: true });
+    const user = props.users.find(u => u.id === userId);
+
+    if (!user) return;
+
+    user.isFollowing = !user.isFollowing;
+
+    router.post(
+        route('feed.follow', userId),
+        {},
+        {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        },
+    );
 };
 </script>
 <template>
@@ -22,7 +36,7 @@ const submit = (userId: number) => {
         <div
             v-for="user in users"
             :key="user.id"
-            class="mb-4 flex items-center justify-between rounded-xl border-1 border-gray-200 bg-gray-50 p-4 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
+            class="mb-4 flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 p-4 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
         >
             <div class="flex items-center gap-4">
                 <UserAvatar :user="user" :size="40" />
@@ -31,11 +45,14 @@ const submit = (userId: number) => {
                         :href="route('profile', user.slug)"
                         :title="`Vers le profil de ${user.name}`"
                     >
-                    <p class="text-sm font-medium max-w-[175px]">
-                        {{ user.name }}
-                    </p>
+                        <p class="max-w-43.75 text-sm font-medium">
+                            {{ user.name }}
+                        </p>
                     </a>
-                    <p v-if="user.location_visibility && user.location" class="text-xs text-gray-500 flex gap-1 max-w-62.5">
+                    <p
+                        v-if="user.location_visibility && user.location"
+                        class="flex max-w-62.5 gap-1 text-xs text-gray-500"
+                    >
                         <MapPin class="size-4 text-main" />
                         {{ user.location }}
                     </p>
