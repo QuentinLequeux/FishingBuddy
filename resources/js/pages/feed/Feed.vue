@@ -66,12 +66,6 @@ const handleShortcut = (e: any) => {
     }
 };
 
-type LoadMoreProps = {
-    offset: number;
-    hasMore: boolean;
-    activities: IActivities[];
-};
-
 const loadMore = () => {
     router.get(
         route('feed'),
@@ -81,7 +75,11 @@ const loadMore = () => {
             preserveState: true,
             only: ['activities', 'hasMore', 'offset'],
             onSuccess: (page) => {
-                const props = page.props as unknown as LoadMoreProps;
+                const props = page.props as unknown as {
+                        offset: number;
+                        hasMore: boolean;
+                        activities: IActivities[];
+                };
                 activities.value.push(...props.activities);
                 offset.value = props.offset;
                 hasMore.value = props.hasMore;
