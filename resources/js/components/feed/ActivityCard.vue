@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { IActivities } from '@/types/IActivities';
 import { Separator } from '@/components/ui/separator';
 import UserAvatar from '@/components/global/UserAvatar.vue';
+import PopoverShare from '@/components/feed/PopoverShare.vue';
 import PopoverActivity from '@/components/feed/PopoverActivity.vue';
 
 // dayjs
@@ -33,14 +34,27 @@ const props = defineProps<{
     authUserId: number | null;
 }>();
 
-const submit = (method: string) => {
+const like = () => {
+    if (props.activity.hasLiked) {
+        // eslint-disable-next-line vue/no-mutating-props
+        props.activity.hasLiked = false;
+        // eslint-disable-next-line vue/no-mutating-props
+        props.activity.likesCount--;
+    } else {
+        // eslint-disable-next-line vue/no-mutating-props
+        props.activity.hasLiked = true;
+        // eslint-disable-next-line vue/no-mutating-props
+        props.activity.likesCount++;
+    }
+
     router.post(
-        route(
-            `feed.${method}`,
-            method === 'like' ? props.activity.id : props.activity.user.id,
-        ),
+        route('feed.like', props.activity.id),
         {},
-        { preserveScroll: true, preserveState: false },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        },
     );
 };
 
@@ -50,17 +64,34 @@ const addView = (activity: IActivities) => {
         {},
         {
             preserveScroll: true,
+            preserveState: true,
+            replace: true,
         },
     );
     if (!activity.views) {
         activity.views++;
     }
 };
+
+const follow = () => {
+    // eslint-disable-next-line vue/no-mutating-props
+    props.activity.isFollowing = !props.activity.isFollowing;
+
+    router.post(
+        route('feed.follow', props.activity.user.id),
+        {},
+        {
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        },
+    );
+};
 </script>
 
 <template>
     <article
-        class="mt-10 h-auto max-w-[500px] rounded-xl border-1 bg-white p-4 shadow-card dark:bg-gray-900"
+        class="mt-10 h-auto max-w-125 rounded-xl border bg-white p-4 shadow-card dark:bg-gray-900"
     >
         <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
@@ -84,7 +115,7 @@ const addView = (activity: IActivities) => {
             <div>
                 <Button
                     v-if="$page.props.auth.user?.id != activity.user?.id"
-                    @click="submit('follow')"
+                    @click="follow"
                     class="main-button"
                     title="Suivre"
                 >
@@ -147,7 +178,7 @@ const addView = (activity: IActivities) => {
             <div class="flex">
                 <div class="relative">
                     <Button
-                        @click="submit('like')"
+                        @click="like"
                         variant="ghost"
                         :title="activity.likesCount + ' Likes'"
                     >
@@ -203,10 +234,12 @@ const addView = (activity: IActivities) => {
                 </Button>
             </div>
             <div
-                v-if="activity.user_id === $page.props.auth.user?.id"
-                class="mr-2"
+                class="mr-2 flex gap-2"
             >
-                <PopoverActivity :activity="activity" />
+                <PopoverShare />
+                <PopoverActivity
+                    v-if="activity.user_id === $page.props.auth.user?.id"
+                    :activity="activity" />
             </div>
         </div>
     </article>
